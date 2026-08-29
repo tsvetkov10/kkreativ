@@ -35,7 +35,7 @@ export default function Home() {
             }}
             style={{ fontSize: '1.2rem', padding: '1.2rem 3rem' }}
           >
-            Contact
+            СВЪРЖИ СЕ
           </button>
         </div>
       </section>
