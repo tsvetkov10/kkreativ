@@ -28,7 +28,7 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="logo">[kk]</a>
-          <p>Създаваме дръзки дигитални отпечатъци. Базирани в бъдещето.</p>
+          <p>creativity is limitless.</p>
         </div>
         <div className="footer-links">
           <span className="footer-title font-mono">социални мрежи</span>
