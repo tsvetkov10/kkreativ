@@ -1801,8 +1801,8 @@ p {
   z-index: 2;
 }
 .testimonial-header {
-  text-align: left;
-  margin-bottom: 4.5rem;
+  text-align: center;
+  margin: 0 auto 4.5rem auto;
   max-width: 800px;
 }
 .testimonial-tag {
