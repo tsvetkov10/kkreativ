@@ -94,14 +94,14 @@ export default function Navbar() {
             onClick={(e) => handleLinkClick(e, '#what-we-do')} 
             className={`nav-item ${activeSection === 'what-we-do' && location.pathname === '/' ? 'active' : ''}`}
           >
-            what we do
+            our craft
           </a>
           <a 
             href="/#about-us" 
             onClick={(e) => handleLinkClick(e, '#about-us')} 
             className={`nav-item ${activeSection === 'about-us' && location.pathname === '/' ? 'active' : ''}`}
           >
-            about us
+            our story
           </a>
           {/* Mobile Only CTA */}
           <a 
