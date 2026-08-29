@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const ugcImages = [
+  { src: '/ugc_placeholder.jpg', alt: 'UGC Video Review' },
+  { src: '/content_creation.jpg', alt: 'Content Creation Showcase' },
+  { src: '/rapid_growth.jpg', alt: 'Rapid Growth Results' },
+  { src: '/goal_alignment.jpg', alt: 'Brand Alignment' }
+];
 
 export default function PerformanceUgc() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % ugcImages.length);
+  };
+
   return (
     <section className="section" style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
@@ -27,9 +40,34 @@ export default function PerformanceUgc() {
               boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
               border: '1px solid rgba(255,255,255,0.1)'
             }}>
+              {/* Top Right Switch Arrow Button */}
+              <button 
+                onClick={handleNextImage} 
+                aria-label="Switch image" 
+                title="Next image"
+                className="ugc-arrow-btn"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+
+              {/* Subtle Indicator Dots */}
+              <div className="ugc-dots">
+                {ugcImages.map((_, idx) => (
+                  <span 
+                    key={idx} 
+                    className={`ugc-dot ${currentIndex === idx ? 'active' : ''}`}
+                    onClick={() => setCurrentIndex(idx)}
+                  />
+                ))}
+              </div>
+
               <img 
-                src="/ugc_placeholder.jpg" 
-                alt="UGC Video Thumbnail" 
+                key={currentIndex}
+                src={ugcImages[currentIndex].src} 
+                alt={ugcImages[currentIndex].alt} 
+                className="ugc-image-fade"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
               />
             </div>
@@ -97,8 +135,79 @@ export default function PerformanceUgc() {
 
       </div>
 
-      {/* Mobile Styles override inline grid */}
+      {/* Styles for switch arrow, indicators & responsiveness */}
       <style>{`
+        .ugc-arrow-btn {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 10;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: rgba(10, 10, 12, 0.7);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: #f4f4f5;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .ugc-arrow-btn:hover {
+          background: rgba(212, 175, 55, 0.25);
+          border-color: var(--gold-main);
+          color: var(--gold-light);
+          transform: scale(1.08);
+          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+        }
+        .ugc-arrow-btn:active {
+          transform: scale(0.95);
+        }
+        .ugc-dots {
+          position: absolute;
+          bottom: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 10;
+          display: flex;
+          gap: 6px;
+          padding: 6px 12px;
+          background: rgba(10, 10, 12, 0.55);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .ugc-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.4);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .ugc-dot.active {
+          width: 18px;
+          border-radius: 4px;
+          background: var(--gold-main);
+        }
+        .ugc-image-fade {
+          animation: ugc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes ugc-fade-in {
+          from {
+            opacity: 0.4;
+            transform: scale(1.02);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
         @media (max-width: 900px) {
           .section .container > div {
             grid-template-columns: 1fr !important;
@@ -128,3 +237,4 @@ export default function PerformanceUgc() {
     </section>
   );
 }
+
