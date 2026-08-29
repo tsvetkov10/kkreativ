@@ -63,22 +63,31 @@ export default function Preloader({ onComplete }) {
       animationFrameId = requestAnimationFrame(updateProgress);
     };
 
-    // Force strict mute & playsinline properties on DOM element for Safari autoplay
+    // Force strict mute & playsinline properties on DOM element for Safari/Chrome autoplay
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('muted', 'true');
+    video.setAttribute('playsinline', 'true');
+    video.setAttribute('webkit-playsinline', 'true');
+    video.setAttribute('autoplay', 'true');
 
-    // Attempt video playback programmatically
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay blocked by browser policy
-      });
+    const tryPlay = () => {
+      video.muted = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    };
+
+    if (video.readyState >= 2) {
+      tryPlay();
+    } else {
+      video.addEventListener('loadeddata', tryPlay, { once: true });
+      video.addEventListener('canplay', tryPlay, { once: true });
     }
 
+    tryPlay();
     animationFrameId = requestAnimationFrame(updateProgress);
 
     return () => {
@@ -96,7 +105,11 @@ export default function Preloader({ onComplete }) {
             src={logoVideoAsset}
             autoPlay 
             muted 
+            defaultMuted
             playsInline 
+            webkit-playsinline="true"
+            controls={false}
+            disablePictureInPicture
             className="preloader-logo-video"
             onEnded={() => {
               if (screenRef.current) {

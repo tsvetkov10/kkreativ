@@ -1117,15 +1117,20 @@ p {
   transform: translate(-50%, -50%);
   object-fit: contain;
   pointer-events: none;
+  background: transparent;
+  mix-blend-mode: screen;
 }
 
-.preloader-logo-video::-webkit-media-controls {
+.preloader-logo-video::-webkit-media-controls,
+.preloader-logo-video::-webkit-media-controls-panel,
+.preloader-logo-video::-webkit-media-controls-play-button,
+.preloader-logo-video::-webkit-media-controls-start-playback-button,
+.preloader-logo-video::-webkit-media-controls-overlay-play-button,
+.preloader-logo-video::-webkit-media-controls-enclosure {
   display: none !important;
-}
-
-.preloader-logo-video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-  -webkit-appearance: none;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
 }
 
 /* Dashboard Statistics Section */
