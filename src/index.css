@@ -1116,6 +1116,16 @@ p {
   left: 50%;
   transform: translate(-50%, -50%);
   object-fit: contain;
+  pointer-events: none;
+}
+
+.preloader-logo-video::-webkit-media-controls {
+  display: none !important;
+}
+
+.preloader-logo-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 /* Dashboard Statistics Section */

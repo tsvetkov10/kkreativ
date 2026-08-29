@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logoVideoAsset from '../assets/Comp 9_1.webm';
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -87,17 +86,7 @@ export default function Navbar() {
     <header className="nav-container">
       <nav className={`navbar ${mobileActive ? 'mobile-active' : ''}`} id="navbar">
         <div className="nav-logo">
-          <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="logo" aria-label="kkreativ Home">
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
-              className="logo-video"
-            >
-              <source src={logoVideoAsset} type="video/webm" />
-            </video>
-          </a>
+          <a href="/" onClick={(e) => handleLinkClick(e, '/')} className="logo">[kk]</a>
         </div>
         <div className="nav-links">
           <a 

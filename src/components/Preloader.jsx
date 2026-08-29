@@ -63,6 +63,14 @@ export default function Preloader({ onComplete }) {
       animationFrameId = requestAnimationFrame(updateProgress);
     };
 
+    // Force strict mute & playsinline properties on DOM element for Safari autoplay
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+
     // Attempt video playback programmatically
     const playPromise = video.play();
     if (playPromise !== undefined) {
@@ -85,13 +93,18 @@ export default function Preloader({ onComplete }) {
         <div className="video-crop-container">
           <video 
             ref={videoRef}
+            src={logoVideoAsset}
             autoPlay 
             muted 
             playsInline 
             className="preloader-logo-video"
-          >
-            <source src={logoVideoAsset} type="video/webm" />
-          </video>
+            onEnded={() => {
+              if (screenRef.current) {
+                screenRef.current.classList.add('fade-out');
+              }
+              setTimeout(() => onComplete(), 500);
+            }}
+          />
         </div>
       </div>
     </div>
