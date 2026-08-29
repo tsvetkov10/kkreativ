@@ -1,3 +1,5 @@
+import logoVideoAsset from '../assets/Comp 9_1.webm';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -5,7 +7,17 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="logo">[kk]</a>
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="logo" aria-label="kkreativ Home">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="logo-video"
+            >
+              <source src={logoVideoAsset} type="video/webm" />
+            </video>
+          </a>
           <p>creativity is limitless.</p>
         </div>
         <div className="footer-links">

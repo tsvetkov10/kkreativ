@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import logoVideoAsset from '../assets/Comp 9_1.webm';
-import logoVideoAssetHevc from '../assets/Comp 9_1.mov';
 
 export default function Preloader({ onComplete }) {
   const videoRef = useRef(null);
@@ -91,8 +90,7 @@ export default function Preloader({ onComplete }) {
             playsInline 
             className="preloader-logo-video"
           >
-            <source src={logoVideoAssetHevc} type='video/quicktime; codecs="hvc1"' />
-            <source src={logoVideoAsset} type='video/webm; codecs="vp9"' />
+            <source src={logoVideoAsset} type="video/webm" />
           </video>
         </div>
       </div>
