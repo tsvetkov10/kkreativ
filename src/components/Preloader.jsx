@@ -1,30 +1,37 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import logoAnimationWebp from '../assets/Comp 9_1.webp';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
+  // Timestamp query param ensures the animated WebP restarts from frame 0 on every reload
+  const [animSrc] = useState(() => `${logoAnimationWebp}?v=${Date.now()}`);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    let isMounted = true;
     let completed = false;
 
     const handleCompletion = () => {
-      if (completed) return;
+      if (completed || !isMounted) return;
       completed = true;
 
       if (screenRef.current) {
         screenRef.current.classList.add('fade-out');
       }
       setTimeout(() => {
-        onComplete();
-      }, 700);
+        if (isMounted) {
+          onComplete();
+        }
+      }, 600);
     };
 
-    // The animation plays for ~4 seconds before unveiling the site
+    // Play full animation sequence then fade out
     const timer = setTimeout(() => {
       handleCompletion();
-    }, 4000);
+    }, 3400);
 
     return () => {
+      isMounted = false;
       clearTimeout(timer);
     };
   }, [onComplete]);
@@ -34,7 +41,8 @@ export default function Preloader({ onComplete }) {
       <div className="loading-wrap">
         <div className="video-crop-container">
           <img 
-            src={logoAnimationWebp} 
+            key={animSrc}
+            src={animSrc} 
             alt="kkreativ Loading"
             className="preloader-logo-video"
           />
@@ -43,4 +51,5 @@ export default function Preloader({ onComplete }) {
     </div>
   );
 }
+
 
