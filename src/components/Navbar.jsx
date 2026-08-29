@@ -110,7 +110,7 @@ export default function Navbar() {
             className="mobile-cta-only btn-nav-cta"
             style={{ display: 'none' }}
           >
-            start conversation
+            START A CONVERSATION
           </a>
         </div>
         <div className="nav-cta">
@@ -119,7 +119,7 @@ export default function Navbar() {
             onClick={(e) => handleLinkClick(e, '/contact')} 
             className="btn-nav-cta"
           >
-            start conversation
+            START A CONVERSATION
           </a>
         </div>
         
