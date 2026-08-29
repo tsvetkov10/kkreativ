@@ -1,17 +1,86 @@
 import React, { useState } from 'react';
 
-const ugcImages = [
-  { src: '/ugc_placeholder.jpg', alt: 'UGC Video Review' },
-  { src: '/content_creation.jpg', alt: 'Content Creation Showcase' },
-  { src: '/rapid_growth.jpg', alt: 'Rapid Growth Results' },
-  { src: '/goal_alignment.jpg', alt: 'Brand Alignment' }
+const ugcSlides = [
+  {
+    image: '/ugc_placeholder.jpg',
+    alt: 'UGC Video Review',
+    box1: {
+      value: '200%',
+      label: 'Organic Growth',
+      position: { top: '12%', left: '-14%', right: 'auto', bottom: 'auto' }
+    },
+    box2: {
+      value: '5x',
+      label: 'Higher Engagement',
+      position: { bottom: '14%', right: '-14%', top: 'auto', left: 'auto' }
+    }
+  },
+  {
+    image: '/content_creation.jpg',
+    alt: 'Content Creation Showcase',
+    box1: {
+      value: '10M+',
+      label: 'Total Impressions',
+      position: { top: '22%', right: '-16%', left: 'auto', bottom: 'auto' }
+    },
+    box2: {
+      value: '+340%',
+      label: 'Click-Through Rate',
+      position: { bottom: '10%', left: '-12%', top: 'auto', right: 'auto' }
+    }
+  },
+  {
+    image: '/rapid_growth.jpg',
+    alt: 'Rapid Growth Results',
+    box1: {
+      value: '85%',
+      label: 'Retention Rate',
+      position: { top: '8%', left: '-10%', right: 'auto', bottom: 'auto' }
+    },
+    box2: {
+      value: '3.8x',
+      label: 'ROAS Increase',
+      position: { bottom: '24%', right: '-15%', top: 'auto', left: 'auto' }
+    }
+  },
+  {
+    image: '/goal_alignment.jpg',
+    alt: 'Brand Alignment',
+    box1: {
+      value: '98%',
+      label: 'Client Satisfaction',
+      position: { top: '30%', left: '-15%', right: 'auto', bottom: 'auto' }
+    },
+    box2: {
+      value: '4.5x',
+      label: 'Conversion Lift',
+      position: { bottom: '8%', right: '-10%', top: 'auto', left: 'auto' }
+    }
+  }
 ];
 
 export default function PerformanceUgc() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % ugcImages.length);
+    setCurrentIndex((prev) => (prev + 1) % ugcSlides.length);
+  };
+
+  const currentSlide = ugcSlides[currentIndex];
+
+  const sharedBoxStyle = {
+    position: 'absolute',
+    zIndex: 2,
+    background: 'linear-gradient(145deg, rgba(20,20,25,0.85) 0%, rgba(10,10,12,0.95) 100%)',
+    backdropFilter: 'blur(15px)',
+    WebkitBackdropFilter: 'blur(15px)',
+    padding: '1.2rem 1.8rem',
+    borderRadius: '16px',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.1)',
+    border: '1px solid rgba(212,175,55,0.3)',
+    transition: 'top 0.7s cubic-bezier(0.16, 1, 0.3, 1), left 0.7s cubic-bezier(0.16, 1, 0.3, 1), right 0.7s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
+    pointerEvents: 'none',
+    minWidth: '160px'
   };
 
   return (
@@ -54,7 +123,7 @@ export default function PerformanceUgc() {
 
               {/* Subtle Indicator Dots */}
               <div className="ugc-dots">
-                {ugcImages.map((_, idx) => (
+                {ugcSlides.map((_, idx) => (
                   <span 
                     key={idx} 
                     className={`ugc-dot ${currentIndex === idx ? 'active' : ''}`}
@@ -65,53 +134,43 @@ export default function PerformanceUgc() {
 
               <img 
                 key={currentIndex}
-                src={ugcImages[currentIndex].src} 
-                alt={ugcImages[currentIndex].alt} 
+                src={currentSlide.image} 
+                alt={currentSlide.alt} 
                 className="ugc-image-fade"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
               />
             </div>
 
-            {/* Top Left Floating Stats Box */}
-            <div className="floating-box-anim top-left-box" style={{
-              position: 'absolute',
-              top: '15%',
-              left: '-15%',
-              zIndex: 2,
-              background: 'linear-gradient(145deg, rgba(20,20,25,0.85) 0%, rgba(10,10,12,0.95) 100%)',
-              backdropFilter: 'blur(15px)',
-              padding: '1.2rem 1.8rem',
-              borderRadius: '16px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.1)',
-              border: '1px solid rgba(212,175,55,0.3)'
-            }}>
-              <h3 className="font-display gradient-text" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
-                200%
+            {/* Dynamic Floating Stats Box 1 */}
+            <div 
+              className="floating-box-anim ugc-stat-box ugc-box-1" 
+              style={{
+                ...sharedBoxStyle,
+                ...currentSlide.box1.position
+              }}
+            >
+              <h3 key={`box1-val-${currentIndex}`} className="font-display gradient-text stat-value-anim" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
+                {currentSlide.box1.value}
               </h3>
-              <p className="font-mono text-gold" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Organic Growth
+              <p key={`box1-lbl-${currentIndex}`} className="font-mono text-gold stat-label-anim" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {currentSlide.box1.label}
               </p>
             </div>
 
-            {/* Bottom Right Floating Stats Box */}
-            <div className="floating-box-anim bottom-right-box" style={{
-              position: 'absolute',
-              bottom: '15%',
-              right: '-15%',
-              zIndex: 2,
-              animationDelay: '1.5s', // Offset animation
-              background: 'linear-gradient(145deg, rgba(20,20,25,0.85) 0%, rgba(10,10,12,0.95) 100%)',
-              backdropFilter: 'blur(15px)',
-              padding: '1.2rem 1.8rem',
-              borderRadius: '16px',
-              boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.1)',
-              border: '1px solid rgba(212,175,55,0.3)'
-            }}>
-              <h3 className="font-display gradient-text" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
-                5x
+            {/* Dynamic Floating Stats Box 2 */}
+            <div 
+              className="floating-box-anim ugc-stat-box ugc-box-2" 
+              style={{
+                ...sharedBoxStyle,
+                animationDelay: '1.5s', // Offset floating oscillation
+                ...currentSlide.box2.position
+              }}
+            >
+              <h3 key={`box2-val-${currentIndex}`} className="font-display gradient-text stat-value-anim" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
+                {currentSlide.box2.value}
               </h3>
-              <p className="font-mono text-gold" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Higher Engagement
+              <p key={`box2-lbl-${currentIndex}`} className="font-mono text-gold stat-label-anim" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {currentSlide.box2.label}
               </p>
             </div>
 
@@ -135,7 +194,7 @@ export default function PerformanceUgc() {
 
       </div>
 
-      {/* Styles for switch arrow, indicators & responsiveness */}
+      {/* Styles for switch arrow, indicators, animations & responsiveness */}
       <style>{`
         .ugc-arrow-btn {
           position: absolute;
@@ -196,16 +255,32 @@ export default function PerformanceUgc() {
           background: var(--gold-main);
         }
         .ugc-image-fade {
-          animation: ugc-fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          animation: ugc-fade-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .stat-value-anim {
+          animation: stat-fade 0.4s ease-out;
+        }
+        .stat-label-anim {
+          animation: stat-fade 0.5s ease-out;
         }
         @keyframes ugc-fade-in {
           from {
-            opacity: 0.4;
-            transform: scale(1.02);
+            opacity: 0.3;
+            transform: scale(1.03);
           }
           to {
             opacity: 1;
             transform: scale(1);
+          }
+        }
+        @keyframes stat-fade {
+          from {
+            opacity: 0;
+            transform: translateY(6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
         @media (max-width: 900px) {
@@ -222,14 +297,18 @@ export default function PerformanceUgc() {
           .section .container > div > div:last-child p {
             margin: 0 auto;
           }
-          .top-left-box {
+          .ugc-box-1 {
             left: 0 !important;
+            right: auto !important;
             top: 5% !important;
+            bottom: auto !important;
             padding: 1rem 1.5rem !important;
           }
-          .bottom-right-box {
+          .ugc-box-2 {
             right: 0 !important;
+            left: auto !important;
             bottom: 5% !important;
+            top: auto !important;
             padding: 1rem 1.5rem !important;
           }
         }
@@ -237,4 +316,5 @@ export default function PerformanceUgc() {
     </section>
   );
 }
+
 
