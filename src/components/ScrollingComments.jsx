@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
 const positivePoints = [
-  { text: "Influencer collaborations that drive real sales and ROI" },
-  { text: "Consistent posting with high engagement and growth" },
   { text: "Strategic trends tailored perfectly to your brand" },
-  { text: "High traffic that turns into loyal customers" }
+  { text: "Influencer collaborations that drive real sales and ROI" },
+  { text: "Consistent posting with high engagement and organic growth" },
+  { text: "High-converting UGC videos that turn views into customers" },
+  { text: "Data-driven audience targeting with maximized return on ad spend" },
+  { text: "Bespoke creative direction that commands attention on feeds" },
+  { text: "Viral short-form campaigns engineered for rapid reach" },
+  { text: "End-to-end community building with authentic brand loyalty" }
 ];
 
 export default function ScrollingComments() {
@@ -41,22 +45,15 @@ export default function ScrollingComments() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // To ensure the last card finishes before 1.0 scroll progress:
-  // We have 4 items. Last item is index 3.
-  // We want startProgress(3) + duration(0.4) <= 1.0
-  // So startProgress(3) = 0.6.
-  // This means the interval between spawns is 0.6 / 3 = 0.2.
-  const interval = 0.2;
-  let activeIndex = Math.floor(scrollProgress / interval);
-  if (activeIndex >= positivePoints.length) activeIndex = positivePoints.length - 1;
-  
-  // Revert to black at the end of the scroll (e.g., > 0.85) so it transitions smoothly to the next section
-  const isWhiteBg = (activeIndex % 2 !== 0) && (scrollProgress < 0.85);
+  const totalItems = positivePoints.length;
+  // Alternate background theme smoothly as cards advance
+  const activeStep = Math.floor(scrollProgress * (totalItems - 1));
+  const isWhiteBg = (activeStep % 2 !== 0) && (scrollProgress < 0.92);
 
   return (
     <section 
       ref={containerRef} 
-      style={{ height: '350vh', position: 'relative' }} 
+      style={{ height: '420vh', position: 'relative' }} 
       className="scrolling-comments-section"
     >
       <div style={{ 
@@ -96,53 +93,50 @@ export default function ScrollingComments() {
         {/* Floating Cards Container - zIndex 2 */}
         <div style={{ width: '100%', maxWidth: '1400px', position: 'relative', height: '100vh', zIndex: 2 }}>
           {positivePoints.map((point, index) => {
-            const startProgress = index * interval;
-            const endProgress = startProgress + 0.4;
+            // Position formula ensuring 2+ cards are always on screen
+            const currentY = -20 + (index - scrollProgress * (totalItems - 1)) * 40;
             
-            let localProgress = (scrollProgress - startProgress) / (endProgress - startProgress);
-            if (localProgress < 0) localProgress = 0;
-            if (localProgress > 1) localProgress = 1;
-            
-            // True Ladder Layout: Far left and far right alternating, never in the middle
+            // True Ladder Layout: Far left and far right alternating
             const isLeft = index % 2 === 0;
-            const currentX = isLeft ? -32 : 32;
+            const currentX = isLeft ? -30 : 30;
             
-            // FYP Continuous Scroll logic: Spawn from bottom (100vh), exit through top (-100vh)
-            const startY = 100;
-            const targetY = -100;
-            
-            // Linear progression for a true scrolling feel
-            const currentY = startY + (targetY - startY) * localProgress;
-            
-            // Fade in at the bottom (0-0.15), stay visible, fade out at the top (0.85-1.0)
+            // Smooth fade at the top/bottom edges of the screen
+            const absY = Math.abs(currentY);
             let opacity = 0;
-            if (localProgress > 0 && localProgress < 1) {
-              if (localProgress < 0.15) opacity = localProgress / 0.15;
-              else if (localProgress > 0.85) opacity = (1 - localProgress) / 0.15;
-              else opacity = 1;
+            if (absY <= 45) {
+              opacity = 1;
+            } else if (absY < 65) {
+              opacity = (65 - absY) / 20;
+            } else {
+              opacity = 0;
             }
             
-            const scale = 0.9 + (localProgress * 0.1);
+            const scale = Math.max(0.85, Math.min(1.02, 1 - absY * 0.002));
+
+            // Skip rendering if completely off screen
+            if (opacity <= 0) return null;
 
             return (
               <div 
                 key={index}
+                className="scrolling-comment-card"
                 style={{
                   position: 'absolute',
                   top: '50%',
                   left: '50%',
-                  width: 'clamp(280px, 30vw, 380px)',
+                  width: 'clamp(280px, 28vw, 380px)',
                   transform: `translate(calc(-50% + ${currentX}vw), calc(-50% + ${currentY}vh)) scale(${scale})`,
                   opacity: opacity,
-                  background: '#3a3a3a',
+                  background: isWhiteBg ? '#262626' : '#3a3a3a',
                   padding: '1.5rem',
                   borderRadius: '16px',
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
-                  transition: 'opacity 0.1s linear',
+                  boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
+                  transition: 'background 0.6s ease',
                   willChange: 'transform, opacity',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.8rem'
+                  gap: '0.8rem',
+                  zIndex: 3
                 }}
               >
                 {/* Green Circle 'Tick' Icon */}
@@ -155,6 +149,7 @@ export default function ScrollingComments() {
                   alignItems: 'center', 
                   justifyContent: 'center',
                   color: '#fff',
+                  flexShrink: 0
                 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
@@ -163,7 +158,7 @@ export default function ScrollingComments() {
                 
                 <p style={{ 
                   margin: 0,
-                  fontSize: '1.2rem', 
+                  fontSize: '1.15rem', 
                   lineHeight: 1.4, 
                   color: '#ffffff',
                   fontFamily: 'var(--font-sans)',
@@ -179,3 +174,4 @@ export default function ScrollingComments() {
     </section>
   );
 }
+
