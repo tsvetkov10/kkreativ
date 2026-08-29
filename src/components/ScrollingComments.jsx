@@ -6,9 +6,7 @@ const positivePoints = [
   { text: "Consistent posting with high engagement and organic growth" },
   { text: "High-converting UGC videos that turn views into customers" },
   { text: "Data-driven audience targeting with maximized return on ad spend" },
-  { text: "Bespoke creative direction that commands attention on feeds" },
-  { text: "Viral short-form campaigns engineered for rapid reach" },
-  { text: "End-to-end community building with authentic brand loyalty" }
+  { text: "Bespoke creative direction that commands attention on feeds" }
 ];
 
 export default function ScrollingComments() {
@@ -45,15 +43,16 @@ export default function ScrollingComments() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const totalItems = positivePoints.length;
-  // Alternate background theme smoothly as cards advance
-  const activeStep = Math.floor(scrollProgress * (totalItems - 1));
-  const isWhiteBg = (activeStep % 2 !== 0) && (scrollProgress < 0.92);
+  // Background color changes every 2 comments:
+  // Comments 1-2 (s: 0 to 0.35): Dark
+  // Comments 3-4 (s: 0.35 to 0.70): White
+  // Comments 5-6 (s: 0.70 to 1.0): Dark
+  const isWhiteBg = scrollProgress >= 0.35 && scrollProgress <= 0.70;
 
   return (
     <section 
       ref={containerRef} 
-      style={{ height: '420vh', position: 'relative' }} 
+      style={{ height: '400vh', position: 'relative' }} 
       className="scrolling-comments-section"
     >
       <div style={{ 
@@ -93,10 +92,11 @@ export default function ScrollingComments() {
         {/* Floating Cards Container - zIndex 2 */}
         <div style={{ width: '100%', maxWidth: '1400px', position: 'relative', height: '100vh', zIndex: 2 }}>
           {positivePoints.map((point, index) => {
-            // Position formula ensuring 2+ cards are always on screen
-            const currentY = -20 + (index - scrollProgress * (totalItems - 1)) * 40;
+            // Starts below screen (currentY = 85vh at scrollProgress = 0)
+            // and travels upwards as user scrolls, maintaining ~2 visible cards concurrently
+            const currentY = 85 + (index * 40) - (scrollProgress * 370);
             
-            // True Ladder Layout: Far left and far right alternating
+            // True Ladder Layout: alternating left (-30vw) and right (+30vw)
             const isLeft = index % 2 === 0;
             const currentX = isLeft ? -30 : 30;
             
@@ -105,15 +105,15 @@ export default function ScrollingComments() {
             let opacity = 0;
             if (absY <= 45) {
               opacity = 1;
-            } else if (absY < 65) {
-              opacity = (65 - absY) / 20;
+            } else if (absY < 75) {
+              opacity = (75 - absY) / 30;
             } else {
               opacity = 0;
             }
             
             const scale = Math.max(0.85, Math.min(1.02, 1 - absY * 0.002));
 
-            // Skip rendering if completely off screen
+            // Skip rendering when card is completely off-screen
             if (opacity <= 0) return null;
 
             return (
@@ -174,4 +174,5 @@ export default function ScrollingComments() {
     </section>
   );
 }
+
 
