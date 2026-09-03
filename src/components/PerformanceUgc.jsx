@@ -1,73 +1,109 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const ugcSlides = [
+const ugcSections = [
   {
+    id: 'ugc-performance',
+    reversed: false,
     image: '/ugc_placeholder.jpg',
-    alt: 'UGC Video Review',
+    alt: 'Beauty & Skincare UGC Video Review',
+    title: (
+      <>
+        Performance-driven <span style={{ color: '#ff85e8' }}>UGC</span> that delivers results
+      </>
+    ),
+    description:
+      'Our UGC strategy is grounded in real performance data. We design, test, and refine creative so every piece contributes to growth you can actually measure.',
     box1: {
       value: '200%',
       label: 'Organic Growth',
-      position: { top: '12%', left: '-14%', right: 'auto', bottom: 'auto' }
+      position: { top: '12%', left: '-12%', right: 'auto', bottom: 'auto' },
+      className: 'ugc-box-left'
     },
     box2: {
       value: '5x',
       label: 'Higher Engagement',
-      position: { bottom: '14%', right: '-14%', top: 'auto', left: 'auto' }
+      position: { bottom: '14%', right: '-12%', top: 'auto', left: 'auto' },
+      className: 'ugc-box-right'
     }
   },
   {
-    image: '/content_creation.jpg',
-    alt: 'Content Creation Showcase',
+    id: 'ugc-viral-hooks',
+    reversed: true,
+    image: '/ugc_tech.jpg',
+    alt: 'Consumer Tech UGC Video Review',
+    title: (
+      <>
+        Scroll-stopping hooks that spark <span style={{ color: '#ffd700' }}>virality</span>
+      </>
+    ),
+    description:
+      'We craft high-impact hooks and native pacing that halt the scroll within the first 2 seconds, turning passive social feeds into an influx of qualified, high-intent traffic.',
     box1: {
       value: '10M+',
       label: 'Total Impressions',
-      position: { top: '22%', right: '-16%', left: 'auto', bottom: 'auto' }
+      position: { top: '14%', right: '-12%', left: 'auto', bottom: 'auto' },
+      className: 'ugc-box-right'
     },
     box2: {
       value: '+340%',
       label: 'Click-Through Rate',
-      position: { bottom: '10%', left: '-12%', top: 'auto', right: 'auto' }
+      position: { bottom: '12%', left: '-12%', top: 'auto', right: 'auto' },
+      className: 'ugc-box-left'
     }
   },
   {
-    image: '/rapid_growth.jpg',
-    alt: 'Rapid Growth Results',
+    id: 'ugc-conversion',
+    reversed: false,
+    image: '/ugc_fitness.jpg',
+    alt: 'Fitness & Health UGC Video Review',
+    title: (
+      <>
+        Direct-response creative built to <span style={{ color: '#00f2fe' }}>convert</span>
+      </>
+    ),
+    description:
+      'Every angle, benefit demonstration, and call-to-action is engineered for direct conversion. We systematically test and scale winning variations to maximize your return on ad spend.',
     box1: {
-      value: '85%',
-      label: 'Retention Rate',
-      position: { top: '8%', left: '-10%', right: 'auto', bottom: 'auto' }
-    },
-    box2: {
       value: '3.8x',
       label: 'ROAS Increase',
-      position: { bottom: '24%', right: '-15%', top: 'auto', left: 'auto' }
+      position: { top: '10%', left: '-12%', right: 'auto', bottom: 'auto' },
+      className: 'ugc-box-left'
+    },
+    box2: {
+      value: '85%',
+      label: 'Retention Rate',
+      position: { bottom: '16%', right: '-12%', top: 'auto', left: 'auto' },
+      className: 'ugc-box-right'
     }
   },
   {
-    image: '/goal_alignment.jpg',
-    alt: 'Brand Alignment',
+    id: 'ugc-trust-community',
+    reversed: true,
+    image: '/ugc_lifestyle.jpg',
+    alt: 'Lifestyle & Fragrance UGC Video Review',
+    title: (
+      <>
+        Authentic creator stories that build <span style={{ color: '#ff85e8' }}>trust</span>
+      </>
+    ),
+    description:
+      "Audiences don't buy corporate pitches—they buy recommendations from people they relate to. We match your brand with vetted creators who highlight your value proposition authentically.",
     box1: {
       value: '98%',
       label: 'Client Satisfaction',
-      position: { top: '30%', left: '-15%', right: 'auto', bottom: 'auto' }
+      position: { top: '18%', right: '-12%', left: 'auto', bottom: 'auto' },
+      className: 'ugc-box-right'
     },
     box2: {
       value: '4.5x',
       label: 'Conversion Lift',
-      position: { bottom: '8%', right: '-10%', top: 'auto', left: 'auto' }
+      position: { bottom: '10%', left: '-12%', top: 'auto', right: 'auto' },
+      className: 'ugc-box-left'
     }
   }
 ];
 
 export default function PerformanceUgc() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleNextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % ugcSlides.length);
-  };
-
-  const currentSlide = ugcSlides[currentIndex];
-
   const sharedBoxStyle = {
     position: 'absolute',
     zIndex: 2,
@@ -78,243 +114,213 @@ export default function PerformanceUgc() {
     borderRadius: '16px',
     boxShadow: '0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(212,175,55,0.1)',
     border: '1px solid rgba(212,175,55,0.3)',
-    transition: 'top 0.7s cubic-bezier(0.16, 1, 0.3, 1), left 0.7s cubic-bezier(0.16, 1, 0.3, 1), right 0.7s cubic-bezier(0.16, 1, 0.3, 1), bottom 0.7s cubic-bezier(0.16, 1, 0.3, 1)',
     pointerEvents: 'none',
     minWidth: '160px'
   };
 
   return (
-    <section className="section" style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
-      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '4rem',
-          alignItems: 'center'
-        }}>
-          
-          {/* Left Column - Visual */}
-          <div className="reveal-scale" style={{ position: 'relative', display: 'flex', justifyContent: 'center', padding: '2rem' }}>
-            
-            {/* UGC Image container */}
-            <div style={{ 
-              position: 'relative', 
-              zIndex: 1, 
-              width: '100%', 
-              maxWidth: '360px', 
-              aspectRatio: '9/16', 
-              borderRadius: '24px', 
-              overflow: 'hidden',
-              boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
-              border: '1px solid rgba(255,255,255,0.1)'
-            }}>
-              {/* Top Right Switch Arrow Button */}
-              <button 
-                onClick={handleNextImage} 
-                aria-label="Switch image" 
-                title="Next image"
-                className="ugc-arrow-btn"
+    <div className="ugc-showcase-wrapper">
+      {ugcSections.map((section, index) => (
+        <section
+          key={section.id}
+          id={section.id}
+          className="section ugc-section"
+          style={{
+            padding: index === 0 ? '7rem 2rem 5rem' : '5rem 2rem',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
+          <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <div
+              className={`ugc-grid ${section.reversed ? 'reversed' : ''}`}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '4rem',
+                alignItems: 'center'
+              }}
+            >
+              {/* Visual Column */}
+              <div
+                className="reveal-scale ugc-visual-col"
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  padding: '2rem',
+                  order: section.reversed ? 2 : 1
+                }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
-              </button>
-
-              {/* Subtle Indicator Dots */}
-              <div className="ugc-dots">
-                {ugcSlides.map((_, idx) => (
-                  <span 
-                    key={idx} 
-                    className={`ugc-dot ${currentIndex === idx ? 'active' : ''}`}
-                    onClick={() => setCurrentIndex(idx)}
+                {/* UGC Image container */}
+                <div
+                  className="ugc-card-frame"
+                  style={{
+                    position: 'relative',
+                    zIndex: 1,
+                    width: '100%',
+                    maxWidth: '360px',
+                    aspectRatio: '9/16',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+                  }}
+                >
+                  <img
+                    src={section.image}
+                    alt={section.alt}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                      transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                    }}
                   />
-                ))}
+                </div>
+
+                {/* Floating Stats Box 1 */}
+                <div
+                  className={`floating-box-anim ugc-stat-box ${section.box1.className}`}
+                  style={{
+                    ...sharedBoxStyle,
+                    ...section.box1.position
+                  }}
+                >
+                  <h3
+                    className="font-display gradient-text"
+                    style={{ fontSize: '2rem', marginBottom: '0.2rem' }}
+                  >
+                    {section.box1.value}
+                  </h3>
+                  <p
+                    className="font-mono text-gold"
+                    style={{
+                      fontSize: '0.8rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    {section.box1.label}
+                  </p>
+                </div>
+
+                {/* Floating Stats Box 2 */}
+                <div
+                  className={`floating-box-anim ugc-stat-box ${section.box2.className}`}
+                  style={{
+                    ...sharedBoxStyle,
+                    animationDelay: '2.5s',
+                    ...section.box2.position
+                  }}
+                >
+                  <h3
+                    className="font-display gradient-text"
+                    style={{ fontSize: '2rem', marginBottom: '0.2rem' }}
+                  >
+                    {section.box2.value}
+                  </h3>
+                  <p
+                    className="font-mono text-gold"
+                    style={{
+                      fontSize: '0.8rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}
+                  >
+                    {section.box2.label}
+                  </p>
+                </div>
               </div>
 
-              <img 
-                key={currentIndex}
-                src={currentSlide.image} 
-                alt={currentSlide.alt} 
-                className="ugc-image-fade"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-              />
+              {/* Text Column */}
+              <div
+                className="reveal-up ugc-text-col"
+                style={{
+                  paddingLeft: section.reversed ? '0' : '2rem',
+                  paddingRight: section.reversed ? '2rem' : '0',
+                  order: section.reversed ? 1 : 2
+                }}
+              >
+                <h2
+                  className="font-display"
+                  style={{
+                    fontSize: 'clamp(2.6rem, 4.5vw, 4.2rem)',
+                    lineHeight: 1.15,
+                    marginBottom: '1.8rem'
+                  }}
+                >
+                  {section.title}
+                </h2>
+                <p
+                  className="text-secondary"
+                  style={{
+                    fontSize: '1.2rem',
+                    lineHeight: 1.8,
+                    maxWidth: '500px'
+                  }}
+                >
+                  {section.description}
+                </p>
+              </div>
             </div>
-
-            {/* Dynamic Floating Stats Box 1 */}
-            <div 
-              className="floating-box-anim ugc-stat-box ugc-box-1" 
-              style={{
-                ...sharedBoxStyle,
-                ...currentSlide.box1.position
-              }}
-            >
-              <h3 key={`box1-val-${currentIndex}`} className="font-display gradient-text stat-value-anim" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
-                {currentSlide.box1.value}
-              </h3>
-              <p key={`box1-lbl-${currentIndex}`} className="font-mono text-gold stat-label-anim" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                {currentSlide.box1.label}
-              </p>
-            </div>
-
-            {/* Dynamic Floating Stats Box 2 */}
-            <div 
-              className="floating-box-anim ugc-stat-box ugc-box-2" 
-              style={{
-                ...sharedBoxStyle,
-                animationDelay: '1.5s', // Offset floating oscillation
-                ...currentSlide.box2.position
-              }}
-            >
-              <h3 key={`box2-val-${currentIndex}`} className="font-display gradient-text stat-value-anim" style={{ fontSize: '2rem', marginBottom: '0.2rem' }}>
-                {currentSlide.box2.value}
-              </h3>
-              <p key={`box2-lbl-${currentIndex}`} className="font-mono text-gold stat-label-anim" style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                {currentSlide.box2.label}
-              </p>
-            </div>
-
           </div>
+        </section>
+      ))}
 
-          {/* Right Column - Text */}
-          <div className="reveal-up" style={{ paddingLeft: '2rem' }}>
-            <h2 className="font-display" style={{ 
-              fontSize: 'clamp(3rem, 5vw, 4.5rem)', 
-              lineHeight: 1.1, 
-              marginBottom: '2rem' 
-            }}>
-              Performance-driven <span style={{ color: '#ff85e8' }}>UGC</span> that delivers results
-            </h2>
-            <p className="text-secondary" style={{ fontSize: '1.2rem', lineHeight: 1.8, maxWidth: '500px' }}>
-              Our UGC strategy is grounded in real performance data. We design, test, and refine creative so every piece contributes to growth you can actually measure.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-      {/* Styles for switch arrow, indicators, animations & responsiveness */}
+      {/* Embedded styles for responsive scaling, hover interactions, and mobile stacking */}
       <style>{`
-        .ugc-arrow-btn {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          z-index: 10;
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          background: rgba(10, 10, 12, 0.7);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          color: #f4f4f5;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        .ugc-card-frame:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 25px rgba(212,175,55,0.15) !important;
         }
-        .ugc-arrow-btn:hover {
-          background: rgba(212, 175, 55, 0.25);
-          border-color: var(--gold-main);
-          color: var(--gold-light);
-          transform: scale(1.08);
-          box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
-        }
-        .ugc-arrow-btn:active {
-          transform: scale(0.95);
-        }
-        .ugc-dots {
-          position: absolute;
-          bottom: 16px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 10;
-          display: flex;
-          gap: 6px;
-          padding: 6px 12px;
-          background: rgba(10, 10, 12, 0.55);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border-radius: 20px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-        }
-        .ugc-dot {
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.4);
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-        .ugc-dot.active {
-          width: 18px;
-          border-radius: 4px;
-          background: var(--gold-main);
-        }
-        .ugc-image-fade {
-          animation: ugc-fade-in 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .stat-value-anim {
-          animation: stat-fade 0.4s ease-out;
-        }
-        .stat-label-anim {
-          animation: stat-fade 0.5s ease-out;
-        }
-        @keyframes ugc-fade-in {
-          from {
-            opacity: 0.3;
-            transform: scale(1.03);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        @keyframes stat-fade {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        .ugc-card-frame:hover img {
+          transform: scale(1.04);
         }
         @media (max-width: 900px) {
-          .section .container > div {
+          .ugc-section {
+            padding: 4rem 1.5rem !important;
+          }
+          .ugc-grid {
             grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
             text-align: center;
           }
-          .section .container > div > div:last-child {
+          .ugc-visual-col {
+            order: 1 !important;
+            padding: 1.5rem 0.5rem !important;
+          }
+          .ugc-text-col {
+            order: 2 !important;
             padding-left: 0 !important;
+            padding-right: 0 !important;
           }
-          .section .container > div > div:last-child h2 {
-            font-size: 2.5rem !important;
+          .ugc-text-col h2 {
+            font-size: 2.3rem !important;
           }
-          .section .container > div > div:last-child p {
-            margin: 0 auto;
+          .ugc-text-col p {
+            margin: 0 auto !important;
           }
-          .ugc-box-1 {
+          .ugc-box-left {
             left: 0 !important;
             right: auto !important;
             top: 5% !important;
             bottom: auto !important;
-            padding: 1rem 1.5rem !important;
+            padding: 0.9rem 1.4rem !important;
+            min-width: 140px !important;
           }
-          .ugc-box-2 {
+          .ugc-box-right {
             right: 0 !important;
             left: auto !important;
             bottom: 5% !important;
             top: auto !important;
-            padding: 1rem 1.5rem !important;
+            padding: 0.9rem 1.4rem !important;
+            min-width: 140px !important;
           }
         }
       `}</style>
-    </section>
+    </div>
   );
 }
-
-

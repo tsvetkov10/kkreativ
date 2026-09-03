@@ -8,10 +8,10 @@ export default function Footer() {
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="logo">[kk]</a>
           <p>creativity is limitless.</p>
         </div>
-        <div className="footer-links">
-          <span className="footer-title font-mono">социални мрежи</span>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">instagram</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">linkedin</a>
+        <div className="footer-links" style={{ gap: '0.5rem' }}>
+          <span className="footer-title font-mono" style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>социални мрежи</span>
+          <a href="https://www.instagram.com/kkreativagency?igsh=MWd0ZHBpZWlsZ3pocw%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" style={{ fontSize: '1.05rem' }}>instagram</a>
+          <a href="https://www.tiktok.com/@kkreativagency?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" style={{ fontSize: '1.05rem' }}>tiktok</a>
         </div>
         <div className="footer-meta">
           <p className="copyright">&copy; {currentYear} kkreativ. Всички права запазени.</p>

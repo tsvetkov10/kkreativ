@@ -4,9 +4,10 @@ import VideoStats from './VideoStats';
 import PerformanceUgc from './PerformanceUgc';
 import WallOfLove from './WallOfLove';
 import WhatWeDo from './WhatWeDo';
-import ScrollingComments from './ScrollingComments';
 import WhoWeAre from './WhoWeAre';
+import Mission from './Mission';
 import { useNavigate } from 'react-router-dom';
+import novataEraImg from '../assets/kkreativ-novata-era-text-v2.png';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,15 +19,24 @@ export default function Home() {
       <VideoStats />
       <PerformanceUgc />
       <WhatWeDo />
-      <ScrollingComments />
       <WallOfLove />
       <WhoWeAre />
+      <Mission />
 
       <section className="section" style={{ paddingBottom: '8rem', paddingTop: '4rem', textAlign: 'center' }}>
         <div className="container reveal-scale">
-          <h2 className="font-display" style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '2rem' }}>
-            Ready to bring your bold ideas <br />to life?
-          </h2>
+          <img 
+            src={novataEraImg} 
+            alt="НОВАТА ЕРА НА МАРКЕТИНГА Е ВЕЧЕ ТУК - НЕ ИЗОСТАВАЙ." 
+            style={{ 
+              width: '100%', 
+              maxWidth: '820px', 
+              height: 'auto', 
+              display: 'block', 
+              margin: '0 auto 2.5rem auto',
+              filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))'
+            }} 
+          />
           <button 
             className="btn btn-primary btn-nitro-call" 
             onClick={() => {
@@ -35,7 +45,7 @@ export default function Home() {
             }}
             style={{ fontSize: '1.2rem', padding: '1.2rem 3rem' }}
           >
-            СВЪРЖИ СЕ
+            СВЪРЖИ СЕ!
           </button>
         </div>
       </section>
