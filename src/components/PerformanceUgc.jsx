@@ -61,7 +61,7 @@ const ugcSections = [
     videos: [
       encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
       encodeURI('/videos/autolux/Какво искаш__5s_1080p.mp4'),
-      encodeURI('/videos/autolux/Най-евтината Х7_5s_1080p.mp4')
+      encodeURI('/videos/autolux/Най-евтината Х7_5s_1080p.mp4')
     ],
     image: '/ugc_tech.jpg',
     alt: 'AUTOLUX IMPORT UGC Video Case Study',

@@ -26,7 +26,7 @@ const carouselVideos = [
     title: 'STUDIO 63'
   },
   {
-    src: encodeURI('/videos/caroussel/Leo_s Pasta - POV_ Двойките ядат безплатно(1)_5sec_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/Leo_s Pasta - POV_ Двойките ядат безплатно(1)_5sec_1080p.mp4'),
     title: "LEO'S PASTA"
   },
   {
