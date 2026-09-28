@@ -30,21 +30,38 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScrollReveal);
   }, [location]);
 
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    if (id === 'projects') {
+      const titleEl = element.querySelector('.section-tag') || element;
+      const navEl = document.querySelector('.navbar');
+      const navBottom = (navEl && navEl.offsetHeight < 120) ? navEl.getBoundingClientRect().bottom : 80;
+      const titleRect = titleEl.getBoundingClientRect();
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
+      const titleAbsoluteTop = titleRect.top + currentScrollY;
+      const targetScroll = Math.max(0, titleAbsoluteTop - (navBottom + 25));
+      window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      return;
+    }
+
+    const offset = id === 'what-we-do' ? 0 : 80;
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = element.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+  };
+
   // When location hash changes, scroll to it (handles cross-page hash links)
   useEffect(() => {
     if (location.hash) {
-      setTimeout(() => {
-        const id = location.hash.replace('#', '');
-        const element = document.getElementById(id);
-        if (element) {
-          const offset = 80;
-          const bodyRect = document.body.getBoundingClientRect().top;
-          const elementRect = element.getBoundingClientRect().top;
-          const elementPosition = elementRect - bodyRect;
-          const offsetPosition = elementPosition - offset;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
+      const id = location.hash.replace('#', '');
+      const timer = setTimeout(() => {
+        scrollToSection(id);
       }, 100);
+      return () => clearTimeout(timer);
     }
   }, [location]);
 
@@ -54,13 +71,15 @@ export default function Navbar() {
 
     if (target === '/contact') {
       navigate('/contact');
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
       return;
     }
 
     if (target === '/') {
       navigate('/');
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
       return;
     }
 
@@ -69,15 +88,7 @@ export default function Navbar() {
       if (location.pathname !== '/') {
         navigate(`/${target}`);
       } else {
-        const element = document.getElementById(id);
-        if (element) {
-          const offset = id === 'what-we-do' ? 0 : 80;
-          const bodyRect = document.body.getBoundingClientRect().top;
-          const elementRect = element.getBoundingClientRect().top;
-          const elementPosition = elementRect - bodyRect;
-          const offsetPosition = elementPosition - offset;
-          window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        }
+        scrollToSection(id);
       }
     }
   };
@@ -90,9 +101,9 @@ export default function Navbar() {
         </div>
         <div className="nav-links">
           <a 
-            href="/#what-we-do" 
-            onClick={(e) => handleLinkClick(e, '#what-we-do')} 
-            className={`nav-item ${activeSection === 'what-we-do' && location.pathname === '/' ? 'active' : ''}`}
+            href="/#projects" 
+            onClick={(e) => handleLinkClick(e, '#projects')} 
+            className={`nav-item ${(activeSection === 'projects' || activeSection?.startsWith('ugc-') || activeSection === 'what-we-do') && location.pathname === '/' ? 'active' : ''}`}
           >
             our craft
           </a>

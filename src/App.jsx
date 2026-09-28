@@ -15,7 +15,9 @@ export default function App() {
 
   useEffect(() => {
     // Scroll to top on route change
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     
     if (!loaded) return;
 

@@ -17,13 +17,13 @@ export default function Home() {
       <Hero />
       <VideoResults />
       <VideoStats />
+      <WallOfLove />
       <PerformanceUgc />
       <WhatWeDo />
-      <WallOfLove />
       <WhoWeAre />
       <Mission />
 
-      <section className="section" style={{ paddingBottom: '8rem', paddingTop: '4rem', textAlign: 'center' }}>
+      <section className="section cta-banner-section" style={{ paddingBottom: '8rem', paddingTop: '4rem', textAlign: 'center' }}>
         <div className="container reveal-scale">
           <img 
             src={novataEraImg} 
@@ -41,7 +41,8 @@ export default function Home() {
             className="btn btn-primary btn-nitro-call" 
             onClick={() => {
               navigate('/contact');
-              window.scrollTo(0, 0);
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              document.documentElement.scrollTop = 0;
             }}
             style={{ fontSize: '1.2rem', padding: '1.2rem 3rem' }}
           >

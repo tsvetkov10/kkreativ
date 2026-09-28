@@ -5,8 +5,26 @@ export default function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="logo">[kk]</a>
-          <p>creativity is limitless.</p>
+          <a 
+            href="#" 
+            onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} 
+            className="logo"
+            style={{ 
+              fontSize: 'clamp(2.4rem, 3.8vw, 3rem)', 
+              marginBottom: '0.85rem',
+              display: 'inline-block' 
+            }}
+          >
+            [kk]
+          </a>
+          <p style={{ 
+            fontSize: 'clamp(1.2rem, 2vw, 1.4rem)', 
+            color: 'var(--text-secondary)',
+            letterSpacing: '0.01em',
+            margin: 0
+          }}>
+            creativity is limitless.
+          </p>
         </div>
         <div className="footer-links" style={{ gap: '0.5rem' }}>
           <span className="footer-title font-mono" style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>социални мрежи</span>

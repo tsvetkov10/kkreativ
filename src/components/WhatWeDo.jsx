@@ -2,19 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 
 const steps = [
   {
-    title: "Goal\nAlignment",
-    desc: "We understand your business, audience, and goals.",
-    image: "/goal_alignment.jpg"
+    title: "GOAL\nALIGNMENT",
+    desc: "Разучаваме всичко за бизнеса и нишата ти, след което изграждаме печеливша креативна концепция с ясни цели и цялостна естетика на профила.",
+    image: "/photos-of-owners/concept.png"
   },
   {
-    title: "Content\nCreation",
-    desc: "High-quality, engaging videos that capture attention.",
-    image: "/content_creation.jpg"
+    title: "CONTENT\nCREATION",
+    desc: "Идваме, снимаме, обработваме и публикуваме цялото съдържание - вие единствено се наслаждавате на резултатите :)",
+    image: "/photos-of-owners/production.png"
   },
   {
-    title: "Rapid\nGrowth",
-    desc: "Data-driven distribution that turns views into loyal customers.",
-    image: "/rapid_growth.jpg"
+    title: "RAPID\nGROWTH",
+    desc: "Следим растежа и анализираме реакцията и поведението на аудиторията, спрямо които адаптираме концепциите и надграждаме с всеки един месец.",
+    image: "/photos-of-owners/services.png"
   }
 ];
 
@@ -28,10 +28,8 @@ export default function WhatWeDo() {
       const rect = containerRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       
-      // The container is sticky at top: 0. 
-      // The animation should only start when the container hits the top of the viewport (rect.top <= 0).
-      // It finishes when the bottom of the container hits the bottom of the viewport (rect.bottom <= windowHeight).
       const maxScroll = rect.height - windowHeight;
+      if (maxScroll <= 0) return;
       let progress = -rect.top / maxScroll;
       
       // Clamp between 0 and 1
@@ -39,9 +37,32 @@ export default function WhatWeDo() {
       setScrollProgress(progress);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
     handleScroll(); // init
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Reveal animation observer
+    const el = containerRef.current?.querySelector('.what-we-do-grid');
+    if (!el || el.classList.contains('visible')) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.05, rootMargin: '0px 0px -20px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const rawIndex = scrollProgress * (steps.length - 1);
@@ -49,19 +70,22 @@ export default function WhatWeDo() {
 
   return (
     <section id="what-we-do" ref={containerRef} style={{ height: '300vh', position: 'relative' }}>
-      <div style={{ 
-        position: 'sticky', 
-        top: 0, 
-        height: '100vh', 
-        width: '100%', 
-        overflow: 'hidden', 
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'var(--bg-dark)'
-      }}>
+      <div 
+        className="what-we-do-sticky"
+        style={{ 
+          position: 'sticky', 
+          top: 0, 
+          height: '100vh', 
+          width: '100%', 
+          overflow: 'hidden', 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'var(--bg-dark)'
+        }}
+      >
         
-        <div className="container what-we-do-grid" style={{
+        <div className="container what-we-do-grid reveal-up" style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
           alignItems: 'center',
@@ -73,24 +97,29 @@ export default function WhatWeDo() {
         }}>
           
           {/* Left: Title */}
-          <div className="what-we-do-title-col" style={{ position: 'relative', height: '200px' }}>
+          <div className="what-we-do-title-col" style={{ position: 'relative', height: '200px', zIndex: 10 }}>
             {steps.map((step, idx) => {
               const isActive = activeIndex === idx;
+              const nudge = isActive ? 0 : (idx < activeIndex ? -20 : 20);
               return (
                 <h2 
                   key={`title-${idx}`} 
-                  className="font-display"
                   style={{
                     position: 'absolute',
                     top: '50%',
-                    transform: `translateY(-50%) translateY(${isActive ? '0' : (idx < activeIndex ? '-20px' : '20px')})`,
+                    transform: `translateY(-50%) translateY(${nudge}px)`,
+                    '--nudge': `${nudge}px`,
                     left: 0,
-                    fontSize: 'clamp(3rem, 5vw, 5rem)',
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 800,
+                    fontSize: 'clamp(2.4rem, 4.2vw, 4.2rem)',
                     lineHeight: 1.1,
+                    letterSpacing: '-0.02em',
                     opacity: isActive ? 1 : 0,
-                    transition: 'all 0.5s ease',
+                    transition: 'opacity 0.4s ease, transform 0.4s ease',
                     whiteSpace: 'pre-line',
-                    pointerEvents: 'none'
+                    pointerEvents: 'none',
+                    color: 'var(--text-primary)'
                   }}
                 >
                   {step.title}
@@ -100,7 +129,19 @@ export default function WhatWeDo() {
           </div>
 
           {/* Middle: Interactive Cards */}
-          <div style={{ position: 'relative', height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div 
+            className="what-we-do-cards-col" 
+            style={{ 
+              position: 'relative', 
+              height: '100%', 
+              width: '100%', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              overflow: 'hidden',
+              zIndex: 1
+            }}
+          >
             {steps.map((step, idx) => {
               const dist = rawIndex - idx;
               // dist = 0 -> center
@@ -109,7 +150,7 @@ export default function WhatWeDo() {
               
               const yOffset = dist * -40; // vh
               const scale = Math.max(0.6, 1 - Math.abs(dist) * 0.3);
-              const opacity = Math.max(0, 1 - Math.abs(dist) * 0.7);
+              const opacity = Math.max(0, 1 - Math.abs(dist));
               
               let rotate = 0;
               if (Math.abs(dist) < 1) {
@@ -131,7 +172,7 @@ export default function WhatWeDo() {
                     transform: `translate(-50%, -50%) scale(${scale}) rotate(${rotate}deg)`,
                     opacity: opacity,
                     zIndex: steps.length - Math.abs(idx - activeIndex), // active is highest
-                    boxShadow: Math.abs(dist) < 0.2 ? '0 20px 40px rgba(0,0,0,0.5)' : 'none',
+                    boxShadow: Math.abs(dist) < 0.5 ? '0 20px 40px rgba(0,0,0,0.5)' : 'none',
                     transition: 'box-shadow 0.3s ease'
                   }}
                 >
@@ -167,9 +208,10 @@ export default function WhatWeDo() {
           </div>
 
           {/* Right: Description */}
-          <div className="what-we-do-desc-col" style={{ position: 'relative', height: '100px', display: 'flex', justifyContent: 'flex-end' }}>
+          <div className="what-we-do-desc-col" style={{ position: 'relative', height: '160px', display: 'flex', justifyContent: 'flex-end', zIndex: 10 }}>
              {steps.map((step, idx) => {
               const isActive = activeIndex === idx;
+              const nudge = isActive ? 0 : (idx < activeIndex ? -15 : 15);
               return (
                 <p 
                   key={`desc-${idx}`} 
@@ -177,13 +219,15 @@ export default function WhatWeDo() {
                   style={{
                     position: 'absolute',
                     top: '50%',
-                    transform: `translateY(-50%) translateY(${isActive ? '0' : (idx < activeIndex ? '-20px' : '20px')})`,
+                    transform: `translateY(-50%) translateY(${nudge}px)`,
+                    '--nudge': `${nudge}px`,
                     right: 0,
-                    fontSize: '1.2rem',
-                    maxWidth: '280px',
+                    fontSize: 'clamp(0.95rem, 1.15vw, 1.15rem)',
+                    lineHeight: 1.65,
+                    maxWidth: '380px',
                     textAlign: 'right',
                     opacity: isActive ? 1 : 0,
-                    transition: 'all 0.5s ease',
+                    transition: 'opacity 0.4s ease, transform 0.4s ease',
                     pointerEvents: 'none'
                   }}
                 >
@@ -197,28 +241,64 @@ export default function WhatWeDo() {
       </div>
 
       <style>{`
+        .what-we-do-sticky {
+          position: -webkit-sticky !important;
+          position: sticky !important;
+          top: 0 !important;
+          height: 100vh !important;
+          height: 100dvh !important;
+          width: 100% !important;
+          overflow: hidden !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          background: var(--bg-dark) !important;
+        }
         @media (max-width: 900px) {
           .what-we-do-grid {
             grid-template-columns: 1fr !important;
-            grid-template-rows: 150px 1fr 150px !important;
-            padding: 2rem 1rem !important;
+            grid-template-rows: 75px 1fr 105px !important;
+            padding: 5.5rem 1.25rem 1.5rem !important;
+            gap: 0.75rem !important;
+            height: 100% !important;
+            max-height: 100vh !important;
+            max-height: 100dvh !important;
+          }
+          .what-we-do-title-col {
+            height: 75px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
           }
           .what-we-do-title-col h2 {
             left: 50% !important;
-            transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, calc(-50% + var(--nudge, 0px))) !important;
             text-align: center !important;
             width: 100% !important;
+            font-size: clamp(1.6rem, 5.5vw, 2.1rem) !important;
+            line-height: 1.15 !important;
+          }
+          .what-we-do-cards-col {
+            overflow: hidden !important;
+            min-height: 200px !important;
+            max-height: 52vh !important;
+          }
+          .what-we-do-cards-col > div {
+            max-width: min(290px, 80vw) !important;
           }
           .what-we-do-desc-col {
             justify-content: center !important;
+            height: 105px !important;
           }
           .what-we-do-desc-col p {
             left: 50% !important;
             right: auto !important;
-            transform: translate(-50%, -50%) !important;
+            transform: translate(-50%, calc(-50% + var(--nudge, 0px))) !important;
             text-align: center !important;
             width: 100% !important;
-            max-width: 100% !important;
+            max-width: 330px !important;
+            font-size: 0.92rem !important;
+            line-height: 1.5 !important;
           }
         }
       `}</style>

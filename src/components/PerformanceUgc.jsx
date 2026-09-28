@@ -4,24 +4,53 @@ const ugcSections = [
   {
     id: 'ugc-performance',
     reversed: false,
+    videos: [
+      encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
+      encodeURI('/videos/acai-hero/МОРСКИ ШАХ_5s_1080p.mp4'),
+      encodeURI('/videos/acai-hero/Образователно_5s_1080p.mp4')
+    ],
     image: '/ugc_placeholder.jpg',
-    alt: 'Beauty & Skincare UGC Video Review',
+    alt: 'ACAI HERO UGC Video Case Study',
     title: (
       <>
-        Performance-driven <span style={{ color: '#ff85e8' }}>UGC</span> that delivers results
+        <span
+          style={{
+            fontFamily: "var(--font-display), 'Akira Expanded', sans-serif",
+            color: 'var(--gold-main, #ffd700)',
+            display: 'block',
+            fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+            letterSpacing: '0.04em',
+            marginBottom: '0.65rem',
+            lineHeight: 1.15
+          }}
+        >
+          ACAI HERO
+        </span>
+        <span
+          style={{
+            display: 'block',
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(1.15rem, 1.65vw, 1.45rem)',
+            lineHeight: 1.35,
+            color: 'var(--text-primary)'
+          }}
+        >
+          бразилският плод, за който милиони научиха през последните месеци.
+        </span>
       </>
     ),
     description:
-      'Our UGC strategy is grounded in real performance data. We design, test, and refine creative so every piece contributes to growth you can actually measure.',
+      'Микс от забавни скечове, публични интервюта и образователни видеа за продукта докараха милиони до профилите на бранда и го изградиха като безспорен лидер в нишата си.',
     box1: {
-      value: '200%',
-      label: 'Organic Growth',
+      value: '+5000',
+      label: 'последователя',
       position: { top: '12%', left: '-12%', right: 'auto', bottom: 'auto' },
       className: 'ugc-box-left'
     },
     box2: {
-      value: '5x',
-      label: 'Higher Engagement',
+      value: '3 000 000+',
+      label: 'гледания',
       position: { bottom: '14%', right: '-12%', top: 'auto', left: 'auto' },
       className: 'ugc-box-right'
     }
@@ -29,79 +58,321 @@ const ugcSections = [
   {
     id: 'ugc-viral-hooks',
     reversed: true,
+    videos: [
+      encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
+      encodeURI('/videos/autolux/Какво искаш__5s_1080p.mp4'),
+      encodeURI('/videos/autolux/Най-евтината Х7_5s_1080p.mp4')
+    ],
     image: '/ugc_tech.jpg',
-    alt: 'Consumer Tech UGC Video Review',
+    alt: 'AUTOLUX IMPORT UGC Video Case Study',
     title: (
       <>
-        Scroll-stopping hooks that spark <span style={{ color: '#ffd700' }}>virality</span>
+        <span
+          style={{
+            fontFamily: "var(--font-display), 'Akira Expanded', sans-serif",
+            color: 'var(--gold-main, #ffd700)',
+            display: 'block',
+            fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+            letterSpacing: '0.04em',
+            marginBottom: '0.65rem',
+            lineHeight: 1.15
+          }}
+        >
+          AUTOLUX IMPORT
+        </span>
+        <span
+          style={{
+            display: 'block',
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(1.15rem, 1.65vw, 1.45rem)',
+            lineHeight: 1.35,
+            color: 'var(--text-primary)'
+          }}
+        >
+          най-интересните вносители на коли в България.
+        </span>
       </>
     ),
-    description:
-      'We craft high-impact hooks and native pacing that halt the scroll within the first 2 seconds, turning passive social feeds into an influx of qualified, high-intent traffic.',
+    description: `Започвайки работата целта ни беше ясна - 10,000 човека във вайбър групата. 6 месеца по-късно целта беше постигната.
+
+Миксът от реални доставки, много смях и едно силно партньорство не спират да носят резултати - все повече поръчки и чисто нов showroom на autolux import.
+
+Тепърва започваме!`,
     box1: {
-      value: '10M+',
-      label: 'Total Impressions',
-      position: { top: '14%', right: '-12%', left: 'auto', bottom: 'auto' },
-      className: 'ugc-box-right'
+      value: '+4000',
+      label: 'последователя',
+      position: { top: '12%', left: '-12%', right: 'auto', bottom: 'auto' },
+      className: 'ugc-box-left'
     },
     box2: {
-      value: '+340%',
-      label: 'Click-Through Rate',
-      position: { bottom: '12%', left: '-12%', top: 'auto', right: 'auto' },
-      className: 'ugc-box-left'
+      value: '+7000',
+      label: 'члена във Viber групата',
+      position: { bottom: '14%', right: '-12%', top: 'auto', left: 'auto' },
+      className: 'ugc-box-right'
     }
   },
   {
     id: 'ugc-conversion',
     reversed: false,
+    videos: [
+      encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
+      encodeURI('/videos/leo/Паста за 1 евро__5s_1080p.mp4'),
+      encodeURI('/videos/leo/Хората ми казаха, че съм луд_5s_1080p.mp4')
+    ],
     image: '/ugc_fitness.jpg',
-    alt: 'Fitness & Health UGC Video Review',
+    alt: "Leo's Pasta UGC Video Case Study",
     title: (
       <>
-        Direct-response creative built to <span style={{ color: '#00f2fe' }}>convert</span>
+        <span
+          style={{
+            fontFamily: "var(--font-display), 'Akira Expanded', sans-serif",
+            color: 'var(--gold-main, #ffd700)',
+            display: 'block',
+            fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+            letterSpacing: '0.04em',
+            marginBottom: '0.65rem',
+            lineHeight: 1.15
+          }}
+        >
+          LEO’S PASTA
+        </span>
+        <span
+          style={{
+            display: 'block',
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(1.15rem, 1.65vw, 1.45rem)',
+            lineHeight: 1.35,
+            color: 'var(--text-primary)'
+          }}
+        >
+          паста в кутия?
+        </span>
       </>
     ),
     description:
-      'Every angle, benefit demonstration, and call-to-action is engineered for direct conversion. We systematically test and scale winning variations to maximize your return on ad spend.',
+      'Точно така, това е концепцията на любимият ни италиански готвач Лео Бианки. За месеци изградихме чисто ново и модерно усещане около бранда с много характер, както и доказан растеж в продажбите.',
     box1: {
-      value: '3.8x',
-      label: 'ROAS Increase',
+      value: '+2000',
+      label: 'последователя',
       position: { top: '10%', left: '-12%', right: 'auto', bottom: 'auto' },
       className: 'ugc-box-left'
     },
     box2: {
-      value: '85%',
-      label: 'Retention Rate',
+      value: '2 000 000+',
+      label: 'гледания',
       position: { bottom: '16%', right: '-12%', top: 'auto', left: 'auto' },
       className: 'ugc-box-right'
     }
-  },
-  {
-    id: 'ugc-trust-community',
-    reversed: true,
-    image: '/ugc_lifestyle.jpg',
-    alt: 'Lifestyle & Fragrance UGC Video Review',
-    title: (
-      <>
-        Authentic creator stories that build <span style={{ color: '#ff85e8' }}>trust</span>
-      </>
-    ),
-    description:
-      "Audiences don't buy corporate pitches—they buy recommendations from people they relate to. We match your brand with vetted creators who highlight your value proposition authentically.",
-    box1: {
-      value: '98%',
-      label: 'Client Satisfaction',
-      position: { top: '18%', right: '-12%', left: 'auto', bottom: 'auto' },
-      className: 'ugc-box-right'
-    },
-    box2: {
-      value: '4.5x',
-      label: 'Conversion Lift',
-      position: { bottom: '10%', left: '-12%', top: 'auto', right: 'auto' },
-      className: 'ugc-box-left'
-    }
   }
 ];
+
+function UgcVideoPlayer({ videos, videoSrc, alt }) {
+  const containerRef = React.useRef(null);
+  const videoRef = React.useRef(null);
+  const [currentIdx, setCurrentIdx] = React.useState(0);
+  const [isMuted, setIsMuted] = React.useState(true);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+  const [shouldLoad, setShouldLoad] = React.useState(false);
+
+  const videoList = Array.isArray(videos) && videos.length > 0 ? videos : (videoSrc ? [videoSrc] : []);
+  const currentVideoSrc = videoList[currentIdx];
+
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          if (videoRef.current && videoRef.current.paused) {
+            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+          }
+        } else {
+          if (videoRef.current && !videoRef.current.paused) {
+            videoRef.current.pause();
+            setIsPlaying(false);
+          }
+        }
+      },
+      { rootMargin: '200px 0px', threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  React.useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = isMuted;
+    if (shouldLoad) {
+      v.load();
+      v.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    }
+  }, [currentIdx, shouldLoad]);
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setCurrentIdx((idx) => (idx + 1) % videoList.length);
+  };
+
+  const toggleSound = (e) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    const nextMuted = !videoRef.current.muted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  return (
+    <div 
+      ref={containerRef}
+      style={{ position: 'relative', width: '100%', height: '100%', cursor: 'pointer', background: '#000' }}
+      onClick={togglePlay}
+    >
+      {/* Single Arrow Button on Top Right - cycles continuously through videos */}
+      {videoList.length > 1 && (
+        <button 
+          onClick={handleNext}
+          className="ugc-arrow-btn"
+          aria-label="Следващо видео"
+          title="Следващо видео"
+          type="button"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </button>
+      )}
+
+      <video
+        ref={videoRef}
+        loop
+        muted={isMuted}
+        playsInline
+        preload={shouldLoad ? "auto" : "none"}
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          display: 'block'
+        }}
+      >
+        {shouldLoad && currentVideoSrc && <source src={currentVideoSrc} type="video/mp4" />}
+        Your browser does not support video playback.
+      </video>
+
+      {/* Sound toggle button */}
+      <button
+        onClick={toggleSound}
+        type="button"
+        aria-label={isMuted ? "Включи звука" : "Заглуши звука"}
+        style={{
+          position: 'absolute',
+          bottom: '16px',
+          right: '16px',
+          zIndex: 10,
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255, 255, 255, 0.25)',
+          borderRadius: '50%',
+          width: '42px',
+          height: '42px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#ffffff',
+          cursor: 'pointer',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
+          transition: 'all 0.25s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = 'rgba(212, 175, 55, 0.9)';
+          e.currentTarget.style.color = '#000';
+          e.currentTarget.style.transform = 'scale(1.1)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)';
+          e.currentTarget.style.color = '#fff';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
+      >
+        {isMuted ? (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        ) : (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        )}
+      </button>
+
+      {/* Play/Pause overlay indicator when paused */}
+      {!isPlaying && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(0, 0, 0, 0.45)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 4,
+          pointerEvents: 'none'
+        }}>
+          <div style={{
+            width: '64px',
+            height: '64px',
+            borderRadius: '50%',
+            background: 'rgba(212, 175, 55, 0.95)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#000',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.6)'
+          }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" style={{ marginLeft: '4px' }}>
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+          </div>
+        </div>
+      )}
+
+      {/* Preload other brand videos */}
+      {shouldLoad && (
+        <div style={{ display: 'none' }} aria-hidden="true">
+          {videoList.map((src, i) => (
+            i !== currentIdx ? <video key={src} src={src} preload="auto" muted playsInline /> : null
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function PerformanceUgc() {
   const sharedBoxStyle = {
@@ -119,25 +390,66 @@ export default function PerformanceUgc() {
   };
 
   return (
-    <div className="ugc-showcase-wrapper">
+    <section className="ugc-showcase-wrapper" id="projects">
+      {/* Header Block: [projects] */}
+      <div 
+        className="section-header reveal-up" 
+        style={{ 
+          paddingTop: '8rem',
+          paddingBottom: '2.5rem',
+          maxWidth: '1000px', 
+          margin: '0 auto', 
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem'
+        }}
+      >
+        <span 
+          className="section-tag text-gold" 
+          style={{ 
+            fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
+            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', 
+            letterSpacing: '0.06em', 
+            textTransform: 'none',
+            lineHeight: 1,
+            marginBottom: '0.35rem',
+            display: 'inline-block'
+          }}
+        >
+          [projects]
+        </span>
+        <h2 
+          style={{ 
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(2.4rem, 5vw, 4rem)', 
+            lineHeight: 1.15,
+            letterSpacing: '-0.02em',
+            margin: 0,
+            color: 'var(--text-primary)'
+          }}
+        >
+          ЗАЕДНО В ГЛЕДАНИЯ И ПОСЛЕДОВАТЕЛИ
+        </h2>
+      </div>
+
       {ugcSections.map((section, index) => (
         <section
           key={section.id}
           id={section.id}
           className="section ugc-section"
           style={{
-            padding: index === 0 ? '7rem 2rem 5rem' : '5rem 2rem',
+            padding: index === 0 ? '3.5rem 2rem 5rem' : '5rem 2rem',
             position: 'relative',
             overflow: 'hidden'
           }}
         >
-          <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>
             <div
               className={`ugc-grid ${section.reversed ? 'reversed' : ''}`}
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '4rem',
+                gridTemplateColumns: section.reversed ? '1fr 420px' : '420px 1fr',
+                gap: '4.5rem',
                 alignItems: 'center'
               }}
             >
@@ -148,11 +460,11 @@ export default function PerformanceUgc() {
                   position: 'relative',
                   display: 'flex',
                   justifyContent: 'center',
-                  padding: '2rem',
+                  padding: '1.5rem 1rem',
                   order: section.reversed ? 2 : 1
                 }}
               >
-                {/* UGC Image container */}
+                {/* UGC Media container */}
                 <div
                   className="ugc-card-frame"
                   style={{
@@ -165,20 +477,34 @@ export default function PerformanceUgc() {
                     overflow: 'hidden',
                     boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
                     border: '1px solid rgba(255,255,255,0.1)',
+                    background: '#000',
                     transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
-                  <img
-                    src={section.image}
-                    alt={section.alt}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
-                    }}
-                  />
+                  {section.videos && section.videos.length > 0 ? (
+                    <UgcVideoPlayer
+                      videos={section.videos}
+                      alt={section.alt}
+                    />
+                  ) : section.video ? (
+                    <UgcVideoPlayer
+                      videoSrc={section.video}
+                      videoFallback={section.videoFallback}
+                      alt={section.alt}
+                    />
+                  ) : (
+                    <img
+                      src={section.image}
+                      alt={section.alt}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                        transition: 'transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
+                      }}
+                    />
+                  )}
                 </div>
 
                 {/* Floating Stats Box 1 */}
@@ -190,8 +516,14 @@ export default function PerformanceUgc() {
                   }}
                 >
                   <h3
-                    className="font-display gradient-text"
-                    style={{ fontSize: '2rem', marginBottom: '0.2rem' }}
+                    className="gradient-text"
+                    style={{ 
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 800,
+                      fontSize: 'clamp(1.5rem, 2.2vw, 1.95rem)', 
+                      marginBottom: '0.2rem',
+                      whiteSpace: 'nowrap'
+                    }}
                   >
                     {section.box1.value}
                   </h3>
@@ -217,8 +549,14 @@ export default function PerformanceUgc() {
                   }}
                 >
                   <h3
-                    className="font-display gradient-text"
-                    style={{ fontSize: '2rem', marginBottom: '0.2rem' }}
+                    className="gradient-text"
+                    style={{ 
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 800,
+                      fontSize: 'clamp(1.4rem, 2vw, 1.85rem)', 
+                      marginBottom: '0.2rem',
+                      whiteSpace: 'nowrap'
+                    }}
                   >
                     {section.box2.value}
                   </h3>
@@ -241,29 +579,35 @@ export default function PerformanceUgc() {
                 style={{
                   paddingLeft: section.reversed ? '0' : '2rem',
                   paddingRight: section.reversed ? '2rem' : '0',
-                  order: section.reversed ? 1 : 2
+                  order: section.reversed ? 1 : 2,
+                  maxWidth: '740px'
                 }}
               >
                 <h2
-                  className="font-display"
                   style={{
-                    fontSize: 'clamp(2.6rem, 4.5vw, 4.2rem)',
-                    lineHeight: 1.15,
-                    marginBottom: '1.8rem'
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 700,
+                    fontSize: 'clamp(1.8rem, 2.7vw, 2.75rem)',
+                    lineHeight: 1.25,
+                    marginBottom: '1.6rem',
+                    letterSpacing: '-0.02em',
+                    color: 'var(--text-primary)'
                   }}
                 >
                   {section.title}
                 </h2>
-                <p
+                <div
                   className="text-secondary"
                   style={{
-                    fontSize: '1.2rem',
-                    lineHeight: 1.8,
-                    maxWidth: '500px'
+                    fontSize: '1.15rem',
+                    lineHeight: 1.75,
+                    maxWidth: '680px',
+                    margin: 0,
+                    whiteSpace: 'pre-line'
                   }}
                 >
                   {section.description}
-                </p>
+                </div>
               </div>
             </div>
           </div>
@@ -279,48 +623,120 @@ export default function PerformanceUgc() {
         .ugc-card-frame:hover img {
           transform: scale(1.04);
         }
+        .ugc-arrow-btn {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          z-index: 10;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: rgba(10, 10, 15, 0.75);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        }
+        .ugc-arrow-btn:hover {
+          background: rgba(212, 175, 55, 0.3);
+          border-color: var(--gold-main, #ffd700);
+          color: var(--gold-light, #fff2a3);
+          transform: scale(1.1);
+          box-shadow: 0 6px 22px rgba(212, 175, 55, 0.35);
+        }
+        .ugc-arrow-btn:active {
+          transform: scale(0.95);
+        }
         @media (max-width: 900px) {
           .ugc-section {
-            padding: 4rem 1.5rem !important;
+            padding: 3.5rem 1rem !important;
+          }
+          .ugc-section .container {
+            padding: 0 0.5rem !important;
           }
           .ugc-grid {
             grid-template-columns: 1fr !important;
-            gap: 2.5rem !important;
-            text-align: center;
+            gap: 2rem !important;
+            text-align: left;
           }
           .ugc-visual-col {
             order: 1 !important;
-            padding: 1.5rem 0.5rem !important;
+            padding: 1rem 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .ugc-card-frame {
+            max-width: 285px !important;
+            border-radius: 20px !important;
+          }
+          .ugc-stat-box {
+            padding: 0.65rem 0.95rem !important;
+            min-width: 115px !important;
+            border-radius: 14px !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7) !important;
+          }
+          .ugc-stat-box h3 {
+            font-size: 1.25rem !important;
+            margin-bottom: 0.15rem !important;
+          }
+          .ugc-stat-box p {
+            font-size: 0.68rem !important;
+            letter-spacing: 0.03em !important;
+          }
+          .ugc-box-left {
+            left: max(4px, calc(50% - 150px)) !important;
+            right: auto !important;
+            top: 4% !important;
+            bottom: auto !important;
+          }
+          .ugc-box-right {
+            right: max(4px, calc(50% - 150px)) !important;
+            left: auto !important;
+            bottom: 4% !important;
+            top: auto !important;
           }
           .ugc-text-col {
             order: 2 !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+            text-align: left !important;
+            max-width: 100% !important;
           }
           .ugc-text-col h2 {
-            font-size: 2.3rem !important;
+            font-size: clamp(1.4rem, 5vw, 1.85rem) !important;
+            line-height: 1.25 !important;
+            text-align: left !important;
+            margin-bottom: 1rem !important;
           }
-          .ugc-text-col p {
-            margin: 0 auto !important;
+          .ugc-text-col p,
+          .ugc-text-col .text-secondary {
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+            margin: 0 !important;
+            text-align: left !important;
+            max-width: 100% !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .ugc-card-frame {
+            max-width: 255px !important;
           }
           .ugc-box-left {
-            left: 0 !important;
-            right: auto !important;
-            top: 5% !important;
-            bottom: auto !important;
-            padding: 0.9rem 1.4rem !important;
-            min-width: 140px !important;
+            left: 4px !important;
+            top: 3% !important;
           }
           .ugc-box-right {
-            right: 0 !important;
-            left: auto !important;
-            bottom: 5% !important;
-            top: auto !important;
-            padding: 0.9rem 1.4rem !important;
-            min-width: 140px !important;
+            right: 4px !important;
+            bottom: 3% !important;
           }
         }
       `}</style>
-    </div>
+    </section>
   );
 }

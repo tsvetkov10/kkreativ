@@ -54,7 +54,7 @@ export default function VideoStats() {
 
   const views = useCountUp(10, 5000, isVisible);
   const likes = useCountUp(1000, 5000, isVisible);
-  const growth = useCountUp(200, 5000, isVisible);
+  const growth = useCountUp(150, 5000, isVisible);
 
   const stats = [
     {
@@ -67,7 +67,7 @@ export default function VideoStats() {
     },
     {
       num: `+${growth}%`,
-      label: 'РЪСТ НА ТРАФИКА'
+      label: 'РАСТЕЖ НА ПОСЛЕДОВАТЕЛИ'
     }
   ];
 
@@ -75,30 +75,29 @@ export default function VideoStats() {
     <section ref={sectionRef} className="section video-stats-section" id="video-stats" style={{ paddingTop: '5rem', paddingBottom: '5rem' }}>
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
         
-        {/* Centered Section Header */}
-        <div className="section-header reveal-up" style={{ 
-          textAlign: 'center', 
-          margin: '0 auto 3.5rem auto', 
-          maxWidth: '800px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-          <span className="section-tag font-mono text-gold" style={{ 
-            fontSize: '0.9rem', 
-            letterSpacing: '0.15em', 
-            marginBottom: '1rem',
-            textAlign: 'center'
+        {/* Section Header */}
+        <div className="section-header reveal-up">
+          <span className="section-tag text-gold" style={{ 
+            fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
+            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', 
+            letterSpacing: '0.06em', 
+            textTransform: 'none',
+            lineHeight: 1,
+            marginBottom: '0.35rem',
+            display: 'inline-block'
           }}>
-            / РЕЗУЛТАТИ ОТ ВИДЕА
+            [results]
           </span>
-          <h2 className="font-display" style={{ 
-            fontSize: 'clamp(2.6rem, 5vw, 4.2rem)', 
+          <h2 style={{ 
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(2.4rem, 5vw, 4rem)', 
             lineHeight: 1.15,
-            textAlign: 'center',
-            margin: 0
+            letterSpacing: '-0.02em',
+            margin: 0,
+            color: 'var(--text-primary)'
           }}>
-            резултати от видеа.
+            ЧИСЛАТА НИКОГА НЕ ЛЪЖАТ
           </h2>
         </div>
 

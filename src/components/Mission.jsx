@@ -2,24 +2,59 @@ import { useState } from 'react';
 
 const missionImages = [
   {
-    src: '/mission_team_v1.jpg',
-    alt: 'Creative Agency Team in Studio'
+    src: '/our-mission/45.jpg',
+    alt: 'Калоян и Георги - kkreativ'
   },
   {
-    src: '/mission_team_v2.jpg',
-    alt: 'Creative Agency Founders Collaborating'
+    src: '/our-mission/17.jpg',
+    alt: 'Георги - kkreativ'
   },
   {
-    src: '/mission_team_v3.jpg',
-    alt: 'Behind the Scenes Video Production'
+    src: '/our-mission/20.jpg',
+    alt: 'Калоян - kkreativ'
+  },
+  {
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 01_31_05 PM.png'),
+    alt: 'Калоян и Георги - kkreativ'
+  },
+  {
+    src: '/our-mission/6.jpg',
+    alt: 'Георги - kkreativ'
+  },
+  {
+    src: '/our-mission/13.jpg',
+    alt: 'Калоян - kkreativ'
+  },
+  {
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 04_01_57 PM.png'),
+    alt: 'Георги - kkreativ'
+  },
+  {
+    src: '/our-mission/15.jpg',
+    alt: 'Калоян - kkreativ'
+  },
+  {
+    src: '/our-mission/40.jpg',
+    alt: 'Калоян и Георги - kkreativ'
   }
 ];
 
 export default function Mission() {
   const [currentIdx, setCurrentIdx] = useState(0);
 
+  const isFirst = currentIdx === 0;
+  const isLast = currentIdx === missionImages.length - 1;
+
+  const handlePrev = () => {
+    if (!isFirst) {
+      setCurrentIdx((prev) => prev - 1);
+    }
+  };
+
   const handleNext = () => {
-    setCurrentIdx((prev) => (prev + 1) % missionImages.length);
+    if (!isLast) {
+      setCurrentIdx((prev) => prev + 1);
+    }
   };
 
   return (
@@ -33,7 +68,7 @@ export default function Mission() {
           alignItems: 'center'
         }}>
           
-          {/* Left Column: Tilted 9:16 Photo Card with Arrow */}
+          {/* Left Column: Tilted 9:16 Photo Card with Arrows */}
           <div className="reveal-scale mission-visual-col" style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
             <div className="mission-card-wrapper" style={{ position: 'relative', width: '100%', maxWidth: '360px' }}>
               
@@ -53,12 +88,26 @@ export default function Mission() {
                   background: '#1a1a20'
                 }}
               >
-                {/* Arrow Switch Button on Top Right */}
+                {/* Previous Arrow Button on Top Left */}
+                <button 
+                  onClick={handlePrev}
+                  disabled={isFirst}
+                  className={`mission-arrow-btn mission-arrow-prev ${isFirst ? 'disabled' : ''}`}
+                  aria-label="Previous image"
+                  title={isFirst ? undefined : "Previous image"}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6" />
+                  </svg>
+                </button>
+
+                {/* Next Arrow Button on Top Right */}
                 <button 
                   onClick={handleNext}
-                  className="mission-arrow-btn"
-                  aria-label="Switch image"
-                  title="Next image"
+                  disabled={isLast}
+                  className={`mission-arrow-btn mission-arrow-next ${isLast ? 'disabled' : ''}`}
+                  aria-label="Next image"
+                  title={isLast ? undefined : "Next image"}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="9 18 15 12 9 6" />
@@ -72,6 +121,7 @@ export default function Mission() {
                       key={idx} 
                       className={`mission-dot ${currentIdx === idx ? 'active' : ''}`}
                       onClick={() => setCurrentIdx(idx)}
+                      title={`Снимка ${idx + 1}`}
                     />
                   ))}
                 </div>
@@ -89,6 +139,16 @@ export default function Mission() {
                     display: 'block'
                   }} 
                 />
+
+                {/* Snappy Preload of Next & Prev Images */}
+                <div style={{ display: 'none' }} aria-hidden="true">
+                  {currentIdx < missionImages.length - 1 && (
+                    <img src={missionImages[currentIdx + 1].src} alt="" />
+                  )}
+                  {currentIdx > 0 && (
+                    <img src={missionImages[currentIdx - 1].src} alt="" />
+                  )}
+                </div>
               </div>
 
             </div>
@@ -97,35 +157,34 @@ export default function Mission() {
           {/* Right Column: Mission Copy */}
           <div className="reveal-up mission-text-col" style={{ paddingLeft: '1rem' }}>
             
-            <span className="font-mono text-gold mission-tag" style={{
-              fontSize: '0.95rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              display: 'inline-block',
-              marginBottom: '2rem',
-              fontWeight: '600'
+            <h2 style={{
+              fontFamily: "'Montserrat', sans-serif",
+              fontWeight: 800,
+              fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              color: 'var(--gold-main, #ffd700)',
+              marginBottom: '2rem'
             }}>
               OUR MISSION
-            </span>
+            </h2>
 
-            <p style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(1.05rem, 1.25vw, 1.2rem)',
-              lineHeight: 1.8,
-              color: 'rgba(255, 255, 255, 0.9)',
-              marginBottom: '1.8rem'
-            }}>
-              Our mission is to help businesses grow by creating meaningful digital experiences that combine strategy, creativity, and functionality. We aim to go beyond visuals and build solutions that are thoughtful, user-focused, and result-driven.
-            </p>
+            <div 
+              className="text-secondary mission-copy" 
+              style={{
+                fontSize: '1.15rem',
+                lineHeight: 1.75,
+                maxWidth: '680px',
+                margin: 0,
+                whiteSpace: 'pre-line'
+              }}
+            >
+              {`Мисията ни е проста - да вкараме Gen Z енергията си във всеки бранд, с който работим.
 
-            <p style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(1.05rem, 1.25vw, 1.2rem)',
-              lineHeight: 1.8,
-              color: 'rgba(255, 255, 255, 0.75)'
-            }}>
-              Through branding, design, and development, we work closely with our clients to turn ideas into clear, impactful, and scalable digital products.
-            </p>
+Израснали сме с телефон в ръка и разбираме езика на социалните мрежи, трендовете и съдържанието. Не искаме да работим със 100 бизнеса - искаме малък брой внимателно подбрани брандове, с които да изградим истинско партньорство, базирано на доверие, откритост и здрава работа.
+
+Двамата сме рамо до рамо още от училище - от влогове в YouTube на 12 до собствен бизнес днес. Затова държим целият процес да минава през нас - от комуникацията и снимките до обработката и последния детайл.`}
+            </div>
 
           </div>
 
@@ -141,7 +200,6 @@ export default function Mission() {
         .mission-arrow-btn {
           position: absolute;
           top: 18px;
-          right: 18px;
           z-index: 10;
           width: 44px;
           height: 44px;
@@ -158,15 +216,30 @@ export default function Mission() {
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
         }
-        .mission-arrow-btn:hover {
+        .mission-arrow-prev {
+          left: 18px;
+        }
+        .mission-arrow-next {
+          right: 18px;
+        }
+        .mission-arrow-btn:not(:disabled):hover {
           background: rgba(212, 175, 55, 0.3);
           border-color: var(--gold-main);
           color: var(--gold-light);
           transform: scale(1.1);
           box-shadow: 0 6px 22px rgba(212, 175, 55, 0.35);
         }
-        .mission-arrow-btn:active {
+        .mission-arrow-btn:not(:disabled):active {
           transform: scale(0.95);
+        }
+        .mission-arrow-btn:disabled,
+        .mission-arrow-btn.disabled {
+          opacity: 0.2;
+          cursor: not-allowed;
+          pointer-events: none;
+          box-shadow: none;
+          border-color: rgba(255, 255, 255, 0.08);
+          background: rgba(10, 10, 15, 0.4);
         }
         .mission-dots {
           position: absolute;
@@ -211,15 +284,25 @@ export default function Mission() {
         }
         @media (max-width: 900px) {
           .mission-section {
-            padding: 5rem 1.5rem !important;
+            padding: 3.5rem 1rem !important;
           }
           .mission-grid {
             grid-template-columns: 1fr !important;
-            gap: 3.5rem !important;
+            gap: 2.5rem !important;
             text-align: center;
+          }
+          .mission-card-wrapper {
+            max-width: 280px !important;
           }
           .mission-text-col {
             padding-left: 0 !important;
+            text-align: left !important;
+          }
+          .mission-copy {
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+            text-align: left !important;
+            max-width: 100% !important;
           }
           .mission-image-card {
             transform: rotate(0deg) !important;
