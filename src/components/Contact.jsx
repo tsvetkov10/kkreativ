@@ -9,12 +9,37 @@ export default function Contact({ id = "contact" }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [burstParticles, setBurstParticles] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
   }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const EMOJIS = ['🚀', '✨', '🔥', '⚡️', '🌟', '🎉', '💌'];
+      const particles = [];
+      for (let i = 0; i < 10; i++) {
+        const angle = (Math.PI * 2 * i) / 10 + (Math.random() - 0.5) * 0.4;
+        const dist = 70 + Math.random() * 80;
+        const tx = Math.cos(angle) * dist;
+        const ty = Math.sin(angle) * dist;
+        const rot = (Math.random() - 0.5) * 60;
+        particles.push({
+          id: i,
+          emoji: EMOJIS[i % EMOJIS.length],
+          tx: `${tx}px`,
+          ty: `${ty}px`,
+          rot: `${rot}deg`
+        });
+      }
+      setBurstParticles(particles);
+      const timer = setTimeout(() => setBurstParticles([]), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +77,7 @@ export default function Contact({ id = "contact" }) {
     setCompany('');
     setMessage('');
     setErrorMessage('');
+    setBurstParticles([]);
     setIsSuccess(false);
   };
 
@@ -135,67 +161,95 @@ export default function Contact({ id = "contact" }) {
                   className="contact-success" 
                   style={{ 
                     textAlign: 'center', 
-                    padding: '3rem 1rem',
+                    padding: '3.2rem 1.5rem',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    minHeight: '420px',
+                    minHeight: '440px',
+                    position: 'relative',
                     animation: 'fadeInSuccess 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
                   }}
                 >
-                  {/* Status Capsule Pill */}
-                  <div style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.55rem',
-                    padding: '0.45rem 1.15rem',
-                    borderRadius: '100px',
-                    background: 'rgba(212, 175, 55, 0.08)',
-                    border: '1px solid rgba(212, 175, 55, 0.28)',
-                    marginBottom: '1.75rem'
-                  }}>
-                    <span style={{
-                      width: '7px',
-                      height: '7px',
-                      borderRadius: '50%',
-                      background: 'var(--gold-main)',
-                      boxShadow: '0 0 10px rgba(212, 175, 55, 0.9)'
-                    }}></span>
-                    <span style={{
-                      fontFamily: "'Montserrat', sans-serif",
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: 'var(--gold-main)'
-                    }}>
-                      успешно получено
+                  {/* Celebratory Burst Emojis on Submission */}
+                  {burstParticles.map((p) => (
+                    <span
+                      key={p.id}
+                      className="success-burst-particle"
+                      style={{
+                        position: 'absolute',
+                        top: '25%',
+                        left: '50%',
+                        pointerEvents: 'none',
+                        '--tx': p.tx,
+                        '--ty': p.ty,
+                        '--rot': p.rot,
+                        fontSize: '1.8rem',
+                        zIndex: 20
+                      }}
+                    >
+                      {p.emoji}
                     </span>
+                  ))}
+
+                  {/* Animated Flying Paper Airplane in kkreativ Brand Style */}
+                  <div className="success-animation-container">
+                    <div className="success-glow-halo" />
+                    
+                    <div className="success-plane-wrap">
+                      <svg 
+                        width="56" 
+                        height="56" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        className="success-plane-svg"
+                      >
+                        <defs>
+                          <linearGradient id="goldPlaneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#ffd700" />
+                            <stop offset="50%" stopColor="#d4af37" />
+                            <stop offset="100%" stopColor="#f3e5ab" />
+                          </linearGradient>
+                        </defs>
+                        <polygon 
+                          points="22 2 15 22 11 13 2 9 22 2" 
+                          fill="rgba(212, 175, 55, 0.18)" 
+                          stroke="url(#goldPlaneGrad)" 
+                          strokeWidth="1.8" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                        />
+                        <line 
+                          x1="22" 
+                          y1="2" 
+                          x2="11" 
+                          y2="13" 
+                          stroke="url(#goldPlaneGrad)" 
+                          strokeWidth="1.8" 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                        />
+                      </svg>
+                    </div>
+
+                    {/* Floating Agency Stickers in Hero/Website Style */}
+                    <span className="success-sticker sticker-1">✨</span>
+                    <span className="success-sticker sticker-2">🔥</span>
+                    <span className="success-sticker sticker-3">⚡️</span>
                   </div>
 
                   {/* Headline in Montserrat Extra Bold */}
                   <h3 style={{ 
                     fontFamily: "'Montserrat', sans-serif",
                     fontWeight: 800,
-                    fontSize: 'clamp(1.9rem, 3.8vw, 2.5rem)', 
-                    lineHeight: 1.18,
+                    fontSize: 'clamp(2rem, 4vw, 2.6rem)', 
+                    lineHeight: 1.15,
                     letterSpacing: '-0.025em',
                     color: '#ffffff',
-                    margin: 0
+                    margin: '0 0 1rem 0'
                   }}>
                     Съобщението е изпратено!
                   </h3>
-
-                  {/* Subtle Gold Accent Divider */}
-                  <div style={{
-                    width: '38px',
-                    height: '2px',
-                    background: 'var(--gold-gradient)',
-                    margin: '1.35rem auto 1.45rem',
-                    borderRadius: '2px',
-                    opacity: 0.85
-                  }}></div>
 
                   {/* Body Text in Montserrat */}
                   <p style={{ 
@@ -205,7 +259,7 @@ export default function Contact({ id = "contact" }) {
                     color: 'var(--text-secondary)',
                     lineHeight: 1.65,
                     maxWidth: '400px',
-                    marginBottom: '2.5rem'
+                    margin: '0 auto 2.4rem auto'
                   }}>
                     Благодарим ви. Ще се свържем с вас възможно най-скоро.
                   </p>
@@ -373,6 +427,131 @@ export default function Contact({ id = "contact" }) {
 
         </div>
       </section>
+
+      <style>{`
+        .success-animation-container {
+          position: relative;
+          width: 110px;
+          height: 110px;
+          margin: 0 auto 1.8rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .success-glow-halo {
+          position: absolute;
+          width: 95px;
+          height: 95px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, rgba(212, 175, 55, 0.08) 55%, transparent 75%);
+          animation: haloPulse 3s ease-in-out infinite;
+        }
+
+        .success-plane-wrap {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          animation: planeFloat 3.6s ease-in-out infinite, planeEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          filter: drop-shadow(0 8px 20px rgba(212, 175, 55, 0.45));
+        }
+
+        @keyframes planeEntrance {
+          0% {
+            opacity: 0;
+            transform: translate(-30px, 30px) scale(0.6) rotate(-20deg);
+          }
+          100% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1) rotate(0deg);
+          }
+        }
+
+        @keyframes planeFloat {
+          0%, 100% {
+            transform: translateY(0px) rotate(-6deg);
+          }
+          50% {
+            transform: translateY(-10px) rotate(5deg);
+          }
+        }
+
+        @keyframes haloPulse {
+          0%, 100% {
+            transform: scale(0.88);
+            opacity: 0.35;
+          }
+          50% {
+            transform: scale(1.18);
+            opacity: 0.85;
+          }
+        }
+
+        .success-sticker {
+          position: absolute;
+          z-index: 3;
+          pointer-events: none;
+          filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+          user-select: none;
+        }
+
+        .sticker-1 {
+          top: 0px;
+          right: 4px;
+          font-size: 1.4rem;
+          animation: floatSticker1 3.2s ease-in-out infinite;
+        }
+
+        .sticker-2 {
+          bottom: 4px;
+          left: 6px;
+          font-size: 1.3rem;
+          animation: floatSticker2 3.8s ease-in-out infinite;
+        }
+
+        .sticker-3 {
+          top: 22px;
+          left: 0px;
+          font-size: 1.15rem;
+          animation: floatSticker3 4.2s ease-in-out infinite;
+        }
+
+        @keyframes floatSticker1 {
+          0%, 100% { transform: translateY(0px) rotate(-10deg) scale(1); }
+          50% { transform: translateY(-8px) rotate(12deg) scale(1.15); }
+        }
+
+        @keyframes floatSticker2 {
+          0%, 100% { transform: translateY(0px) rotate(14deg) scale(1); }
+          50% { transform: translateY(-7px) rotate(-8deg) scale(1.12); }
+        }
+
+        @keyframes floatSticker3 {
+          0%, 100% { transform: translateY(0px) rotate(-5deg); }
+          50% { transform: translateY(-9px) rotate(18deg); }
+        }
+
+        .success-burst-particle {
+          animation: burstParticleAnim 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          user-select: none;
+        }
+
+        @keyframes burstParticleAnim {
+          0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(0.3);
+          }
+          60% {
+            opacity: 1;
+          }
+          100% {
+            opacity: 0;
+            transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.3) rotate(var(--rot));
+          }
+        }
+      `}</style>
     </div>
   );
 }
