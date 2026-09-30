@@ -72,7 +72,7 @@ export default function WallOfLove() {
             margin: 0,
             color: 'var(--text-primary)'
           }}>
-            БРАНДОВЕТЕ, КОИТО НИ СЕ ВЪРЗАХА НА АКЪЛА
+            БРАНДОВЕТЕ, КОИТО НИ СЕ ДОВЕРИХА... И НЕ СЪЖАЛЯВАТ.
           </h2>
         </div>
       </div>

@@ -415,7 +415,7 @@ export default function PerformanceUgc() {
             display: 'inline-block'
           }}
         >
-          [projects]
+          [our craft]
         </span>
         <h2 
           style={{ 
