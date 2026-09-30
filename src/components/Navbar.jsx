@@ -46,7 +46,7 @@ export default function Navbar() {
       return;
     }
 
-    const offset = id === 'what-we-do' ? 0 : 80;
+    const offset = 80;
     const bodyRect = document.body.getBoundingClientRect().top;
     const elementRect = element.getBoundingClientRect().top;
     const elementPosition = elementRect - bodyRect;
