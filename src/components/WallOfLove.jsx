@@ -47,8 +47,8 @@ const brandLogos = [
 ];
 
 export default function WallOfLove() {
-  // 14 logos per group (2 sets of 7) gives ample width per group across any screen size
-  const groupLogos = [...brandLogos, ...brandLogos];
+  // 14 logos per set (2 sets of 7) gives ample width per set across 4K displays
+  const singleSet = [...brandLogos, ...brandLogos];
 
   return (
     <section className="section trusted-by-section" id="family">
@@ -80,34 +80,50 @@ export default function WallOfLove() {
         </div>
       </div>
 
-      {/* Infinite Scrolling Logo Marquee with edge gradient fade masks */}
+      {/* Infinite Seamless Scrolling Logo Marquee */}
       <div className="trusted-marquee-wrapper">
         <div className="trusted-marquee-track">
-          {[0, 1, 2, 3].map((groupIndex) => (
-            <div 
-              key={groupIndex} 
-              className="trusted-marquee-group" 
-              aria-hidden={groupIndex > 0 ? "true" : undefined}
-            >
-              {groupLogos.map((logo, idx) => (
-                <div key={`g${groupIndex}-${idx}`} className="trusted-logo-item">
-                  <img 
-                    src={logo.src} 
-                    alt={logo.alt}
-                    style={{ 
-                      height: `calc(${logo.height}px * var(--logo-scale, 1))`,
-                      transform: logo.offsetY 
-                        ? `translateY(calc(${logo.offsetY}px * var(--logo-scale, 1)))` 
-                        : undefined
-                    }} 
-                    loading="eager"
-                    decoding="async"
-                    draggable="false"
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
+          {/* Group 1 */}
+          <div className="trusted-marquee-group">
+            {singleSet.map((logo, idx) => (
+              <div key={`set1-${idx}`} className="trusted-logo-item">
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt}
+                  style={{ 
+                    height: `calc(${logo.height}px * var(--logo-scale, 1))`,
+                    transform: logo.offsetY 
+                      ? `translateY(calc(${logo.offsetY}px * var(--logo-scale, 1)))` 
+                      : undefined
+                  }} 
+                  loading="eager"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Group 2 (Clone for infinite seamless loop) */}
+          <div className="trusted-marquee-group" aria-hidden="true">
+            {singleSet.map((logo, idx) => (
+              <div key={`set2-${idx}`} className="trusted-logo-item">
+                <img 
+                  src={logo.src} 
+                  alt={logo.alt}
+                  style={{ 
+                    height: `calc(${logo.height}px * var(--logo-scale, 1))`,
+                    transform: logo.offsetY 
+                      ? `translateY(calc(${logo.offsetY}px * var(--logo-scale, 1)))` 
+                      : undefined
+                  }} 
+                  loading="eager"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -116,7 +132,7 @@ export default function WallOfLove() {
           position: relative;
           width: 100%;
           padding: 4rem 0 6rem;
-          background: var(--bg-dark);
+          background: var(--bg-primary, #0a0a0c);
           overflow: hidden;
           z-index: 2;
         }
@@ -127,14 +143,43 @@ export default function WallOfLove() {
           width: 100%;
           overflow: hidden;
           padding: 1.5rem 0;
-          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+        }
+
+        /* Clean gradient fade edge masks (immune to Safari GPU mask dropout bugs) */
+        .trusted-marquee-wrapper::before,
+        .trusted-marquee-wrapper::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 140px;
+          z-index: 5;
+          pointer-events: none;
+        }
+
+        .trusted-marquee-wrapper::before {
+          left: 0;
+          background: linear-gradient(to right, var(--bg-primary, #0a0a0c) 0%, rgba(10, 10, 12, 0.8) 40%, transparent 100%);
+        }
+
+        .trusted-marquee-wrapper::after {
+          right: 0;
+          background: linear-gradient(to left, var(--bg-primary, #0a0a0c) 0%, rgba(10, 10, 12, 0.8) 40%, transparent 100%);
         }
 
         .trusted-marquee-track {
           display: flex;
           width: max-content;
+          animation: trustedScrollMarquee 38s linear infinite;
           will-change: transform;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+        .trusted-marquee-track:hover {
+          animation-play-state: paused;
         }
 
         .trusted-marquee-group {
@@ -143,22 +188,15 @@ export default function WallOfLove() {
           flex-shrink: 0;
           gap: 5.5rem;
           padding-right: 5.5rem;
-          animation: trustedScrollMarquee 42s linear infinite;
-          will-change: transform;
-          transform: translate3d(0, 0, 0);
-          -webkit-transform: translate3d(0, 0, 0);
-          backface-visibility: hidden;
-          -webkit-backface-visibility: hidden;
         }
 
+        /* Seamless 50% translation loop without gaps or jumps */
         @keyframes trustedScrollMarquee {
           0% {
             transform: translate3d(0, 0, 0);
-            -webkit-transform: translate3d(0, 0, 0);
           }
           100% {
-            transform: translate3d(-100%, 0, 0);
-            -webkit-transform: translate3d(-100%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
           }
         }
 
@@ -194,13 +232,17 @@ export default function WallOfLove() {
           .trusted-marquee-wrapper {
             --logo-scale: 0.65;
             padding: 1rem 0;
-            mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
-            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+          }
+          .trusted-marquee-wrapper::before,
+          .trusted-marquee-wrapper::after {
+            width: 60px !important;
+          }
+          .trusted-marquee-track {
+            animation-duration: 28s !important;
           }
           .trusted-marquee-group {
             gap: 3.5rem !important;
             padding-right: 3.5rem !important;
-            animation-duration: 30s !important;
           }
           .trusted-logo-item {
             height: 75px !important;

@@ -186,7 +186,7 @@ export default function VideoResults() {
     <section id="video-results" className="video-marquee-section">
       <div className="marquee-wrapper">
         <div className="marquee-track">
-          {[0, 1, 2].map((groupIndex) => (
+          {[0, 1].map((groupIndex) => (
             <div key={groupIndex} className="marquee-group" aria-hidden={groupIndex > 0 ? 'true' : 'false'}>
               {carouselVideos.map((vid, idx) => (
                 <MarqueeCard key={`${groupIndex}-${idx}`} vid={vid} />

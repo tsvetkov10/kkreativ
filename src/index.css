@@ -1643,21 +1643,26 @@ p {
 .marquee-track {
   display: flex;
   width: max-content;
+  animation: scrollMarquee 45s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
 }
 
 .marquee-group {
   display: flex;
   gap: 1.5rem;
   padding-right: 1.5rem;
-  animation: scrollMarquee 45s linear infinite;
-  will-change: transform;
+  flex-shrink: 0;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
 @keyframes scrollMarquee {
   0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-100%, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 .marquee-card {
