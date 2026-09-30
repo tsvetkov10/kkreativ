@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const brandLogos = [
   {
@@ -47,6 +47,68 @@ const brandLogos = [
 ];
 
 export default function WallOfLove() {
+  const trackRef = useRef(null);
+  const firstGroupRef = useRef(null);
+  const offsetRef = useRef(0);
+  const isHoveredRef = useRef(false);
+  const currentSpeedRef = useRef(60);
+
+  useEffect(() => {
+    let groupWidth = 0;
+    
+    const updateGroupWidth = () => {
+      if (firstGroupRef.current) {
+        groupWidth = firstGroupRef.current.offsetWidth;
+      }
+    };
+
+    updateGroupWidth();
+
+    let ro;
+    if (typeof ResizeObserver !== 'undefined' && firstGroupRef.current) {
+      ro = new ResizeObserver(() => {
+        updateGroupWidth();
+      });
+      ro.observe(firstGroupRef.current);
+    }
+
+    let animationFrameId;
+    let lastTime = performance.now();
+    const baseSpeed = 60; // smooth px/second
+
+    const tick = (now) => {
+      const rawDt = (now - lastTime) / 1000;
+      lastTime = now;
+      const dt = Math.min(rawDt, 0.1);
+
+      // Smoothly lerp towards target speed: 0 when hovered, baseSpeed when unhovered
+      const targetSpeed = isHoveredRef.current ? 0 : baseSpeed;
+      currentSpeedRef.current += (targetSpeed - currentSpeedRef.current) * 0.12;
+
+      // Snap to 0 when sufficiently close to avoid micro-drift
+      if (Math.abs(currentSpeedRef.current) < 0.1) {
+        currentSpeedRef.current = targetSpeed === 0 ? 0 : currentSpeedRef.current;
+      }
+
+      if (currentSpeedRef.current > 0 && groupWidth > 0 && trackRef.current) {
+        offsetRef.current += currentSpeedRef.current * dt;
+        if (offsetRef.current >= groupWidth) {
+          offsetRef.current %= groupWidth;
+        }
+        trackRef.current.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`;
+      }
+
+      animationFrameId = requestAnimationFrame(tick);
+    };
+
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (ro) ro.disconnect();
+    };
+  }, []);
+
   return (
     <section className="section trusted-by-section" id="family">
       {/* Section Header */}
@@ -77,12 +139,19 @@ export default function WallOfLove() {
         </div>
       </div>
 
-      {/* Infinite Seamless Scrolling Logo Marquee */}
-      <div className="trusted-marquee-wrapper">
-        <div className="trusted-marquee-track">
+      {/* Infinite Seamless Scrolling Logo Marquee with Smooth JS Hover/De-hover */}
+      <div 
+        className="trusted-marquee-wrapper"
+        onMouseEnter={() => { isHoveredRef.current = true; }}
+        onMouseLeave={() => { isHoveredRef.current = false; }}
+        onTouchStart={() => { isHoveredRef.current = true; }}
+        onTouchEnd={() => { isHoveredRef.current = false; }}
+      >
+        <div className="trusted-marquee-track" ref={trackRef}>
           {[0, 1, 2, 3].map((groupIndex) => (
             <div 
               key={`grp-${groupIndex}`} 
+              ref={groupIndex === 0 ? firstGroupRef : undefined}
               className="trusted-marquee-group" 
               aria-hidden={groupIndex > 0 ? "true" : undefined}
             >
@@ -153,6 +222,7 @@ export default function WallOfLove() {
           display: flex;
           width: max-content;
           flex-shrink: 0;
+          will-change: transform;
         }
 
         .trusted-marquee-group {
@@ -161,20 +231,6 @@ export default function WallOfLove() {
           flex-shrink: 0;
           gap: 5.5rem;
           padding-right: 5.5rem;
-          animation: trustedScrollMarquee 26s linear infinite;
-        }
-
-        .trusted-marquee-wrapper:hover .trusted-marquee-group {
-          animation-play-state: paused;
-        }
-
-        @keyframes trustedScrollMarquee {
-          0% {
-            transform: translateX(0%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
         }
 
         .trusted-logo-item {
@@ -217,7 +273,6 @@ export default function WallOfLove() {
           .trusted-marquee-group {
             gap: 3.5rem !important;
             padding-right: 3.5rem !important;
-            animation-duration: 18s !important;
           }
           .trusted-logo-item {
             height: 75px !important;
