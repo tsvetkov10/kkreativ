@@ -131,15 +131,122 @@ export default function Contact({ id = "contact" }) {
               
               {/* Form */}
               {isSuccess ? (
-              <div className="contact-success" style={{ textAlign: 'center', padding: '3rem 0' }}>
-                <div className="success-icon" style={{ fontSize: '4rem', color: 'var(--gold-main)', marginBottom: '1rem' }}>✓</div>
-                <h3 className="font-display" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Съобщението е изпратено!</h3>
-                <p className="text-secondary" style={{ marginBottom: '2rem' }}>Благодарим ви. Ще се свържем с вас възможно най-скоро.</p>
-                <button className="btn btn-primary" onClick={handleReset} style={{ width: 'auto', padding: '1rem 2rem' }}>
-                  Изпрати ново съобщение
-                </button>
-              </div>
-            ) : (
+                <div 
+                  className="contact-success" 
+                  style={{ 
+                    textAlign: 'center', 
+                    padding: '3rem 1rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '420px',
+                    animation: 'fadeInSuccess 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                  }}
+                >
+                  {/* Status Capsule Pill */}
+                  <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.55rem',
+                    padding: '0.45rem 1.15rem',
+                    borderRadius: '100px',
+                    background: 'rgba(212, 175, 55, 0.08)',
+                    border: '1px solid rgba(212, 175, 55, 0.28)',
+                    marginBottom: '1.75rem'
+                  }}>
+                    <span style={{
+                      width: '7px',
+                      height: '7px',
+                      borderRadius: '50%',
+                      background: 'var(--gold-main)',
+                      boxShadow: '0 0 10px rgba(212, 175, 55, 0.9)'
+                    }}></span>
+                    <span style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: 'var(--gold-main)'
+                    }}>
+                      успешно получено
+                    </span>
+                  </div>
+
+                  {/* Headline in Montserrat Extra Bold */}
+                  <h3 style={{ 
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 800,
+                    fontSize: 'clamp(1.9rem, 3.8vw, 2.5rem)', 
+                    lineHeight: 1.18,
+                    letterSpacing: '-0.025em',
+                    color: '#ffffff',
+                    margin: 0
+                  }}>
+                    Съобщението е изпратено!
+                  </h3>
+
+                  {/* Subtle Gold Accent Divider */}
+                  <div style={{
+                    width: '38px',
+                    height: '2px',
+                    background: 'var(--gold-gradient)',
+                    margin: '1.35rem auto 1.45rem',
+                    borderRadius: '2px',
+                    opacity: 0.85
+                  }}></div>
+
+                  {/* Body Text in Montserrat */}
+                  <p style={{ 
+                    fontFamily: "'Montserrat', sans-serif",
+                    fontWeight: 400,
+                    fontSize: 'clamp(0.98rem, 1.25vw, 1.08rem)',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.65,
+                    maxWidth: '400px',
+                    marginBottom: '2.5rem'
+                  }}>
+                    Благодарим ви. Ще се свържем с вас възможно най-скоро.
+                  </p>
+
+                  {/* Action Button */}
+                  <button 
+                    type="button"
+                    onClick={handleReset} 
+                    style={{
+                      fontFamily: "'Montserrat', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '0.88rem',
+                      letterSpacing: '0.02em',
+                      color: '#ffffff',
+                      background: 'rgba(255, 255, 255, 0.05)',
+                      border: '1px solid rgba(212, 175, 55, 0.35)',
+                      padding: '0.9rem 2.2rem',
+                      borderRadius: '100px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'var(--gold-gradient)';
+                      e.currentTarget.style.color = '#0a0a0c';
+                      e.currentTarget.style.borderColor = 'transparent';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 10px 25px -5px rgba(212, 175, 55, 0.45)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.color = '#ffffff';
+                      e.currentTarget.style.borderColor = 'rgba(212, 175, 55, 0.35)';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+                    }}
+                  >
+                    Изпрати ново съобщение
+                  </button>
+                </div>
+              ) : (
               <form className="contact-form" style={{ display: 'flex', flexDirection: 'column', gap: '1.15rem' }} onSubmit={handleSubmit}>
                 
                 <div>
