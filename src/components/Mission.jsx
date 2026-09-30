@@ -10,6 +10,10 @@ const missionImages = [
     alt: 'Георги - kkreativ'
   },
   {
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 03_43_37 PM.png'),
+    alt: 'Калоян и Георги - kkreativ'
+  },
+  {
     src: '/our-mission/20.jpg',
     alt: 'Калоян - kkreativ'
   },

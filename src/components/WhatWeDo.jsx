@@ -38,7 +38,7 @@ export default function WhatWeDo() {
             display: 'inline-block'
           }}
         >
-          [what we do]
+          [services]
         </span>
         <h2 style={{
           fontFamily: "'Montserrat', sans-serif",
@@ -180,6 +180,13 @@ export default function WhatWeDo() {
             max-width: 540px;
             margin: 0 auto;
             gap: 2rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .what-we-do-header {
+            text-align: left !important;
+            padding: 0 1.5rem !important;
           }
         }
       `}</style>
