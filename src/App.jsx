@@ -58,13 +58,15 @@ export default function App() {
         <CanvasBackground />
         <EmojiSplash />
 
-        <main>
+        <main style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
-        <Footer />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <Footer />
+        </div>
       </div>
     </>
   );

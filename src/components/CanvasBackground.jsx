@@ -10,7 +10,6 @@ export default function CanvasBackground() {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let particles = [];
-    
     let lastWidth = window.innerWidth;
     
     const mouse = {
@@ -19,31 +18,15 @@ export default function CanvasBackground() {
       radius: 150
     };
 
-    const isMobile = () => {
-      return (
-        window.innerWidth < 768 ||
-        /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
-      );
-    };
-
     const resizeCanvas = (force = false) => {
       const currentWidth = window.innerWidth;
-      // On mobile, scrolling down/up expands or hides the browser address bar,
-      // which fires 'resize' with an identical innerWidth.
-      // NEVER clear or reinitialize particles on vertical-only resize!
-      if (!force && particles.length > 0 && Math.abs(currentWidth - lastWidth) < 4) {
+      // If width hasn't changed (e.g. mobile address bar expanding/collapsing on scroll), don't reset
+      if (!force && particles.length > 0 && Math.abs(currentWidth - lastWidth) < 2) {
         return;
       }
       lastWidth = currentWidth;
-
-      // Ensure canvas height covers the full screen height on mobile so no gaps appear
-      const fullHeight = Math.max(
-        window.innerHeight,
-        window.screen?.height || window.innerHeight
-      );
-
-      canvas.width = currentWidth;
-      canvas.height = fullHeight;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       initParticles();
     };
 
@@ -104,10 +87,7 @@ export default function CanvasBackground() {
 
     const initParticles = () => {
       particles = [];
-      const mobile = isMobile();
-      // On mobile screens, use fewer particles to keep GPU load ultra-light
-      const divisor = mobile ? 24000 : 11000;
-      const numberOfParticles = Math.max(12, Math.floor((canvas.width * canvas.height) / divisor));
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 11000);
       
       for (let i = 0; i < numberOfParticles; i++) {
         const size = Math.random() * 2.5 + 0.5;
@@ -121,10 +101,6 @@ export default function CanvasBackground() {
     };
 
     const connectParticles = () => {
-      // On mobile devices, connecting lines aren't needed or visible with smaller particles,
-      // and skipping them saves massive CPU/battery during scroll!
-      if (isMobile()) return;
-
       for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
           const dx = particles[a].x - particles[b].x;
