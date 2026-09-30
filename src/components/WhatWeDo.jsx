@@ -110,11 +110,11 @@ export default function WhatWeDo() {
                     transform: `translateY(-50%) translateY(${nudge}px)`,
                     '--nudge': `${nudge}px`,
                     left: 0,
-                    fontFamily: "'Montserrat', sans-serif",
-                    fontWeight: 800,
-                    fontSize: 'clamp(2.4rem, 4.2vw, 4.2rem)',
-                    lineHeight: 1.1,
-                    letterSpacing: '-0.02em',
+                    fontFamily: "var(--font-display), 'Akira Expanded', sans-serif",
+                    fontWeight: 'normal',
+                    fontSize: 'clamp(1.8rem, 2.7vw, 2.8rem)',
+                    lineHeight: 1.2,
+                    letterSpacing: '0.02em',
                     opacity: isActive ? 1 : 0,
                     transition: 'opacity 0.4s ease, transform 0.4s ease',
                     whiteSpace: 'pre-line',
@@ -275,8 +275,9 @@ export default function WhatWeDo() {
             transform: translate(-50%, calc(-50% + var(--nudge, 0px))) !important;
             text-align: center !important;
             width: 100% !important;
-            font-size: clamp(1.6rem, 5.5vw, 2.1rem) !important;
-            line-height: 1.15 !important;
+            font-size: clamp(1.2rem, 4.4vw, 1.55rem) !important;
+            line-height: 1.25 !important;
+            letter-spacing: 0.02em !important;
           }
           .what-we-do-cards-col {
             overflow: hidden !important;

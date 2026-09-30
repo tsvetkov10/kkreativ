@@ -158,11 +158,10 @@ export default function Mission() {
           <div className="reveal-up mission-text-col" style={{ paddingLeft: '1rem' }}>
             
             <h2 style={{
-              fontFamily: "'Montserrat', sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(2.2rem, 3.8vw, 3.4rem)',
+              fontFamily: "var(--font-display), 'Akira Expanded', sans-serif",
+              fontSize: 'clamp(1.8rem, 3.2vw, 2.8rem)',
               lineHeight: 1.15,
-              letterSpacing: '-0.02em',
+              letterSpacing: '0.02em',
               color: 'var(--gold-main, #ffd700)',
               marginBottom: '2rem'
             }}>

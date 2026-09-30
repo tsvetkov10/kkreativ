@@ -181,8 +181,15 @@ export default function WhoWeAre() {
                     }}>
                       {member.name}
                     </h3>
-                    <p className="font-mono text-gold" style={{ fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                      {member.role}
+                    <p className="text-gold" style={{ 
+                      fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
+                      fontSize: '1.45rem', 
+                      letterSpacing: '0.06em', 
+                      textTransform: 'none',
+                      margin: 0,
+                      lineHeight: 1.2
+                    }}>
+                      {member.role.toLowerCase()}
                     </p>
                   </div>
 
@@ -266,11 +273,12 @@ export default function WhoWeAre() {
                     </h3>
                     <div style={{ width: '36px', height: '2px', background: 'var(--gold-gradient)', marginBottom: '0.85rem' }}></div>
                     <p 
-                      className="text-secondary" 
                       style={{ 
                         fontFamily: "'Montserrat', sans-serif",
                         fontSize: '0.88rem', 
+                        fontWeight: 700,
                         lineHeight: 1.55, 
+                        color: 'var(--text-primary)',
                         whiteSpace: 'pre-line', 
                         maxWidth: '340px',
                         margin: 0
