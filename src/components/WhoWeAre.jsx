@@ -181,15 +181,8 @@ export default function WhoWeAre() {
                     }}>
                       {member.name}
                     </h3>
-                    <p className="text-gold" style={{ 
-                      fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
-                      fontSize: '1.45rem', 
-                      letterSpacing: '0.06em', 
-                      textTransform: 'none',
-                      margin: 0,
-                      lineHeight: 1.2
-                    }}>
-                      {member.role.toLowerCase()}
+                    <p className="font-mono text-gold" style={{ fontSize: '0.9rem', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                      {member.role}
                     </p>
                   </div>
 
