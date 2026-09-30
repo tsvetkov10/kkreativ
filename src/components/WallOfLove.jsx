@@ -9,7 +9,7 @@ const brandLogos = [
   },
   {
     name: 'Autolux Import',
-    src: '/brands/Autolux_Import.png',
+    src: '/brands/Autolux_Import.png?v=2',
     height: 62,
     alt: 'Autolux Import'
   },
