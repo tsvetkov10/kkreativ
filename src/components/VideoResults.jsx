@@ -22,7 +22,7 @@ const carouselVideos = [
     title: 'ACAI HERO'
   },
   {
-    src: encodeURI('/videos/caroussel/Studio 63 - можеш ли да плеснеш_(1)_5sec_1080p.mp4'),
+    src: '/videos/caroussel/Studio_63_plesni_s_ruce_5sec.mp4',
     title: 'STUDIO 63'
   },
   {
