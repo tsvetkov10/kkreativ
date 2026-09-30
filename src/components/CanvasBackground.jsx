@@ -11,15 +11,39 @@ export default function CanvasBackground() {
     let animationFrameId;
     let particles = [];
     
+    let lastWidth = window.innerWidth;
+    
     const mouse = {
       x: null,
       y: null,
       radius: 150
     };
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    const isMobile = () => {
+      return (
+        window.innerWidth < 768 ||
+        /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)
+      );
+    };
+
+    const resizeCanvas = (force = false) => {
+      const currentWidth = window.innerWidth;
+      // On mobile, scrolling down/up expands or hides the browser address bar,
+      // which fires 'resize' with an identical innerWidth.
+      // NEVER clear or reinitialize particles on vertical-only resize!
+      if (!force && particles.length > 0 && Math.abs(currentWidth - lastWidth) < 4) {
+        return;
+      }
+      lastWidth = currentWidth;
+
+      // Ensure canvas height covers the full screen height on mobile so no gaps appear
+      const fullHeight = Math.max(
+        window.innerHeight,
+        window.screen?.height || window.innerHeight
+      );
+
+      canvas.width = currentWidth;
+      canvas.height = fullHeight;
       initParticles();
     };
 
@@ -80,7 +104,10 @@ export default function CanvasBackground() {
 
     const initParticles = () => {
       particles = [];
-      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 11000);
+      const mobile = isMobile();
+      // On mobile screens, use fewer particles to keep GPU load ultra-light
+      const divisor = mobile ? 24000 : 11000;
+      const numberOfParticles = Math.max(12, Math.floor((canvas.width * canvas.height) / divisor));
       
       for (let i = 0; i < numberOfParticles; i++) {
         const size = Math.random() * 2.5 + 0.5;
@@ -94,6 +121,10 @@ export default function CanvasBackground() {
     };
 
     const connectParticles = () => {
+      // On mobile devices, connecting lines aren't needed or visible with smaller particles,
+      // and skipping them saves massive CPU/battery during scroll!
+      if (isMobile()) return;
+
       for (let a = 0; a < particles.length; a++) {
         for (let b = a; b < particles.length; b++) {
           const dx = particles[a].x - particles[b].x;
@@ -132,18 +163,23 @@ export default function CanvasBackground() {
       mouse.y = null;
     };
 
+    const handleResize = () => resizeCanvas(false);
+    const handleOrientation = () => resizeCanvas(true);
+
     // Setup listeners
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleOrientation);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
     
     // Initial call
-    resizeCanvas();
+    resizeCanvas(true);
     animate();
 
     // Clean up
     return () => {
-      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleOrientation);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);

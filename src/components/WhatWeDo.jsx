@@ -81,7 +81,7 @@ export default function WhatWeDo() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'var(--bg-dark)'
+          background: 'var(--bg-primary, #0a0a0c)'
         }}
       >
         
@@ -252,7 +252,11 @@ export default function WhatWeDo() {
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          background: var(--bg-dark) !important;
+          background: var(--bg-primary, #0a0a0c) !important;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
         }
         @media (max-width: 900px) {
           .what-we-do-grid {
