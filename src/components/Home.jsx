@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Hero from './Hero';
 import VideoResults from './VideoResults';
 import VideoStats from './VideoStats';
@@ -10,9 +11,28 @@ import novataEraImg from '../assets/kkreativ-novata-era-text-v2.png';
 
 export default function Home() {
   const navigate = useNavigate();
+  const [animate, setAnimate] = useState(false);
+
+  useEffect(() => {
+    let timer;
+    const checkReady = () => {
+      const loader = document.getElementById('loading-screen');
+      if (loader) {
+        timer = setTimeout(checkReady, 80);
+      } else {
+        timer = setTimeout(() => {
+          setAnimate(true);
+        }, 40);
+      }
+    };
+
+    checkReady();
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <>
+    <div className={`home-page-container ${animate ? 'is-animated' : ''}`}>
       <Hero />
       <VideoResults />
       <WallOfLove />
@@ -48,6 +68,6 @@ export default function Home() {
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }

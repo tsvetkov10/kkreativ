@@ -1003,6 +1003,46 @@ p {
   transform: scale(1) translateY(0);
 }
 
+/* Home Entrance Pop-Up Animation for Hero & Moving Carousel */
+.home-page-container .hero-content {
+  opacity: 0;
+  transform: scale(0.93) translateY(28px);
+  transform-origin: center top;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.home-page-container.is-animated .hero-content {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.home-page-container .video-marquee-section {
+  opacity: 0;
+  transform: scale(0.92) translateY(45px);
+  transform-origin: center top;
+  transition: opacity 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, transform 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+  will-change: opacity, transform;
+}
+
+.home-page-container.is-animated .video-marquee-section {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.home-page-container .trusted-by-section {
+  opacity: 0;
+  transform: scale(0.95) translateY(25px);
+  transform-origin: center top;
+  transition: opacity 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.2s, transform 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+  will-change: opacity, transform;
+}
+
+.home-page-container.is-animated .trusted-by-section {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
 .delay-1 {
   transition-delay: 0.15s;
 }
