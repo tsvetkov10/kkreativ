@@ -2,7 +2,7 @@ import React from 'react';
 
 const ugcSections = [
   {
-    id: 'ugc-performance',
+    id: 'ugc-acai-hero',
     reversed: false,
     videos: [
       encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
@@ -56,7 +56,7 @@ const ugcSections = [
     }
   },
   {
-    id: 'ugc-viral-hooks',
+    id: 'ugc-autolux',
     reversed: true,
     videos: [
       encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
@@ -111,7 +111,7 @@ const ugcSections = [
     }
   },
   {
-    id: 'ugc-conversion',
+    id: 'ugc-leos-pasta',
     reversed: false,
     videos: [
       encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
@@ -424,7 +424,8 @@ export default function PerformanceUgc() {
           style={{
             padding: index === 0 ? '3.5rem 2rem 5rem' : '5rem 2rem',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            scrollMarginTop: '90px'
           }}
         >
           <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 2rem' }}>

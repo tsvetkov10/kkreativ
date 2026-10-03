@@ -5,6 +5,7 @@ const showcaseClients = [
   {
     num: '01',
     name: 'Acai Hero',
+    targetId: 'ugc-acai-hero',
     subtitle: 'Вайръл скечове, интервюта и образователни видеа',
     video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
     badges: [
@@ -17,6 +18,7 @@ const showcaseClients = [
   {
     num: '02',
     name: 'Autolux Import',
+    targetId: 'ugc-autolux',
     subtitle: 'Реални доставки, ексклузивни коли и продажби',
     video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
     badges: [
@@ -29,6 +31,7 @@ const showcaseClients = [
   {
     num: '03',
     name: 'Leo\'s Pasta',
+    targetId: 'ugc-leos-pasta',
     subtitle: 'Автентично италианско готвене и силен бранд',
     video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
     badges: [
@@ -71,9 +74,7 @@ function ShowcaseCard({ client }) {
   }, []);
 
   const handleClick = () => {
-    navigate('/our-craft');
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
+    navigate(`/our-craft#${client.targetId}`);
   };
 
   return (

@@ -1,15 +1,36 @@
 import React, { useEffect } from 'react';
 import PerformanceUgc from './PerformanceUgc';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function OurCraft() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, []);
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const scrollToTarget = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          const navOffset = 90;
+          const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+          const targetScroll = Math.max(0, elementPosition - navOffset);
+          window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+        }
+      };
+
+      const timer1 = setTimeout(scrollToTarget, 60);
+      const timer2 = setTimeout(scrollToTarget, 280);
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+  }, [location.hash, location.pathname]);
 
   return (
     <div className="page-wrapper our-craft-page" style={{ minHeight: '100vh', paddingTop: '1rem', paddingBottom: '6rem' }}>
