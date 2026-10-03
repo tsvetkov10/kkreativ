@@ -142,6 +142,8 @@ function ShowcaseCard({ client }) {
 }
 
 export default function CraftShowcase() {
+  const navigate = useNavigate();
+
   return (
     <section id="our-craft" className="section craft-showcase-section">
       <div className="container" style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 2rem' }}>
@@ -178,6 +180,25 @@ export default function CraftShowcase() {
           {showcaseClients.map((client) => (
             <ShowcaseCard key={client.num} client={client} />
           ))}
+        </div>
+
+        {/* Call-to-Action Button */}
+        <div className="craft-showcase-cta reveal-up" style={{ textAlign: 'center', marginTop: '3.5rem' }}>
+          <button
+            className="btn-craft-showcase"
+            onClick={() => {
+              navigate('/our-craft');
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+            }}
+          >
+            <span>Виж работата ни</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </button>
         </div>
 
       </div>
@@ -378,6 +399,43 @@ export default function CraftShowcase() {
           color: #0a0a0c;
           border-color: transparent;
           transform: scale(1.08);
+        }
+
+        .btn-craft-showcase {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.85rem;
+          background: var(--gold-gradient, linear-gradient(135deg, #d4af37 0%, #f3e5ab 100%));
+          color: #0a0a0c;
+          font-family: 'Montserrat', sans-serif;
+          font-size: clamp(1rem, 1.3vw, 1.15rem);
+          font-weight: 700;
+          padding: 1.15rem 3rem;
+          border-radius: 100px;
+          border: none;
+          cursor: pointer;
+          letter-spacing: 0.02em;
+          box-shadow: 0 10px 25px -4px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.15);
+          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                      box-shadow 0.35s ease;
+        }
+
+        .btn-craft-showcase:hover {
+          transform: translateY(-4px) scale(1.02);
+          box-shadow: 0 18px 40px -6px rgba(212, 175, 55, 0.6), 0 0 30px rgba(212, 175, 55, 0.25);
+        }
+
+        .btn-craft-showcase:hover svg {
+          transform: translateX(4px);
+        }
+
+        .btn-craft-showcase svg {
+          transition: transform 0.3s ease;
+        }
+
+        .btn-craft-showcase:active {
+          transform: translateY(1px) scale(0.98);
         }
 
         @media (max-width: 992px) {
