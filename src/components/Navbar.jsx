@@ -31,6 +31,11 @@ export default function Navbar() {
   }, [location]);
 
   const scrollToSection = (id) => {
+    if (id === 'hero' || id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
     const element = document.getElementById(id);
     if (!element) return;
 
@@ -76,10 +81,14 @@ export default function Navbar() {
       return;
     }
 
-    if (target === '/') {
-      navigate('/');
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
+    if (target === '/' || target === '#hero' || target === '#home') {
+      if (location.pathname !== '/') {
+        navigate('/');
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        document.documentElement.scrollTop = 0;
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       return;
     }
 
@@ -101,11 +110,11 @@ export default function Navbar() {
         </div>
         <div className="nav-links">
           <a 
-            href="/#projects" 
-            onClick={(e) => handleLinkClick(e, '#projects')} 
-            className={`nav-item ${(activeSection === 'projects' || activeSection?.startsWith('ugc-') || activeSection === 'what-we-do') && location.pathname === '/' ? 'active' : ''}`}
+            href="/#hero" 
+            onClick={(e) => handleLinkClick(e, '#hero')} 
+            className={`nav-item ${(activeSection === 'hero' || activeSection === 'video-results' || !activeSection) && location.pathname === '/' ? 'active' : ''}`}
           >
-            our craft
+            our home
           </a>
           <a 
             href="/#about-us" 
