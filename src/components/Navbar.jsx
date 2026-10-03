@@ -81,6 +81,13 @@ export default function Navbar() {
       return;
     }
 
+    if (target === '/our-craft' || target === '/craft') {
+      navigate('/our-craft');
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      return;
+    }
+
     if (target === '/' || target === '#hero' || target === '#home') {
       if (location.pathname !== '/') {
         navigate('/');
@@ -112,16 +119,16 @@ export default function Navbar() {
           <a 
             href="/#hero" 
             onClick={(e) => handleLinkClick(e, '#hero')} 
-            className={`nav-item ${(activeSection === 'hero' || activeSection === 'video-results' || !activeSection) && location.pathname === '/' ? 'active' : ''}`}
+            className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
           >
             our home
           </a>
           <a 
-            href="/#about-us" 
-            onClick={(e) => handleLinkClick(e, '#about-us')} 
-            className={`nav-item ${activeSection === 'about-us' && location.pathname === '/' ? 'active' : ''}`}
+            href="/our-craft" 
+            onClick={(e) => handleLinkClick(e, '/our-craft')} 
+            className={`nav-item ${location.pathname === '/our-craft' || location.pathname === '/craft' ? 'active' : ''}`}
           >
-            our story
+            our craft
           </a>
           {/* Mobile Only CTA */}
           <a 

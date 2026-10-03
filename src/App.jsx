@@ -6,6 +6,7 @@ import CanvasBackground from './components/CanvasBackground';
 import EmojiSplash from './components/EmojiSplash';
 
 import Home from './components/Home';
+import OurCraft from './components/OurCraft';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -61,6 +62,8 @@ export default function App() {
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/our-craft" element={<OurCraft />} />
+            <Route path="/craft" element={<OurCraft />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>

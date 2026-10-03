@@ -1,7 +1,6 @@
 import Hero from './Hero';
 import VideoResults from './VideoResults';
 import VideoStats from './VideoStats';
-import PerformanceUgc from './PerformanceUgc';
 import WallOfLove from './WallOfLove';
 import WhatWeDo from './WhatWeDo';
 import WhoWeAre from './WhoWeAre';
@@ -18,7 +17,6 @@ export default function Home() {
       <VideoResults />
       <WallOfLove />
       <VideoStats />
-      <PerformanceUgc />
       <WhatWeDo />
       <WhoWeAre />
       <Mission />
