@@ -57,10 +57,11 @@ export default function WhatWeDo() {
               <path
                 d="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                 fill="none"
-                stroke="rgba(212, 175, 55, 0.75)"
+                stroke="rgba(212, 175, 55, 0.85)"
                 strokeWidth="2.5"
-                strokeDasharray="8 14"
-                className="services-dash-stream"
+                strokeLinecap="round"
+                strokeDasharray="8 16"
+                className="services-dash-stream-desktop"
               />
             </svg>
           </div>
@@ -110,10 +111,11 @@ export default function WhatWeDo() {
                       />
                       <path
                         d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
-                        stroke="rgba(212, 175, 55, 0.75)"
+                        stroke="rgba(212, 175, 55, 0.85)"
                         strokeWidth="2"
-                        strokeDasharray="5 9"
-                        className="services-dash-stream"
+                        strokeLinecap="round"
+                        strokeDasharray="6 14"
+                        className="services-dash-stream-mobile"
                       />
                     </svg>
                   </div>
@@ -184,15 +186,33 @@ export default function WhatWeDo() {
           width: 100%;
           height: 100%;
           display: block;
+          transform: translateZ(0);
         }
 
-        .services-dash-stream {
-          animation: flowStream 1.4s linear infinite;
+        .services-dash-stream-desktop {
+          animation: flowStreamDesktop 1.6s linear infinite;
+          will-change: stroke-dashoffset;
+          filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.45));
         }
 
-        @keyframes flowStream {
+        @keyframes flowStreamDesktop {
           from {
-            stroke-dashoffset: 36;
+            stroke-dashoffset: 48;
+          }
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+
+        .services-dash-stream-mobile {
+          animation: flowStreamMobile 1.4s linear infinite;
+          will-change: stroke-dashoffset;
+          filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.45));
+        }
+
+        @keyframes flowStreamMobile {
+          from {
+            stroke-dashoffset: 40;
           }
           to {
             stroke-dashoffset: 0;
