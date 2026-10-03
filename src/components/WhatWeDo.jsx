@@ -44,16 +44,6 @@ export default function WhatWeDo() {
               viewBox="0 0 1000 195"
               preserveAspectRatio="none"
             >
-              <defs>
-                <filter id="goldArrowGlow" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-              </defs>
-
               {/* Guide track line */}
               <path
                 d="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
@@ -67,27 +57,11 @@ export default function WhatWeDo() {
               <path
                 d="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                 fill="none"
-                stroke="rgba(212, 175, 55, 0.7)"
-                strokeWidth="2"
-                strokeDasharray="6 12"
+                stroke="rgba(212, 175, 55, 0.75)"
+                strokeWidth="2.5"
+                strokeDasharray="8 14"
                 className="services-dash-stream"
               />
-
-              {/* Single Traveling Arrow that loops continuously */}
-              <g filter="url(#goldArrowGlow)">
-                <path
-                  d="M -9 -5.5 L 5 0 L -9 5.5 L -6 0 Z"
-                  fill="#ffd700"
-                />
-                <circle cx="-12" cy="0" r="2" fill="#d4af37" opacity="0.8" />
-                <circle cx="-19" cy="0" r="1.2" fill="#d4af37" opacity="0.4" />
-                <animateMotion
-                  path="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
-                  dur="3s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </g>
             </svg>
           </div>
 
@@ -128,15 +102,6 @@ export default function WhatWeDo() {
                 {idx < steps.length - 1 && (
                   <div className="services-mobile-connector" aria-hidden="true">
                     <svg width="40" height="70" viewBox="0 0 40 70" fill="none">
-                      <defs>
-                        <filter id={`goldArrowGlowMobile-${idx}`} x="-50%" y="-50%" width="200%" height="200%">
-                          <feGaussianBlur stdDeviation="2.5" result="blur" />
-                          <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                          </feMerge>
-                        </filter>
-                      </defs>
                       <path
                         d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
                         stroke="rgba(255, 255, 255, 0.12)"
@@ -145,23 +110,11 @@ export default function WhatWeDo() {
                       />
                       <path
                         d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
-                        stroke="rgba(212, 175, 55, 0.7)"
+                        stroke="rgba(212, 175, 55, 0.75)"
                         strokeWidth="2"
                         strokeDasharray="5 9"
                         className="services-dash-stream"
                       />
-                      <g filter={`url(#goldArrowGlowMobile-${idx})`}>
-                        <path
-                          d="M -7 -4.5 L 4 0 L -7 4.5 L -4 0 Z"
-                          fill="#ffd700"
-                        />
-                        <animateMotion
-                          path={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
-                          dur="1.8s"
-                          repeatCount="indefinite"
-                          rotate="auto"
-                        />
-                      </g>
                     </svg>
                   </div>
                 )}
