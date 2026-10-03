@@ -22,16 +22,8 @@ const carouselVideos = [
     title: 'ACAI HERO'
   },
   {
-    src: '/videos/caroussel/Studio_63_plesni_s_ruce_5sec.mp4',
-    title: 'STUDIO 63'
-  },
-  {
     src: '/videos/caroussel/Leos_Pasta_POV_Dvoikite_5sec_1080p.mp4',
     title: "LEO'S PASTA"
-  },
-  {
-    src: encodeURI('/videos/caroussel/Autolux - Брутална доставка(1)_5sec_1080p.mp4'),
-    title: 'AUTOLUX'
   },
   {
     src: encodeURI('/videos/caroussel/ACAI HERO - Габи_(1)_5s_1080p.mp4'),

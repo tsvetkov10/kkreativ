@@ -8,11 +8,7 @@ const showcaseClients = [
     targetId: 'ugc-acai-hero',
     subtitle: 'Вайръл скечове, интервюта и образователни видеа',
     video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
-    badges: [
-      { icon: '👁', label: '3 000 000+' },
-      { icon: '👥', label: '+5000' },
-      { icon: '🚀', label: '280%' }
-    ],
+    badges: ['3 000 000+', '+5000', '280%'],
     tags: ['FOOD & BEV', 'VIRAL CONTENT']
   },
   {
@@ -21,11 +17,7 @@ const showcaseClients = [
     targetId: 'ugc-autolux',
     subtitle: 'Реални доставки, ексклузивни коли и продажби',
     video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
-    badges: [
-      { icon: '👁', label: '2 500 000+' },
-      { icon: '👥', label: '+4000' },
-      { icon: '💬', label: '10K+ Viber' }
-    ],
+    badges: ['2 500 000+', '+4000', '10K+ Viber'],
     tags: ['AUTOMOTIVE', 'COMMUNITY']
   },
   {
@@ -34,11 +26,7 @@ const showcaseClients = [
     targetId: 'ugc-leos-pasta',
     subtitle: 'Автентично италианско готвене и силен бранд',
     video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
-    badges: [
-      { icon: '👁', label: '1 500 000+' },
-      { icon: '👥', label: '+6000' },
-      { icon: '🍝', label: '450%' }
-    ],
+    badges: ['1 500 000+', '+6000', '450%'],
     tags: ['RESTAURANT', 'SOCIAL SCALING']
   }
 ];
@@ -110,8 +98,7 @@ function ShowcaseCard({ client }) {
       <div className="craft-card-badges">
         {client.badges.map((b, idx) => (
           <span key={idx} className="craft-badge-pill">
-            <span className="craft-badge-icon">{b.icon}</span>
-            <span className="craft-badge-text">{b.label}</span>
+            <span className="craft-badge-text">{typeof b === 'string' ? b : b.label}</span>
           </span>
         ))}
       </div>
@@ -290,26 +277,21 @@ export default function CraftShowcase() {
         .craft-badge-pill {
           display: inline-flex;
           align-items: center;
-          gap: 0.35rem;
-          background: rgba(14, 16, 22, 0.68);
+          justify-content: center;
+          background: rgba(14, 16, 22, 0.72);
           backdrop-filter: blur(14px);
           -webkit-backdrop-filter: blur(14px);
           border: 1px solid rgba(255, 255, 255, 0.14);
           border-radius: 100px;
-          padding: 0.35rem 0.7rem;
+          padding: 0.38rem 0.82rem;
           color: #ffffff;
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .craft-badge-icon {
-          font-size: 0.78rem;
-          line-height: 1;
         }
 
         .craft-badge-text {
           font-family: 'Montserrat', sans-serif;
           font-weight: 700;
-          font-size: 0.74rem;
+          font-size: 0.76rem;
           letter-spacing: 0.02em;
         }
 
