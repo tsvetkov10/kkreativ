@@ -16,8 +16,8 @@ export default function Home() {
     <>
       <Hero />
       <VideoResults />
-      <VideoStats />
       <WallOfLove />
+      <VideoStats />
       <PerformanceUgc />
       <WhatWeDo />
       <WhoWeAre />

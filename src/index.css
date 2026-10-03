@@ -1630,7 +1630,7 @@ p {
 .video-marquee-section {
   position: relative;
   width: 100%;
-  padding: 2rem 0 6rem;
+  padding: 2rem 0 2rem;
   overflow: hidden;
   background: transparent;
 }
@@ -1715,7 +1715,7 @@ p {
 
 @media (max-width: 768px) {
   .video-marquee-section {
-    padding: 1.5rem 0 3.5rem !important;
+    padding: 1.5rem 0 1.5rem !important;
   }
   .marquee-group {
     gap: 1.1rem !important;
@@ -1736,7 +1736,7 @@ p {
 
 @media (max-width: 480px) {
   .video-marquee-section {
-    padding: 1rem 0 2.8rem !important;
+    padding: 1rem 0 1.2rem !important;
   }
   .marquee-group {
     gap: 0.85rem !important;

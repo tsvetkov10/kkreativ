@@ -110,34 +110,7 @@ export default function WallOfLove() {
   }, []);
 
   return (
-    <section className="section trusted-by-section" id="family">
-      {/* Section Header */}
-      <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-        <div className="section-header reveal-up" style={{ marginBottom: '3.5rem', maxWidth: '1000px' }}>
-          <span className="section-tag text-gold" style={{ 
-            fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', 
-            letterSpacing: '0.06em', 
-            textTransform: 'none',
-            lineHeight: 1,
-            marginBottom: '0.35rem',
-            display: 'inline-block'
-          }}>
-            [family]
-          </span>
-          <h2 style={{ 
-            fontFamily: "'Montserrat', sans-serif",
-            fontWeight: 800,
-            fontSize: 'clamp(2.4rem, 5vw, 4rem)', 
-            lineHeight: 1.15,
-            letterSpacing: '-0.02em',
-            margin: 0,
-            color: 'var(--text-primary)'
-          }}>
-            БРАНДОВЕТЕ, КОИТО НИ СЕ ДОВЕРИХА
-          </h2>
-        </div>
-      </div>
+    <section className="section trusted-by-section" id="brands">
 
       {/* Infinite Seamless Scrolling Logo Marquee with Smooth JS Hover/De-hover */}
       <div 
@@ -181,7 +154,7 @@ export default function WallOfLove() {
         .trusted-by-section {
           position: relative;
           width: 100%;
-          padding: 4rem 0 6rem;
+          padding: 1.5rem 0 3.5rem;
           background: transparent;
           overflow: hidden;
           z-index: 2;
@@ -260,7 +233,7 @@ export default function WallOfLove() {
 
         @media (max-width: 768px) {
           .trusted-by-section {
-            padding: 2.5rem 0 4rem !important;
+            padding: 1rem 0 2.5rem !important;
           }
           .trusted-marquee-wrapper {
             --logo-scale: 0.65;
