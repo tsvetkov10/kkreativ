@@ -59,6 +59,9 @@ export default function WallOfLove() {
     const updateGroupWidth = () => {
       if (firstGroupRef.current) {
         groupWidth = firstGroupRef.current.offsetWidth;
+        if (offsetRef.current === 0 && groupWidth > 0) {
+          offsetRef.current = groupWidth;
+        }
       }
     };
 
@@ -91,9 +94,9 @@ export default function WallOfLove() {
       }
 
       if (currentSpeedRef.current > 0 && groupWidth > 0 && trackRef.current) {
-        offsetRef.current += currentSpeedRef.current * dt;
-        if (offsetRef.current >= groupWidth) {
-          offsetRef.current %= groupWidth;
+        offsetRef.current -= currentSpeedRef.current * dt;
+        while (offsetRef.current <= 0) {
+          offsetRef.current += groupWidth;
         }
         trackRef.current.style.transform = `translate3d(-${offsetRef.current}px, 0, 0)`;
       }
