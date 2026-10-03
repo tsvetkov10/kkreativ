@@ -294,9 +294,9 @@ export default function WhatWeDo() {
         }
 
         .services-step-desc {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(0.92rem, 1.05vw, 1rem);
-          line-height: 1.7;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: clamp(0.86rem, 0.98vw, 0.94rem);
+          line-height: 1.65;
           color: var(--text-secondary, #a1a1aa);
           margin: 0;
           max-width: 340px;
