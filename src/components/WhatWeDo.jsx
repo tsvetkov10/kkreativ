@@ -2,46 +2,22 @@ import React from 'react';
 
 const steps = [
   {
-    title: 'Strategy First',
-    desc: 'We align on goals, audience, and content direction before anything goes live.',
-    icon: (
-      /* 4 Diamonds Cluster */
-      <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Top diamond */}
-        <path d="M14 2L18.5 6.5L14 11L9.5 6.5Z" fill="#111111" />
-        {/* Right diamond */}
-        <path d="M21.5 9.5L26 14L21.5 18.5L17 14Z" fill="#111111" />
-        {/* Bottom diamond */}
-        <path d="M14 17L18.5 21.5L14 26L9.5 21.5Z" fill="#111111" />
-        {/* Left diamond */}
-        <path d="M6.5 9.5L11 14L6.5 18.5L2 14Z" fill="#111111" />
-      </svg>
-    )
+    num: "01",
+    title: "GOAL\nALIGNMENT",
+    desc: "Разучаваме всичко за бизнеса и нишата ти, след което изграждаме печеливша креативна концепция с ясни цели и цялостна естетика на профила.",
+    image: "/photos-of-owners/concept.png"
   },
   {
-    title: 'Create & Manage',
-    desc: 'We handle the production, scheduling, and posting across all key platforms.',
-    icon: (
-      /* Smartphone Icon */
-      <svg width="24" height="32" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="1" width="18" height="30" rx="4.5" fill="#111111" />
-        <circle cx="12" cy="26.5" r="1.4" fill="#F7F2EA" />
-        <rect x="9.5" y="4.5" width="5" height="1.2" rx="0.6" fill="#3D3D40" />
-      </svg>
-    )
+    num: "02",
+    title: "CONTENT\nCREATION",
+    desc: "Идваме, снимаме, обработваме и публикуваме цялото съдържание - вие единствено се наслаждавате на резултатите :)",
+    image: "/photos-of-owners/production.png"
   },
   {
-    title: 'Review & Refine',
-    desc: 'We track performance, learn what’s working, and adjust as needed.',
-    icon: (
-      /* Review & Refine Card */
-      <svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="3" y="3" width="26" height="24" rx="5" fill="#111111" />
-        <rect x="7.5" y="8" width="17" height="2.4" rx="1.2" fill="#F7F2EA" />
-        <rect x="7.5" y="13.8" width="17" height="2.4" rx="1.2" fill="#F7F2EA" />
-        <rect x="7.5" y="19.5" width="11" height="2.4" rx="1.2" fill="#F7F2EA" />
-      </svg>
-    )
+    num: "03",
+    title: "RAPID\nGROWTH",
+    desc: "Следим растежа и анализираме реакцията и поведението на аудиторията, спрямо които адаптираме концепциите и надграждаме с всеки един месец.",
+    image: "/photos-of-owners/services.png"
   }
 ];
 
@@ -50,7 +26,7 @@ export default function WhatWeDo() {
     <section id="what-we-do" className="services-process-section">
       <div className="container">
         
-        {/* Section Header */}
+        {/* Header Block */}
         <div className="services-header reveal-up">
           <span className="services-tag">[services]</span>
           <h2 className="services-title">
@@ -66,54 +42,64 @@ export default function WhatWeDo() {
           <div className="services-connector-desktop" aria-hidden="true">
             <svg
               className="services-curve-svg"
-              viewBox="0 0 1000 96"
+              viewBox="0 0 1000 195"
               preserveAspectRatio="none"
             >
-              {/* Subtle guide track */}
+              <defs>
+                <filter id="goldArrowGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* Guide track line */}
               <path
-                d="M 166.7 48 C 277.8 82, 388.9 82, 500 48 C 611.1 14, 722.2 14, 833.3 48"
+                d="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                 fill="none"
-                stroke="#DDD9D3"
+                stroke="rgba(255, 255, 255, 0.12)"
                 strokeWidth="2.5"
                 strokeLinecap="round"
               />
 
-              {/* Constant flowing dash stream */}
+              {/* Constant flowing gold dash stream */}
               <path
-                d="M 166.7 48 C 277.8 82, 388.9 82, 500 48 C 611.1 14, 722.2 14, 833.3 48"
+                d="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                 fill="none"
-                stroke="#A8A297"
+                stroke="rgba(212, 175, 55, 0.7)"
                 strokeWidth="2"
                 strokeDasharray="6 12"
                 className="services-dash-stream"
               />
 
               {/* Traveling Arrow 1 */}
-              <g className="services-arrow-runner">
+              <g filter="url(#goldArrowGlow)">
                 <path
-                  d="M -8 -5 L 4 0 L -8 5 L -5 0 Z"
-                  fill="#111111"
+                  d="M -9 -5.5 L 5 0 L -9 5.5 L -6 0 Z"
+                  fill="#ffd700"
                 />
-                <circle cx="-11" cy="0" r="1.8" fill="#111111" opacity="0.6" />
-                <circle cx="-17" cy="0" r="1.1" fill="#111111" opacity="0.3" />
+                <circle cx="-12" cy="0" r="2" fill="#d4af37" opacity="0.8" />
+                <circle cx="-19" cy="0" r="1.2" fill="#d4af37" opacity="0.4" />
                 <animateMotion
-                  path="M 166.7 48 C 277.8 82, 388.9 82, 500 48 C 611.1 14, 722.2 14, 833.3 48"
+                  path="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                   dur="3.2s"
                   repeatCount="indefinite"
                   rotate="auto"
                 />
               </g>
 
-              {/* Traveling Arrow 2 (offset by 1.6s so both segments always show motion) */}
-              <g className="services-arrow-runner">
+              {/* Traveling Arrow 2 (offset by 1.6s so both segments always show active motion) */}
+              <g filter="url(#goldArrowGlow)">
                 <path
-                  d="M -8 -5 L 4 0 L -8 5 L -5 0 Z"
-                  fill="#111111"
+                  d="M -9 -5.5 L 5 0 L -9 5.5 L -6 0 Z"
+                  fill="#ffd700"
                 />
-                <circle cx="-11" cy="0" r="1.8" fill="#111111" opacity="0.6" />
-                <circle cx="-17" cy="0" r="1.1" fill="#111111" opacity="0.3" />
+                <circle cx="-12" cy="0" r="2" fill="#d4af37" opacity="0.8" />
+                <circle cx="-19" cy="0" r="1.2" fill="#d4af37" opacity="0.4" />
                 <animateMotion
-                  path="M 166.7 48 C 277.8 82, 388.9 82, 500 48 C 611.1 14, 722.2 14, 833.3 48"
+                  path="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
                   dur="3.2s"
                   begin="1.6s"
                   repeatCount="indefinite"
@@ -129,17 +115,27 @@ export default function WhatWeDo() {
               <React.Fragment key={idx}>
                 <div className="services-step-card reveal-up" style={{ animationDelay: `${idx * 0.15}s` }}>
                   
-                  {/* Pebble / Squircle Icon Box */}
-                  <div className="services-icon-box">
-                    {step.icon}
+                  {/* Photo Box where the arrow travels */}
+                  <div className="services-photo-box">
+                    <img 
+                      src={step.image} 
+                      alt={step.title.replace('\n', ' ')} 
+                      className="services-photo-img" 
+                      loading="lazy" 
+                    />
+                    <div className="services-photo-overlay" />
+                    <span className="services-photo-badge">{step.num}</span>
                   </div>
 
-                  {/* Step Title */}
+                  {/* Step Title in Akira Expanded */}
                   <h3 className="services-step-title">
                     {step.title}
                   </h3>
 
-                  {/* Step Description */}
+                  {/* Gold Gradient Divider */}
+                  <div className="services-step-divider" />
+
+                  {/* Description Copy */}
                   <p className="services-step-desc">
                     {step.desc}
                   </p>
@@ -150,23 +146,32 @@ export default function WhatWeDo() {
                 {idx < steps.length - 1 && (
                   <div className="services-mobile-connector" aria-hidden="true">
                     <svg width="40" height="70" viewBox="0 0 40 70" fill="none">
+                      <defs>
+                        <filter id={`goldArrowGlowMobile-${idx}`} x="-50%" y="-50%" width="200%" height="200%">
+                          <feGaussianBlur stdDeviation="2.5" result="blur" />
+                          <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                          </feMerge>
+                        </filter>
+                      </defs>
                       <path
                         d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
-                        stroke="#DDD9D3"
+                        stroke="rgba(255, 255, 255, 0.12)"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                       />
                       <path
                         d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
-                        stroke="#A8A297"
+                        stroke="rgba(212, 175, 55, 0.7)"
                         strokeWidth="2"
                         strokeDasharray="5 9"
                         className="services-dash-stream"
                       />
-                      <g>
+                      <g filter={`url(#goldArrowGlowMobile-${idx})`}>
                         <path
                           d="M -7 -4.5 L 4 0 L -7 4.5 L -4 0 Z"
-                          fill="#111111"
+                          fill="#ffd700"
                         />
                         <animateMotion
                           path={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
@@ -188,9 +193,9 @@ export default function WhatWeDo() {
 
       <style>{`
         .services-process-section {
-          background-color: #F0EBE5;
-          color: #111113;
-          padding: 8rem 0 9rem 0;
+          background-color: transparent;
+          color: var(--text-primary, #f4f4f5);
+          padding: 7rem 0 8rem 0;
           position: relative;
           overflow: hidden;
           width: 100%;
@@ -198,7 +203,7 @@ export default function WhatWeDo() {
 
         .services-header {
           text-align: center;
-          margin-bottom: 4.8rem;
+          margin-bottom: 4.5rem;
         }
 
         .services-tag {
@@ -206,18 +211,18 @@ export default function WhatWeDo() {
           font-size: clamp(1.8rem, 3.2vw, 2.5rem);
           letter-spacing: 0.06em;
           text-transform: none;
-          color: #B38A2A;
+          color: var(--gold-main, #d4af37);
           display: inline-block;
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.5rem;
         }
 
         .services-title {
           font-family: 'Montserrat', sans-serif;
           font-size: clamp(2.4rem, 5.2vw, 4.2rem);
-          font-weight: 700;
+          font-weight: 800;
           line-height: 1.15;
-          letter-spacing: -0.025em;
-          color: #0E0E10;
+          letter-spacing: -0.02em;
+          color: var(--text-primary, #f4f4f5);
           margin: 0 auto;
           max-width: 960px;
         }
@@ -227,6 +232,7 @@ export default function WhatWeDo() {
           font-style: italic;
           font-weight: 400;
           letter-spacing: -0.01em;
+          color: var(--gold-main, #d4af37);
           padding: 0 0.06em;
         }
 
@@ -242,7 +248,7 @@ export default function WhatWeDo() {
           top: 0;
           left: 0;
           width: 100%;
-          height: 96px;
+          height: 195px;
           pointer-events: none;
           z-index: 1;
         }
@@ -283,47 +289,90 @@ export default function WhatWeDo() {
           position: relative;
         }
 
-        .services-icon-box {
-          width: 96px;
-          height: 96px;
-          border-radius: 26px;
-          background: #F7F2EA;
-          border: 1px solid rgba(0, 0, 0, 0.05);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.035), 0 1px 3px rgba(0, 0, 0, 0.04);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 2.2rem;
+        .services-photo-box {
+          width: 100%;
+          max-width: 260px;
+          aspect-ratio: 4 / 3;
+          border-radius: 20px;
+          overflow: hidden;
           position: relative;
-          z-index: 3;
-          transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
-                      box-shadow 0.35s ease,
-                      border-color 0.35s ease;
+          z-index: 2;
+          background: #141416;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(212, 175, 55, 0.08);
+          margin-bottom: 1.8rem;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.4s ease,
+                      box-shadow 0.4s ease;
         }
 
-        .services-step-card:hover .services-icon-box {
-          transform: translateY(-5px);
-          box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.05);
-          border-color: rgba(179, 138, 42, 0.35);
+        .services-step-card:hover .services-photo-box {
+          transform: translateY(-6px);
+          border-color: rgba(212, 175, 55, 0.55);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8), 0 0 25px rgba(212, 175, 55, 0.22);
+        }
+
+        .services-photo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .services-step-card:hover .services-photo-img {
+          transform: scale(1.07);
+        }
+
+        .services-photo-overlay {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.5) 100%);
+          pointer-events: none;
+        }
+
+        .services-photo-badge {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          background: rgba(14, 14, 18, 0.85);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(212, 175, 55, 0.4);
+          color: var(--gold-main, #d4af37);
+          font-family: var(--font-display), 'Akira Expanded', sans-serif;
+          font-size: 0.82rem;
+          letter-spacing: 0.05em;
+          padding: 0.25rem 0.6rem;
+          border-radius: 8px;
+          pointer-events: none;
         }
 
         .services-step-title {
-          font-family: 'Montserrat', sans-serif;
-          font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+          font-family: var(--font-display), 'Akira Expanded', sans-serif;
+          font-size: clamp(1.2rem, 1.6vw, 1.5rem);
           font-weight: 700;
           line-height: 1.25;
-          letter-spacing: -0.015em;
-          color: #111113;
-          margin: 0 0 0.85rem 0;
+          letter-spacing: 0.02em;
+          color: var(--text-primary, #f4f4f5);
+          margin: 0;
+          white-space: pre-line;
+        }
+
+        .services-step-divider {
+          width: 36px;
+          height: 2px;
+          background: var(--gold-gradient, linear-gradient(135deg, #d4af37 0%, #f3e5ab 100%));
+          margin: 1.1rem auto;
         }
 
         .services-step-desc {
           font-family: 'Montserrat', sans-serif;
-          font-size: clamp(0.95rem, 1.05vw, 1.05rem);
-          line-height: 1.65;
-          color: #686259;
+          font-size: clamp(0.92rem, 1.05vw, 1rem);
+          line-height: 1.7;
+          color: var(--text-secondary, #a1a1aa);
           margin: 0;
-          max-width: 320px;
+          max-width: 340px;
           font-weight: 400;
         }
 
@@ -345,6 +394,10 @@ export default function WhatWeDo() {
             margin: 0 auto;
           }
 
+          .services-photo-box {
+            max-width: 300px;
+          }
+
           .services-mobile-connector {
             display: flex;
             justify-content: center;
@@ -358,7 +411,7 @@ export default function WhatWeDo() {
           }
 
           .services-process-section {
-            padding: 6rem 0 6.5rem 0;
+            padding: 5.5rem 0 6rem 0;
           }
         }
       `}</style>
