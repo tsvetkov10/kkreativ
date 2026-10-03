@@ -7,7 +7,7 @@ export default function OurCraft() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.hash) {
+    if (location.hash && location.hash !== '#ugc-acai-hero') {
       const id = location.hash.replace('#', '');
       const scrollToTarget = () => {
         const el = document.getElementById(id);

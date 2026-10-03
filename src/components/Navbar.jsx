@@ -31,7 +31,7 @@ export default function Navbar() {
   }, [location]);
 
   const scrollToSection = (id) => {
-    if (id === 'hero' || id === 'home') {
+    if (id === 'hero' || id === 'home' || id === 'ugc-acai-hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
@@ -63,6 +63,10 @@ export default function Navbar() {
   useEffect(() => {
     if (location.hash) {
       const id = location.hash.replace('#', '');
+      if (id === 'ugc-acai-hero') {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        return;
+      }
       const timer = setTimeout(() => {
         scrollToSection(id);
       }, 100);

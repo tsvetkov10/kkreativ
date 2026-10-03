@@ -2,7 +2,7 @@ import React from 'react';
 
 const ugcSections = [
   {
-    id: 'ugc-acai-hero',
+    id: 'ugc-acai-hero-card',
     reversed: false,
     videos: [
       encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
@@ -388,7 +388,8 @@ export default function PerformanceUgc() {
   };
 
   return (
-    <section className="ugc-showcase-wrapper" id="projects">
+    <section className="ugc-showcase-wrapper" id="projects" style={{ position: 'relative' }}>
+      <div id="ugc-acai-hero" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', scrollMarginTop: '120px' }} />
       {/* Header Block: [projects] */}
       <div 
         className="section-header reveal-up" 
