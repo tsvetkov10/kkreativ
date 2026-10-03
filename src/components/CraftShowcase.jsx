@@ -8,7 +8,6 @@ const showcaseClients = [
     targetId: 'ugc-acai-hero',
     subtitle: 'Вайръл скечове, интервюта и образователни видеа',
     video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
-    badges: ['3 000 000+', '+5000', '280%'],
     tags: ['FOOD & BEV', 'VIRAL CONTENT']
   },
   {
@@ -17,7 +16,6 @@ const showcaseClients = [
     targetId: 'ugc-autolux',
     subtitle: 'Реални доставки, ексклузивни коли и продажби',
     video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
-    badges: ['2 500 000+', '+4000', '10K+ Viber'],
     tags: ['AUTOMOTIVE', 'COMMUNITY']
   },
   {
@@ -26,7 +24,6 @@ const showcaseClients = [
     targetId: 'ugc-leos-pasta',
     subtitle: 'Автентично италианско готвене и силен бранд',
     video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
-    badges: ['1 500 000+', '+6000', '450%'],
     tags: ['RESTAURANT', 'SOCIAL SCALING']
   }
 ];
@@ -95,13 +92,15 @@ function ShowcaseCard({ client }) {
       </div>
 
       {/* Top Floating Badges */}
-      <div className="craft-card-badges">
-        {client.badges.map((b, idx) => (
-          <span key={idx} className="craft-badge-pill">
-            <span className="craft-badge-text">{typeof b === 'string' ? b : b.label}</span>
-          </span>
-        ))}
-      </div>
+      {client.badges && client.badges.length > 0 && (
+        <div className="craft-card-badges">
+          {client.badges.map((b, idx) => (
+            <span key={idx} className="craft-badge-pill">
+              <span className="craft-badge-text">{typeof b === 'string' ? b : b.label}</span>
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Bottom Content Area */}
       <div className="craft-card-content">
@@ -215,7 +214,7 @@ export default function CraftShowcase() {
           border: 1px solid rgba(255, 255, 255, 0.08);
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
+          justify-content: flex-end;
           padding: 1.25rem;
           cursor: pointer;
           transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -300,6 +299,7 @@ export default function CraftShowcase() {
           z-index: 2;
           display: flex;
           flex-direction: column;
+          margin-top: auto;
         }
 
         .craft-card-num {
