@@ -3,6 +3,7 @@ import Hero from './Hero';
 import VideoResults from './VideoResults';
 import VideoStats from './VideoStats';
 import WallOfLove from './WallOfLove';
+import CraftShowcase from './CraftShowcase';
 import WhatWeDo from './WhatWeDo';
 import WhoWeAre from './WhoWeAre';
 import Mission from './Mission';
@@ -37,6 +38,7 @@ export default function Home() {
       <VideoResults />
       <WallOfLove />
       <VideoStats />
+      <CraftShowcase />
       <WhatWeDo />
       <WhoWeAre />
       <Mission />

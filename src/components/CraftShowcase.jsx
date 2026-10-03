@@ -1,0 +1,406 @@
+import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const showcaseClients = [
+  {
+    num: '01',
+    name: 'Acai Hero',
+    subtitle: 'Вайръл скечове, интервюта и образователни видеа',
+    video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
+    badges: [
+      { icon: '👁', label: '3 000 000+' },
+      { icon: '👥', label: '+5000' },
+      { icon: '🚀', label: '280%' }
+    ],
+    tags: ['FOOD & BEV', 'VIRAL CONTENT']
+  },
+  {
+    num: '02',
+    name: 'Autolux Import',
+    subtitle: 'Реални доставки, ексклузивни коли и продажби',
+    video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
+    badges: [
+      { icon: '👁', label: '2 500 000+' },
+      { icon: '👥', label: '+4000' },
+      { icon: '💬', label: '10K+ Viber' }
+    ],
+    tags: ['AUTOMOTIVE', 'COMMUNITY']
+  },
+  {
+    num: '03',
+    name: 'Leo\'s Pasta',
+    subtitle: 'Автентично италианско готвене и силен бранд',
+    video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
+    badges: [
+      { icon: '👁', label: '1 500 000+' },
+      { icon: '👥', label: '+6000' },
+      { icon: '🍝', label: '450%' }
+    ],
+    tags: ['RESTAURANT', 'SOCIAL SCALING']
+  }
+];
+
+function ShowcaseCard({ client }) {
+  const videoRef = useRef(null);
+  const cardRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const card = cardRef.current;
+    if (!video || !card) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          if (video.paused && !document.hidden) {
+            video.play().catch(() => {});
+          }
+        } else {
+          if (!video.paused) {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(card);
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleClick = () => {
+    navigate('/our-craft');
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+  };
+
+  return (
+    <div 
+      ref={cardRef}
+      className="craft-showcase-card"
+      onClick={handleClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter') handleClick(); }}
+    >
+      {/* Background Video */}
+      <div className="craft-card-media">
+        <video 
+          ref={videoRef}
+          src={client.video}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        <div className="craft-card-overlay" />
+      </div>
+
+      {/* Top Floating Badges */}
+      <div className="craft-card-badges">
+        {client.badges.map((b, idx) => (
+          <span key={idx} className="craft-badge-pill">
+            <span className="craft-badge-icon">{b.icon}</span>
+            <span className="craft-badge-text">{b.label}</span>
+          </span>
+        ))}
+      </div>
+
+      {/* Bottom Content Area */}
+      <div className="craft-card-content">
+        <span className="craft-card-num">{client.num}</span>
+        <h3 className="craft-card-title">{client.name}</h3>
+        <p className="craft-card-subtitle">{client.subtitle}</p>
+
+        <div className="craft-card-bottom-row">
+          <div className="craft-card-tags">
+            {client.tags.map((tag, idx) => (
+              <span key={idx} className="craft-tag-pill">{tag}</span>
+            ))}
+          </div>
+
+          <div className="craft-card-action-btn" aria-label="Виж казуса">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function CraftShowcase() {
+  return (
+    <section id="our-craft" className="section craft-showcase-section">
+      <div className="container" style={{ maxWidth: '1240px', margin: '0 auto', padding: '0 2rem' }}>
+        
+        {/* Section Header */}
+        <div className="section-header reveal-up" style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+          <span className="section-tag text-gold" style={{ 
+            fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
+            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', 
+            letterSpacing: '0.06em', 
+            textTransform: 'none',
+            lineHeight: 1,
+            marginBottom: '0.35rem',
+            display: 'inline-block'
+          }}>
+            [our craft]
+          </span>
+          <h2 style={{ 
+            fontFamily: "'Montserrat', sans-serif",
+            fontWeight: 800,
+            fontSize: 'clamp(2.2rem, 4.6vw, 3.8rem)', 
+            lineHeight: 1.15,
+            letterSpacing: '-0.02em',
+            margin: 0,
+            color: 'var(--text-primary)',
+            textTransform: 'uppercase'
+          }}>
+            НА ДУМИ ВСИЧКИ СМЕ СИЛНИ...
+          </h2>
+        </div>
+
+        {/* 3 Showcase Cards Grid */}
+        <div className="craft-showcase-grid reveal-scale">
+          {showcaseClients.map((client) => (
+            <ShowcaseCard key={client.num} client={client} />
+          ))}
+        </div>
+
+      </div>
+
+      <style>{`
+        .craft-showcase-section {
+          position: relative;
+          width: 100%;
+          padding: 5rem 0 6rem;
+          background: transparent;
+          z-index: 2;
+        }
+
+        .craft-showcase-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.8rem;
+          width: 100%;
+        }
+
+        .craft-showcase-card {
+          position: relative;
+          height: 540px;
+          border-radius: 26px;
+          overflow: hidden;
+          background: #0e0e13;
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          padding: 1.25rem;
+          cursor: pointer;
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                      border-color 0.4s ease, 
+                      box-shadow 0.4s ease;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .craft-showcase-card:hover {
+          transform: translateY(-8px);
+          border-color: rgba(212, 175, 55, 0.4);
+          box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .craft-card-media {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 0;
+          overflow: hidden;
+        }
+
+        .craft-card-media video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .craft-showcase-card:hover .craft-card-media video {
+          transform: scale(1.05);
+        }
+
+        .craft-card-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg, 
+            rgba(10, 10, 14, 0.6) 0%, 
+            rgba(10, 10, 14, 0.15) 25%, 
+            rgba(10, 10, 14, 0.25) 50%, 
+            rgba(10, 10, 14, 0.88) 80%, 
+            rgba(10, 10, 14, 0.98) 100%
+          );
+          pointer-events: none;
+        }
+
+        .craft-card-badges {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.45rem;
+          align-items: center;
+        }
+
+        .craft-badge-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          background: rgba(14, 16, 22, 0.68);
+          backdrop-filter: blur(14px);
+          -webkit-backdrop-filter: blur(14px);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 100px;
+          padding: 0.35rem 0.7rem;
+          color: #ffffff;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .craft-badge-icon {
+          font-size: 0.78rem;
+          line-height: 1;
+        }
+
+        .craft-badge-text {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+          font-size: 0.74rem;
+          letter-spacing: 0.02em;
+        }
+
+        .craft-card-content {
+          position: relative;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .craft-card-num {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 800;
+          font-size: 0.78rem;
+          color: rgba(255, 255, 255, 0.55);
+          letter-spacing: 0.06em;
+          margin-bottom: 0.25rem;
+        }
+
+        .craft-card-title {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 800;
+          font-size: clamp(1.45rem, 1.85vw, 1.75rem);
+          color: #ffffff;
+          line-height: 1.2;
+          letter-spacing: -0.02em;
+          margin: 0 0 0.4rem 0;
+        }
+
+        .craft-card-subtitle {
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 400;
+          font-size: 0.88rem;
+          line-height: 1.45;
+          color: rgba(255, 255, 255, 0.72);
+          margin: 0 0 1.25rem 0;
+          max-width: 95%;
+        }
+
+        .craft-card-bottom-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.8rem;
+        }
+
+        .craft-card-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.45rem;
+          align-items: center;
+        }
+
+        .craft-tag-pill {
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 100px;
+          padding: 0.35rem 0.75rem;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+          font-size: 0.65rem;
+          letter-spacing: 0.06em;
+          color: rgba(255, 255, 255, 0.88);
+          text-transform: uppercase;
+        }
+
+        .craft-card-action-btn {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          flex-shrink: 0;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .craft-showcase-card:hover .craft-card-action-btn {
+          background: var(--gold-gradient, linear-gradient(135deg, #ffd700, #d4af37));
+          color: #0a0a0c;
+          border-color: transparent;
+          transform: scale(1.08);
+        }
+
+        @media (max-width: 992px) {
+          .craft-showcase-grid {
+            grid-template-columns: 1fr;
+            max-width: 460px;
+            margin: 0 auto;
+            gap: 2rem;
+          }
+          .craft-showcase-card {
+            height: 500px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .craft-showcase-section {
+            padding: 3.5rem 0 4.5rem;
+          }
+          .craft-showcase-card {
+            height: 460px;
+            padding: 1.1rem;
+            border-radius: 22px;
+          }
+          .craft-badge-text {
+            font-size: 0.7rem;
+          }
+          .craft-card-title {
+            font-size: 1.4rem;
+          }
+        }
+      `}</style>
+    </section>
+  );
+}
