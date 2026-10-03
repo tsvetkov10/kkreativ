@@ -3,7 +3,7 @@ import React from 'react';
 const steps = [
   {
     num: "01",
-    title: "GOAL\nALIGNMENT",
+    title: "BRAND\nSTRATEGY",
     desc: "Разучаваме всичко за бизнеса и нишата ти, след което изграждаме печеливша креативна концепция с ясни цели и цялостна естетика на профила.",
     image: "/photos-of-owners/concept.png"
   },
@@ -15,7 +15,7 @@ const steps = [
   },
   {
     num: "03",
-    title: "RAPID\nGROWTH",
+    title: "MONTHLY\nANALYSIS",
     desc: "Следим растежа и анализираме реакцията и поведението на аудиторията, спрямо които адаптираме концепциите и надграждаме с всеки един месец.",
     image: "/photos-of-owners/services.png"
   }
@@ -30,8 +30,7 @@ export default function WhatWeDo() {
         <div className="services-header reveal-up">
           <span className="services-tag">[services]</span>
           <h2 className="services-title">
-            We like to keep<br />
-            things <span className="services-title-italic">nice</span> and simple
+            С ДВЕ ДУМИ, НИЕ ПОЕМАМЕ ВСИЧКО.
           </h2>
         </div>
 
@@ -74,7 +73,7 @@ export default function WhatWeDo() {
                 className="services-dash-stream"
               />
 
-              {/* Traveling Arrow 1 */}
+              {/* Single Traveling Arrow that loops continuously */}
               <g filter="url(#goldArrowGlow)">
                 <path
                   d="M -9 -5.5 L 5 0 L -9 5.5 L -6 0 Z"
@@ -84,24 +83,7 @@ export default function WhatWeDo() {
                 <circle cx="-19" cy="0" r="1.2" fill="#d4af37" opacity="0.4" />
                 <animateMotion
                   path="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
-                  dur="3.2s"
-                  repeatCount="indefinite"
-                  rotate="auto"
-                />
-              </g>
-
-              {/* Traveling Arrow 2 (offset by 1.6s so both segments always show active motion) */}
-              <g filter="url(#goldArrowGlow)">
-                <path
-                  d="M -9 -5.5 L 5 0 L -9 5.5 L -6 0 Z"
-                  fill="#ffd700"
-                />
-                <circle cx="-12" cy="0" r="2" fill="#d4af37" opacity="0.8" />
-                <circle cx="-19" cy="0" r="1.2" fill="#d4af37" opacity="0.4" />
-                <animateMotion
-                  path="M 166.7 97.5 C 277.8 155, 388.9 155, 500 97.5 C 611.1 40, 722.2 40, 833.3 97.5"
-                  dur="3.2s"
-                  begin="1.6s"
+                  dur="3s"
                   repeatCount="indefinite"
                   rotate="auto"
                 />
@@ -218,22 +200,14 @@ export default function WhatWeDo() {
 
         .services-title {
           font-family: 'Montserrat', sans-serif;
-          font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+          font-size: clamp(2.1rem, 4.4vw, 3.6rem);
           font-weight: 800;
-          line-height: 1.15;
+          line-height: 1.2;
           letter-spacing: -0.02em;
           color: var(--text-primary, #f4f4f5);
           margin: 0 auto;
-          max-width: 960px;
-        }
-
-        .services-title-italic {
-          font-family: 'Lora', 'Instrument Serif', Georgia, serif;
-          font-style: italic;
-          font-weight: 400;
-          letter-spacing: -0.01em;
-          color: var(--gold-main, #d4af37);
-          padding: 0 0.06em;
+          max-width: 980px;
+          text-transform: uppercase;
         }
 
         .services-steps-wrapper {
