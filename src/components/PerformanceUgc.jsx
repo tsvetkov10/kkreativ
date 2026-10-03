@@ -401,20 +401,6 @@ export default function PerformanceUgc() {
           paddingRight: '1.5rem'
         }}
       >
-        <span 
-          className="section-tag text-gold" 
-          style={{ 
-            fontFamily: "var(--font-logo), 'Creating Minimalist', sans-serif",
-            fontSize: 'clamp(1.8rem, 3vw, 2.4rem)', 
-            letterSpacing: '0.06em', 
-            textTransform: 'none',
-            lineHeight: 1,
-            marginBottom: '0.35rem',
-            display: 'inline-block'
-          }}
-        >
-          [our craft]
-        </span>
         <h2 
           style={{ 
             fontFamily: "'Montserrat', sans-serif",
