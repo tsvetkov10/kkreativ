@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { preloadVideoImmediately } from './BackgroundVideoPreloader';
 
 export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -130,6 +131,7 @@ export default function Navbar() {
           <a 
             href="/our-craft" 
             onClick={(e) => handleLinkClick(e, '/our-craft')} 
+            onMouseEnter={() => preloadVideoImmediately(encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'))}
             className={`nav-item ${location.pathname === '/our-craft' || location.pathname === '/craft' ? 'active' : ''}`}
           >
             our craft

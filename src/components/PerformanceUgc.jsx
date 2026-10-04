@@ -1,4 +1,5 @@
 import React from 'react';
+import { getVideoPoster } from '../utils/videoUtils';
 
 const ugcSections = [
   {
@@ -172,10 +173,11 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
   const [currentIdx, setCurrentIdx] = React.useState(0);
   const [isMuted, setIsMuted] = React.useState(true);
   const [isPlaying, setIsPlaying] = React.useState(false);
-  const [shouldLoad, setShouldLoad] = React.useState(false);
+  const isIntersectingRef = React.useRef(false);
 
   const videoList = Array.isArray(videos) && videos.length > 0 ? videos : (videoSrc ? [videoSrc] : []);
   const currentVideoSrc = videoList[currentIdx];
+  const currentPoster = getVideoPoster(currentVideoSrc);
 
   React.useEffect(() => {
     const el = containerRef.current;
@@ -183,8 +185,8 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        isIntersectingRef.current = entry.isIntersecting;
         if (entry.isIntersecting) {
-          setShouldLoad(true);
           if (videoRef.current && videoRef.current.paused) {
             videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
           }
@@ -195,7 +197,7 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
           }
         }
       },
-      { rootMargin: '200px 0px', threshold: 0.1 }
+      { rootMargin: '300px 0px', threshold: 0.1 }
     );
 
     observer.observe(el);
@@ -206,13 +208,12 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
     const v = videoRef.current;
     if (!v) return;
     v.muted = isMuted;
-    if (shouldLoad) {
-      v.load();
+    if (isIntersectingRef.current) {
       v.play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
     }
-  }, [currentIdx, shouldLoad]);
+  }, [currentIdx, isMuted]);
 
   const handleNext = (e) => {
     e.stopPropagation();
@@ -245,9 +246,28 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
   return (
     <div 
       ref={containerRef}
-      style={{ position: 'relative', width: '100%', height: '100%', cursor: 'pointer', background: '#000' }}
+      style={{ position: 'relative', width: '100%', height: '100%', cursor: 'pointer', background: '#0a0a0f', overflow: 'hidden' }}
       onClick={togglePlay}
     >
+      {/* Instant High-Res Poster Image Behind Video: Zero Black Screen */}
+      {currentPoster && (
+        <img
+          src={currentPoster}
+          alt={alt || "Video preview"}
+          loading="eager"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
+
       {/* Single Arrow Button on Top Right - cycles continuously through videos */}
       {videoList.length > 1 && (
         <button 
@@ -256,6 +276,7 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
           aria-label="Следващо видео"
           title="Следващо видео"
           type="button"
+          style={{ zIndex: 12 }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
@@ -265,18 +286,29 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
 
       <video
         ref={videoRef}
+        key={currentVideoSrc}
+        src={currentVideoSrc}
+        poster={currentPoster}
         loop
         muted={isMuted}
         playsInline
-        preload={shouldLoad ? "auto" : "none"}
+        preload="auto"
+        onCanPlay={() => {
+          if (isIntersectingRef.current && videoRef.current?.paused) {
+            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+          }
+        }}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         style={{
+          position: 'relative',
+          zIndex: 1,
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           display: 'block'
         }}
       >
-        {shouldLoad && currentVideoSrc && <source src={currentVideoSrc} type="video/mp4" />}
         Your browser does not support video playback.
       </video>
 
@@ -361,13 +393,11 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
       )}
 
       {/* Preload other brand videos */}
-      {shouldLoad && (
-        <div style={{ display: 'none' }} aria-hidden="true">
-          {videoList.map((src, i) => (
-            i !== currentIdx ? <video key={src} src={src} preload="auto" muted playsInline /> : null
-          ))}
-        </div>
-      )}
+      <div style={{ display: 'none' }} aria-hidden="true">
+        {videoList.map((src, i) => (
+          i !== currentIdx ? <video key={src} src={src} poster={getVideoPoster(src)} preload="auto" muted playsInline /> : null
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getVideoPoster } from '../utils/videoUtils';
+import { preloadVideoImmediately } from './BackgroundVideoPreloader';
 
 const showcaseClients = [
   {
@@ -74,21 +76,41 @@ function ShowcaseCard({ client }) {
       ref={cardRef}
       className="craft-showcase-card"
       onClick={handleClick}
+      onMouseEnter={() => preloadVideoImmediately(client.video)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === 'Enter') handleClick(); }}
     >
-      {/* Background Video */}
+      {/* Background Video & Poster */}
       <div className="craft-card-media">
+        {getVideoPoster(client.video) && (
+          <img
+            src={getVideoPoster(client.video)}
+            alt={client.name}
+            loading="lazy"
+            decoding="async"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }}
+          />
+        )}
         <video 
           ref={videoRef}
           src={client.video}
+          poster={getVideoPoster(client.video)}
           muted
           loop
           playsInline
           preload="metadata"
+          style={{ position: 'relative', zIndex: 1 }}
         />
-        <div className="craft-card-overlay" />
+        <div className="craft-card-overlay" style={{ zIndex: 2 }} />
       </div>
 
       {/* Top Floating Badges */}
@@ -172,6 +194,7 @@ export default function CraftShowcase() {
         <div className="craft-showcase-cta reveal-up" style={{ textAlign: 'center', marginTop: '3.5rem' }}>
           <button
             className="btn-craft-showcase"
+            onMouseEnter={() => preloadVideoImmediately(encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'))}
             onClick={() => {
               navigate('/our-craft');
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });

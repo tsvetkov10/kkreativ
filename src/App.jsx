@@ -9,6 +9,7 @@ import Home from './components/Home';
 import OurCraft from './components/OurCraft';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import BackgroundVideoPreloader from './components/BackgroundVideoPreloader';
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -58,6 +59,7 @@ export default function App() {
         <Navbar />
         <CanvasBackground />
         <EmojiSplash />
+        <BackgroundVideoPreloader />
 
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Routes>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { getVideoPoster } from '../utils/videoUtils';
 
 const carouselVideos = [
   {
@@ -142,9 +143,28 @@ function MarqueeCard({ vid }) {
 
   return (
     <div ref={cardRef} className="marquee-card">
+      {getVideoPoster(videoSrc) && (
+        <img
+          src={getVideoPoster(videoSrc)}
+          alt={vid.title}
+          loading="lazy"
+          decoding="async"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            borderRadius: '24px',
+            zIndex: 0,
+            pointerEvents: 'none'
+          }}
+        />
+      )}
       <video
         ref={videoRef}
         src={videoSrc}
+        poster={getVideoPoster(videoSrc)}
         muted
         loop
         playsInline
@@ -162,7 +182,8 @@ function MarqueeCard({ vid }) {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          borderRadius: '24px'
+          borderRadius: '24px',
+          zIndex: 1
         }}
       />
 

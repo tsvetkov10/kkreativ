@@ -89,9 +89,6 @@ export default function WhatWeDo() {
                     {step.title}
                   </h3>
 
-                  {/* Gold Gradient Divider */}
-                  <div className="services-step-divider" />
-
                   {/* Description Copy */}
                   <p className="services-step-desc">
                     {step.desc}
@@ -302,15 +299,8 @@ export default function WhatWeDo() {
           line-height: 1.25;
           letter-spacing: 0.02em;
           color: var(--text-primary, #f4f4f5);
-          margin: 0;
+          margin: 0 0 1.1rem 0;
           white-space: pre-line;
-        }
-
-        .services-step-divider {
-          width: 36px;
-          height: 2px;
-          background: var(--gold-gradient, linear-gradient(135deg, #d4af37 0%, #f3e5ab 100%));
-          margin: 1.1rem auto;
         }
 
         .services-step-desc {
