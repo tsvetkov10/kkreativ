@@ -22,6 +22,14 @@ const steps = [
 ];
 
 export default function WhatWeDo() {
+  React.useEffect(() => {
+    // Preload step images so they are ready instantly without blank frames
+    steps.forEach((step) => {
+      const img = new Image();
+      img.src = step.image;
+    });
+  }, []);
+
   return (
     <section id="what-we-do" className="services-process-section">
       <div className="container">
@@ -34,8 +42,8 @@ export default function WhatWeDo() {
           </h2>
         </div>
 
-        {/* Steps Grid & Animated Connection Track */}
-        <div className="services-steps-wrapper">
+        {/* Steps Grid & Animated Connection Track - animated together */}
+        <div className="services-steps-wrapper reveal-up">
           
           {/* Desktop Curved Connector SVG */}
           <div className="services-connector-desktop" aria-hidden="true">
@@ -70,7 +78,7 @@ export default function WhatWeDo() {
           <div className="services-steps-grid">
             {steps.map((step, idx) => (
               <React.Fragment key={idx}>
-                <div className="services-step-card reveal-up" style={{ animationDelay: `${idx * 0.15}s` }}>
+                <div className="services-step-card">
                   
                   {/* Photo Box where the arrow travels */}
                   <div className="services-photo-box">
@@ -78,7 +86,8 @@ export default function WhatWeDo() {
                       src={step.image} 
                       alt={step.title.replace('\n', ' ')} 
                       className="services-photo-img" 
-                      loading="lazy" 
+                      loading="eager"
+                      decoding="async"
                     />
                     <div className="services-photo-overlay" />
                     <span className="services-photo-badge">{step.num}</span>
