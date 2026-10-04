@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { downloadCoreVideos } from '../utils/videoUtils';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -32,12 +31,8 @@ export default function Preloader({ onComplete }) {
       handleCompletion();
     }, 8500);
 
-    // 3. Immediately start downloading core videos in parallel
-    const downloadPromise = downloadCoreVideos((pct) => {
-      if (isMounted) {
-        setProgress(pct);
-      }
-    }).catch(() => {});
+    // 3. Immediately start downloading core videos in parallel in the background
+    const downloadPromise = downloadCoreVideos().catch(() => {});
 
     // 4. Logo animation lasts until BOTH minimum animation sequence AND video downloads are done
     Promise.all([minAnimPromise, downloadPromise]).then(() => {
@@ -62,27 +57,6 @@ export default function Preloader({ onComplete }) {
             loading="eager"
             decoding="async"
             className="preloader-logo-video"
-          />
-        </div>
-        <div 
-          className="loading-bar-wrap" 
-          style={{ 
-            marginTop: '-1.5rem', 
-            opacity: progress > 0 ? 0.85 : 0, 
-            transition: 'opacity 0.4s ease',
-            height: '2px',
-            width: '140px',
-            background: 'rgba(255, 255, 255, 0.08)'
-          }}
-        >
-          <div 
-            className="loading-bar" 
-            style={{ 
-              width: `${Math.max(progress, 5)}%`,
-              height: '100%',
-              background: 'linear-gradient(90deg, #d4af37, #f3e5ab)',
-              transition: 'width 0.25s ease'
-            }} 
           />
         </div>
       </div>
