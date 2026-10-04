@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { CRAFT_ALL_VIDEOS, getVideoPoster } from '../utils/videoUtils';
+import { CRAFT_ALL_VIDEOS, getVideoPoster, downloadVideo, videoBlobCache } from '../utils/videoUtils';
 
 const backgroundPreloadedSet = new Set();
 
@@ -8,7 +8,7 @@ export default function BackgroundVideoPreloader() {
     let isCancelled = false;
     let preloaderTimeout;
 
-    const startPreloading = () => {
+    const startPreloading = async () => {
       // 1. Immediately cache all poster images (fast and lightweight)
       CRAFT_ALL_VIDEOS.forEach((url) => {
         const poster = getVideoPoster(url);
@@ -18,52 +18,23 @@ export default function BackgroundVideoPreloader() {
         }
       });
 
-      // 2. Sequentially preload videos one by one so bandwidth is focused
-      let idx = 0;
-      const loadNext = () => {
-        if (isCancelled || idx >= CRAFT_ALL_VIDEOS.length) return;
-        const currentUrl = CRAFT_ALL_VIDEOS[idx];
-        idx++;
-
-        if (backgroundPreloadedSet.has(currentUrl)) {
-          loadNext();
-          return;
+      // 2. Sequentially download remaining videos one by one into in-memory blob cache
+      for (const currentUrl of CRAFT_ALL_VIDEOS) {
+        if (isCancelled) break;
+        if (backgroundPreloadedSet.has(currentUrl) || videoBlobCache.has(currentUrl)) {
+          continue;
         }
         backgroundPreloadedSet.add(currentUrl);
 
         try {
-          const link = document.createElement('link');
-          link.rel = 'prefetch';
-          link.as = 'video';
-          link.href = currentUrl;
-          document.head.appendChild(link);
+          await downloadVideo(currentUrl);
         } catch {
-          // ignore
+          // ignore error and proceed to next
         }
 
-        const v = document.createElement('video');
-        v.preload = 'auto';
-        v.muted = true;
-        v.playsInline = true;
-        v.src = currentUrl;
-
-        let advanced = false;
-        const advance = () => {
-          if (!advanced) {
-            advanced = true;
-            setTimeout(loadNext, 400);
-          }
-        };
-
-        v.oncanplay = advance;
-        v.onloadeddata = advance;
-        v.onerror = advance;
-
-        setTimeout(advance, 3500);
-        v.load();
-      };
-
-      loadNext();
+        // Brief delay between downloads so network & main thread remain idle
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
     };
 
     if ('requestIdleCallback' in window) {

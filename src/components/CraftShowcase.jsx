@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getVideoPoster, preloadVideoImmediately } from '../utils/videoUtils';
+import { getCachedVideoSrc, getVideoPoster, preloadVideoImmediately } from '../utils/videoUtils';
 
 const showcaseClients = [
   {
@@ -101,12 +101,12 @@ function ShowcaseCard({ client }) {
         )}
         <video 
           ref={videoRef}
-          src={client.video}
+          src={getCachedVideoSrc(client.video)}
           poster={getVideoPoster(client.video)}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           style={{ position: 'relative', zIndex: 1 }}
         />
         <div className="craft-card-overlay" style={{ zIndex: 2 }} />

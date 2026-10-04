@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { downloadCoreVideos } from '../utils/videoUtils';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -22,14 +24,30 @@ export default function Preloader({ onComplete }) {
       }, 600);
     };
 
-    // Play full animation sequence then fade out
-    const timer = setTimeout(() => {
+    // 1. Minimum logo animation sequence duration (~3.2s) so the animation is fully enjoyed
+    const minAnimPromise = new Promise((resolve) => setTimeout(resolve, 3200));
+
+    // 2. Maximum safety timeout (8.5s) so slow connections never trap the user
+    const maxSafetyTimeout = setTimeout(() => {
       handleCompletion();
-    }, 3400);
+    }, 8500);
+
+    // 3. Immediately start downloading core videos in parallel
+    const downloadPromise = downloadCoreVideos((pct) => {
+      if (isMounted) {
+        setProgress(pct);
+      }
+    }).catch(() => {});
+
+    // 4. Logo animation lasts until BOTH minimum animation sequence AND video downloads are done
+    Promise.all([minAnimPromise, downloadPromise]).then(() => {
+      clearTimeout(maxSafetyTimeout);
+      handleCompletion();
+    });
 
     return () => {
       isMounted = false;
-      clearTimeout(timer);
+      clearTimeout(maxSafetyTimeout);
     };
   }, [onComplete]);
 
@@ -46,9 +64,28 @@ export default function Preloader({ onComplete }) {
             className="preloader-logo-video"
           />
         </div>
+        <div 
+          className="loading-bar-wrap" 
+          style={{ 
+            marginTop: '-1.5rem', 
+            opacity: progress > 0 ? 0.85 : 0, 
+            transition: 'opacity 0.4s ease',
+            height: '2px',
+            width: '140px',
+            background: 'rgba(255, 255, 255, 0.08)'
+          }}
+        >
+          <div 
+            className="loading-bar" 
+            style={{ 
+              width: `${Math.max(progress, 5)}%`,
+              height: '100%',
+              background: 'linear-gradient(90deg, #d4af37, #f3e5ab)',
+              transition: 'width 0.25s ease'
+            }} 
+          />
+        </div>
       </div>
     </div>
   );
 }
-
-

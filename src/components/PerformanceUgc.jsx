@@ -1,5 +1,5 @@
 import React from 'react';
-import { getVideoPoster } from '../utils/videoUtils';
+import { getVideoPoster, getCachedVideoSrc, downloadVideo } from '../utils/videoUtils';
 
 const ugcSections = [
   {
@@ -180,6 +180,13 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
   const currentPoster = getVideoPoster(currentVideoSrc);
 
   React.useEffect(() => {
+    // Proactively download videos of this client into blob cache
+    videoList.forEach((src) => {
+      downloadVideo(src);
+    });
+  }, [videoList]);
+
+  React.useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
@@ -287,7 +294,7 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
       <video
         ref={videoRef}
         key={currentVideoSrc}
-        src={currentVideoSrc}
+        src={getCachedVideoSrc(currentVideoSrc)}
         poster={currentPoster}
         loop
         muted={isMuted}
@@ -395,7 +402,7 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
       {/* Preload other brand videos */}
       <div style={{ display: 'none' }} aria-hidden="true">
         {videoList.map((src, i) => (
-          i !== currentIdx ? <video key={src} src={src} poster={getVideoPoster(src)} preload="auto" muted playsInline /> : null
+          i !== currentIdx ? <video key={src} src={getCachedVideoSrc(src)} poster={getVideoPoster(src)} preload="auto" muted playsInline /> : null
         ))}
       </div>
     </div>
