@@ -62,7 +62,6 @@ export default function Home() {
             onClick={() => {
               navigate('/contact');
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-              document.documentElement.scrollTop = 0;
             }}
             style={{ fontSize: '1.2rem', padding: '1.2rem 3rem' }}
           >

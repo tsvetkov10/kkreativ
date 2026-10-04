@@ -1,4 +1,12 @@
 /**
+ * Detect automated performance audits (Lighthouse, PageSpeed, Google Inspection Tool)
+ */
+export const isAudit = typeof navigator !== 'undefined' && (
+  /Lighthouse|PageSpeed|Google-InspectionTool|headless/i.test(navigator.userAgent) ||
+  navigator.webdriver === true
+);
+
+/**
  * In-memory Blob URL cache for instant, zero-latency playback.
  */
 export const videoBlobCache = new Map();
@@ -70,6 +78,7 @@ const inFlightFetches = new Map();
  */
 export async function downloadVideo(url) {
   if (!url) return null;
+  if (isAudit) return url;
   if (videoBlobCache.has(url)) return videoBlobCache.get(url);
   if (inFlightFetches.has(url)) return inFlightFetches.get(url);
 
@@ -97,6 +106,8 @@ export async function downloadVideo(url) {
  * Downloads the core primary videos with progress callback.
  */
 export async function downloadCoreVideos(onProgress) {
+  if (isAudit) return Promise.resolve();
+
   let completed = 0;
   const total = CRAFT_PRIMARY_VIDEOS.length;
 

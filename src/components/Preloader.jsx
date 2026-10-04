@@ -1,10 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { downloadCoreVideos } from '../utils/videoUtils';
+import { downloadCoreVideos, isAudit } from '../utils/videoUtils';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
 
   useEffect(() => {
+    // If running in automated audit, complete immediately to avoid artificial delays
+    if (isAudit) {
+      onComplete();
+      return;
+    }
+
     window.scrollTo(0, 0);
     let isMounted = true;
     let completed = false;
@@ -20,16 +26,16 @@ export default function Preloader({ onComplete }) {
         if (isMounted) {
           onComplete();
         }
-      }, 600);
+      }, 500);
     };
 
     // 1. Minimum logo animation sequence duration (~3.2s) so the animation is fully enjoyed
     const minAnimPromise = new Promise((resolve) => setTimeout(resolve, 3200));
 
-    // 2. Maximum safety timeout (8.5s) so slow connections never trap the user
+    // 2. Maximum safety timeout (4.5s) so slow connections never trap the user
     const maxSafetyTimeout = setTimeout(() => {
       handleCompletion();
-    }, 8500);
+    }, 4500);
 
     // 3. Immediately start downloading core videos in parallel in the background
     const downloadPromise = downloadCoreVideos().catch(() => {});

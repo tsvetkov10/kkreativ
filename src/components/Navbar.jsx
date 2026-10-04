@@ -29,11 +29,8 @@ export default function Navbar() {
     }
 
     const offset = 80;
-    const bodyRect = document.body.getBoundingClientRect().top;
-    const elementRect = element.getBoundingClientRect().top;
-    const elementPosition = elementRect - bodyRect;
-    const offsetPosition = elementPosition - offset;
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    const targetScroll = Math.max(0, element.getBoundingClientRect().top + window.scrollY - offset);
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
   };
 
   // When location hash changes, scroll to it (handles cross-page hash links)
@@ -58,14 +55,12 @@ export default function Navbar() {
     if (target === '/contact') {
       navigate('/contact');
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
       return;
     }
 
     if (target === '/our-craft' || target === '/craft') {
       navigate('/our-craft');
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
       return;
     }
 
@@ -73,7 +68,6 @@ export default function Navbar() {
       if (location.pathname !== '/') {
         navigate('/');
         window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        document.documentElement.scrollTop = 0;
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }

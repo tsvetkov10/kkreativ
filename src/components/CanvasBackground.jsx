@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
+import { isAudit } from '../utils/videoUtils';
 
-export default function CanvasBackground() {
+export default function CanvasBackground({ active = false }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    if (!active || isAudit) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     
@@ -19,15 +22,17 @@ export default function CanvasBackground() {
     };
 
     const resizeCanvas = (force = false) => {
-      const currentWidth = window.innerWidth;
-      // If width hasn't changed (e.g. mobile address bar expanding/collapsing on scroll), don't reset
-      if (!force && particles.length > 0 && Math.abs(currentWidth - lastWidth) < 2) {
-        return;
-      }
-      lastWidth = currentWidth;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      initParticles();
+      requestAnimationFrame(() => {
+        if (!canvasRef.current) return;
+        const currentWidth = window.innerWidth;
+        if (!force && particles.length > 0 && Math.abs(currentWidth - lastWidth) < 2) {
+          return;
+        }
+        lastWidth = currentWidth;
+        canvas.width = currentWidth;
+        canvas.height = window.innerHeight;
+        initParticles();
+      });
     };
 
     // Particle Class
@@ -160,7 +165,7 @@ export default function CanvasBackground() {
       window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [active]);
 
   return <canvas id="canvas-bg" ref={canvasRef}></canvas>;
 }

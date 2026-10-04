@@ -18,10 +18,8 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to top on route change
+    // Scroll to top on route change without forced layout reflow
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
     
     if (!loaded) return;
 
@@ -59,9 +57,9 @@ export default function App() {
       {/* Main App Layout */}
       <div style={{ position: 'relative', opacity: loaded ? 1 : 0, transition: 'opacity 0.5s ease' }}>
         <Navbar />
-        <CanvasBackground />
+        <CanvasBackground active={loaded} />
         <EmojiSplash />
-        <BackgroundVideoPreloader />
+        <BackgroundVideoPreloader active={loaded} />
 
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Suspense fallback={null}>

@@ -36,53 +36,11 @@ const carouselVideos = [
   }
 ];
 
-// Persistent in-memory Blob Cache: downloads each of the 10 files exactly ONCE into RAM
-// Subsequent loops and other cards reference this same in-memory Blob with 0 network calls.
-const videoBlobCache = new Map();
-const blobListeners = new Set();
-
-function initVideoBlobPreload() {
-  carouselVideos.forEach((vid) => {
-    if (videoBlobCache.has(vid.src)) return;
-
-    fetch(vid.src)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.blob();
-      })
-      .then((blob) => {
-        const blobUrl = URL.createObjectURL(blob);
-        videoBlobCache.set(vid.src, blobUrl);
-        blobListeners.forEach((fn) => fn(vid.src, blobUrl));
-      })
-      .catch((err) => {
-        console.warn('Fallback to direct URL for video:', vid.src, err);
-      });
-  });
-}
-
-// Start in-memory preload immediately
-initVideoBlobPreload();
-
 function MarqueeCard({ vid }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
-  const [videoSrc, setVideoSrc] = useState(() => videoBlobCache.get(vid.src) || vid.src);
   const isIntersectingRef = useRef(false);
-
-  useEffect(() => {
-    if (!videoBlobCache.has(vid.src)) {
-      const listener = (src, blobUrl) => {
-        if (src === vid.src) {
-          setVideoSrc(blobUrl);
-        }
-      };
-      blobListeners.add(listener);
-      return () => {
-        blobListeners.delete(listener);
-      };
-    }
-  }, [vid.src]);
+  const poster = getVideoPoster(vid.src);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -143,9 +101,9 @@ function MarqueeCard({ vid }) {
 
   return (
     <div ref={cardRef} className="marquee-card">
-      {getVideoPoster(videoSrc) && (
+      {poster && (
         <img
-          src={getVideoPoster(videoSrc)}
+          src={poster}
           alt={vid.title}
           loading="lazy"
           decoding="async"
@@ -163,12 +121,12 @@ function MarqueeCard({ vid }) {
       )}
       <video
         ref={videoRef}
-        src={videoSrc}
-        poster={getVideoPoster(videoSrc)}
+        src={vid.src}
+        poster={poster}
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         disablePictureInPicture
         disableRemotePlayback
         onCanPlay={() => {

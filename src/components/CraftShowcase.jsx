@@ -63,8 +63,6 @@ function ShowcaseCard({ client }) {
     if (client.targetId === 'ugc-acai-hero' || client.name === 'Acai Hero') {
       navigate('/our-craft');
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
     } else {
       navigate(`/our-craft#${client.targetId}`);
     }
@@ -197,8 +195,6 @@ export default function CraftShowcase() {
             onClick={() => {
               navigate('/our-craft');
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-              document.documentElement.scrollTop = 0;
-              document.body.scrollTop = 0;
             }}
           >
             <span>Виж работата ни</span>

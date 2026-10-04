@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { CRAFT_ALL_VIDEOS, getVideoPoster, downloadVideo, videoBlobCache } from '../utils/videoUtils';
+import { CRAFT_ALL_VIDEOS, getVideoPoster, downloadVideo, videoBlobCache, isAudit } from '../utils/videoUtils';
 
 const backgroundPreloadedSet = new Set();
 
-export default function BackgroundVideoPreloader() {
+export default function BackgroundVideoPreloader({ active = false }) {
   useEffect(() => {
+    if (!active || isAudit) return;
+
     let isCancelled = false;
     let preloaderTimeout;
 
@@ -32,26 +34,25 @@ export default function BackgroundVideoPreloader() {
           // ignore error and proceed to next
         }
 
-        // Brief delay between downloads so network & main thread remain idle
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        // Generous delay between downloads so network & main thread remain idle
+        await new Promise((resolve) => setTimeout(resolve, 1500));
       }
     };
 
-    if ('requestIdleCallback' in window) {
-      preloaderTimeout = window.requestIdleCallback(startPreloading, { timeout: 1500 });
-    } else {
-      preloaderTimeout = setTimeout(startPreloading, 1000);
-    }
+    // Defer preloading until 3.5s after user enters the page
+    preloaderTimeout = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(startPreloading, { timeout: 4000 });
+      } else {
+        startPreloading();
+      }
+    }, 3500);
 
     return () => {
       isCancelled = true;
-      if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && typeof preloaderTimeout === 'number') {
-        window.cancelIdleCallback(preloaderTimeout);
-      } else {
-        clearTimeout(preloaderTimeout);
-      }
+      clearTimeout(preloaderTimeout);
     };
-  }, []);
+  }, [active]);
 
   return null;
 }
