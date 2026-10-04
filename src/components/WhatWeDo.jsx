@@ -108,41 +108,20 @@ export default function WhatWeDo() {
                 {/* Mobile-Only Vertical Connector between steps */}
                 {idx < steps.length - 1 && (
                   <div className="services-mobile-connector" aria-hidden="true">
-                    <svg width="64" height="96" viewBox="0 0 64 96" fill="none">
-                      {/* Top origin halo & anchor node */}
-                      <circle cx="32" cy="4" r="7" fill="none" stroke="rgba(212, 175, 55, 0.35)" strokeWidth="1.5" />
-                      <circle cx="32" cy="4" r="3.5" fill="var(--gold-main, #d4af37)" />
-
-                      {/* Guide track line */}
+                    <svg width="40" height="70" viewBox="0 0 40 70" fill="none">
                       <path
-                        d={idx === 0 
-                          ? "M 32 4 C 32 24, 46 28, 44 43 C 42 58, 32 62, 32 82" 
-                          : "M 32 4 C 32 24, 18 28, 20 43 C 22 58, 32 62, 32 82"}
-                        stroke="rgba(255, 255, 255, 0.14)"
+                        d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
+                        stroke="rgba(255, 255, 255, 0.12)"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                       />
-
-                      {/* Constant flowing gold dash stream */}
                       <path
-                        d={idx === 0 
-                          ? "M 32 4 C 32 24, 46 28, 44 43 C 42 58, 32 62, 32 82" 
-                          : "M 32 4 C 32 24, 18 28, 20 43 C 22 58, 32 62, 32 82"}
-                        stroke="var(--gold-main, #d4af37)"
-                        strokeWidth="2.5"
+                        d={idx === 0 ? "M 20 0 C 35 22, 8 48, 20 70" : "M 20 0 C 5 22, 32 48, 20 70"}
+                        stroke="rgba(212, 175, 55, 0.85)"
+                        strokeWidth="2"
                         strokeLinecap="round"
-                        strokeDasharray="8 16"
+                        strokeDasharray="6 14"
                         className="services-dash-stream-mobile"
-                      />
-
-                      {/* Directional arrowhead pointing into next card */}
-                      <path
-                        d="M 26 76 L 32 83 L 38 76"
-                        fill="none"
-                        stroke="var(--gold-main, #d4af37)"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
                       />
                     </svg>
                   </div>
@@ -232,14 +211,14 @@ export default function WhatWeDo() {
         }
 
         .services-dash-stream-mobile {
-          animation: flowStreamMobile 1.3s linear infinite;
+          animation: flowStreamMobile 1.4s linear infinite;
           will-change: stroke-dashoffset;
-          filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.65));
+          filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.45));
         }
 
         @keyframes flowStreamMobile {
           from {
-            stroke-dashoffset: 48;
+            stroke-dashoffset: 40;
           }
           to {
             stroke-dashoffset: 0;
@@ -369,7 +348,7 @@ export default function WhatWeDo() {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0.6rem 0 1.5rem 0;
+            margin: 0.8rem 0 1.8rem 0;
             width: 100%;
           }
 
