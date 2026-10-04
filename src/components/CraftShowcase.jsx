@@ -330,13 +330,14 @@ export default function CraftShowcase() {
         }
 
         .craft-card-title {
-          font-family: 'Montserrat', sans-serif;
+          font-family: var(--font-display), 'Akira Expanded', sans-serif;
           font-weight: 800;
-          font-size: clamp(1.45rem, 1.85vw, 1.75rem);
+          font-size: clamp(1.15rem, 1.45vw, 1.45rem);
           color: #ffffff;
-          line-height: 1.2;
-          letter-spacing: -0.02em;
-          margin: 0 0 0.4rem 0;
+          line-height: 1.25;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          margin: 0 0 0.45rem 0;
         }
 
         .craft-card-subtitle {
@@ -463,7 +464,7 @@ export default function CraftShowcase() {
             font-size: 0.7rem;
           }
           .craft-card-title {
-            font-size: 1.4rem;
+            font-size: 1.18rem;
           }
         }
       `}</style>
