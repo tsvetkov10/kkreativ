@@ -38,7 +38,7 @@ export default function WhatWeDo() {
         <div className="services-header reveal-up">
           <span className="services-tag">[services]</span>
           <h2 className="services-title">
-            С ДВЕ ДУМИ, НИЕ ПОЕМАМЕ ВСИЧКО.
+            С ДВЕ ДУМИ, НИЕ ПОЕМАМЕ ВСИЧКО
           </h2>
         </div>
 
