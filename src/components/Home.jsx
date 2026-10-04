@@ -63,7 +63,7 @@ export default function Home() {
               navigate('/contact');
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             }}
-            style={{ fontSize: '1.2rem', padding: '1.2rem 3rem' }}
+            style={{ fontSize: '1.2rem', padding: '1.2rem 3rem', fontFamily: "'Montserrat', sans-serif", fontWeight: 800 }}
           >
             СВЪРЖИ СЕ!
           </button>
