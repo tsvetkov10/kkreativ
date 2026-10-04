@@ -122,9 +122,8 @@ function ShowcaseCard({ client }) {
       <div className="craft-card-content">
         <span className="craft-card-num">{client.num}</span>
         <h3 className="craft-card-title">{client.name}</h3>
-        <p className="craft-card-subtitle">{client.subtitle}</p>
-
-        <div className="craft-card-bottom-row">
+        <div className="craft-card-footer-row">
+          <p className="craft-card-subtitle">{client.subtitle}</p>
           <div className="craft-card-action-btn" aria-label="Виж казуса">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -331,27 +330,27 @@ export default function CraftShowcase() {
           margin: 0 0 0.45rem 0;
         }
 
+        .craft-card-footer-row {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 0.75rem;
+        }
+
         .craft-card-subtitle {
           font-family: 'Montserrat', sans-serif;
           font-weight: 400;
           font-size: 0.88rem;
           line-height: 1.45;
           color: rgba(255, 255, 255, 0.72);
-          margin: 0 0 1.25rem 0;
-          max-width: 95%;
-        }
-
-        .craft-card-bottom-row {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 0.8rem;
-          margin-top: 0.5rem;
+          margin: 0;
+          flex: 1;
+          min-height: 2.9em;
         }
 
         .craft-card-action-btn {
-          width: 40px;
-          height: 40px;
+          width: 38px;
+          height: 38px;
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.1);
           backdrop-filter: blur(10px);
