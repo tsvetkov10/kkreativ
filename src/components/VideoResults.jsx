@@ -186,10 +186,6 @@ function MarqueeCard({ vid }) {
           zIndex: 1
         }}
       />
-
-      <div className="marquee-card-inner">
-        <span className="font-mono marquee-tag">{vid.title}</span>
-      </div>
     </div>
   );
 }
