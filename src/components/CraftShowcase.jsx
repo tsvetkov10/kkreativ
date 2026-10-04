@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getVideoPoster } from '../utils/videoUtils';
-import { preloadVideoImmediately } from './BackgroundVideoPreloader';
+import { getVideoPoster, preloadVideoImmediately } from '../utils/videoUtils';
 
 const showcaseClients = [
   {

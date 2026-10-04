@@ -1,10 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import logoAnimationWebp from '../assets/Comp 9_1.webp';
+import { useEffect, useRef } from 'react';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
-  // Timestamp query param ensures the animated WebP restarts from frame 0 on every reload
-  const [animSrc] = useState(() => `${logoAnimationWebp}?v=${Date.now()}`);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -41,9 +38,11 @@ export default function Preloader({ onComplete }) {
       <div className="loading-wrap">
         <div className="video-crop-container">
           <img 
-            key={animSrc}
-            src={animSrc} 
+            src="/Comp 9_1.webp" 
             alt="kkreativ Loading"
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
             className="preloader-logo-video"
           />
         </div>

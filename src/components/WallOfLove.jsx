@@ -55,22 +55,16 @@ export default function WallOfLove() {
 
   useEffect(() => {
     let groupWidth = 0;
-    
-    const updateGroupWidth = () => {
-      if (firstGroupRef.current) {
-        groupWidth = firstGroupRef.current.offsetWidth;
-        if (offsetRef.current === 0 && groupWidth > 0) {
-          offsetRef.current = groupWidth;
-        }
-      }
-    };
-
-    updateGroupWidth();
 
     let ro;
     if (typeof ResizeObserver !== 'undefined' && firstGroupRef.current) {
-      ro = new ResizeObserver(() => {
-        updateGroupWidth();
+      ro = new ResizeObserver((entries) => {
+        if (entries && entries[0]) {
+          groupWidth = entries[0].contentRect.width;
+          if (offsetRef.current === 0 && groupWidth > 0) {
+            offsetRef.current = groupWidth;
+          }
+        }
       });
       ro.observe(firstGroupRef.current);
     }

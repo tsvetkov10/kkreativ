@@ -1,12 +1,4 @@
 export default function Hero() {
-  const handleScroll = (e, id) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <section id="hero" className="hero-section">
       <div className="hero-content container">

@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
 import CanvasBackground from './components/CanvasBackground';
 import EmojiSplash from './components/EmojiSplash';
-
-import Home from './components/Home';
-import OurCraft from './components/OurCraft';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackgroundVideoPreloader from './components/BackgroundVideoPreloader';
+
+import Home from './components/Home';
+
+// Code-split secondary routes to eliminate 90+ KiB unused JavaScript on initial load
+const OurCraft = lazy(() => import('./components/OurCraft'));
+const Contact = lazy(() => import('./components/Contact'));
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -62,12 +64,14 @@ export default function App() {
         <BackgroundVideoPreloader />
 
         <main style={{ position: 'relative', zIndex: 1 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/our-craft" element={<OurCraft />} />
-            <Route path="/craft" element={<OurCraft />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/our-craft" element={<OurCraft />} />
+              <Route path="/craft" element={<OurCraft />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </Suspense>
         </main>
         <div style={{ position: 'relative', zIndex: 1 }}>
           <Footer />

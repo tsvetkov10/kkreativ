@@ -1,35 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { preloadVideoImmediately } from './BackgroundVideoPreloader';
+import { preloadVideoImmediately } from '../utils/videoUtils';
 
 export default function Navbar() {
-  const [activeSection, setActiveSection] = useState('hero');
   const [mobileActive, setMobileActive] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    // Scroll reveal only matters on the home page where sections exist
-    if (location.pathname !== '/') return;
-
-    const handleScrollReveal = () => {
-      const sections = document.querySelectorAll('section');
-      const scrollPos = window.scrollY + 200; // Offset
-
-      sections.forEach((section) => {
-        const top = section.offsetTop;
-        const height = section.offsetHeight;
-        const id = section.getAttribute('id');
-
-        if (scrollPos >= top && scrollPos < top + height) {
-          setActiveSection(id);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScrollReveal);
-    return () => window.removeEventListener('scroll', handleScrollReveal);
-  }, [location]);
 
   const scrollToSection = (id) => {
     if (id === 'hero' || id === 'home' || id === 'ugc-acai-hero') {

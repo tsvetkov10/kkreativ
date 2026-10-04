@@ -14,10 +14,33 @@
     
     <title>kkreativ</title>
     <link rel="icon" type="image/svg+xml" href="/kkreativ-favicon.svg" />
-    <!-- Google Fonts: JetBrains Mono & Lora -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+    <!-- Preload Critical LCP Image -->
+    <link rel="preload" as="image" type="image/webp" href="/Comp 9_1.webp" fetchpriority="high" />
+
+    <!-- Preload Custom Brand Fonts -->
+    <link rel="preload" as="font" type="font/otf" href="/fonts/Akira-Expanded.otf" crossorigin />
+    <link rel="preload" as="font" type="font/otf" href="/fonts/Creating-Minimalist.otf" crossorigin />
+
+    <!-- Google Fonts Preconnect & Async Non-Blocking Load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link 
+      rel="preload" 
+      as="style" 
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" 
+    />
+    <link 
+      rel="stylesheet" 
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" 
+      media="print" 
+      onload="this.media='all'" 
+    />
+    <noscript>
+      <link 
+        rel="stylesheet" 
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" 
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>
