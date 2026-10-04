@@ -3,44 +3,44 @@ import React, { useRef, useEffect } from 'react';
 const brandLogos = [
   {
     name: 'Acai Hero',
-    src: '/brands/Acai_Hero.png',
+    src: '/brands/Acai_Hero.webp',
     height: 64,
     alt: 'Acai Hero'
   },
   {
     name: 'Autolux Import',
-    src: '/brands/Autolux_Import.png?v=2',
+    src: '/brands/Autolux_Import.webp',
     height: 62,
     alt: 'Autolux Import'
   },
   {
     name: 'Ice Pro',
-    src: '/brands/Ice_Pro.png',
+    src: '/brands/Ice_Pro.webp',
     height: 60,
     alt: 'Ice Pro'
   },
   {
     name: 'Leos Pasta',
-    src: '/brands/Leos_Pasta.png',
+    src: '/brands/Leos_Pasta.webp',
     height: 105,
     offsetY: -4,
     alt: "Leo's Pasta"
   },
   {
     name: 'Pawmatix',
-    src: '/brands/Pawmatix.png',
+    src: '/brands/Pawmatix.webp',
     height: 64,
     alt: 'Pawmatix'
   },
   {
     name: 'Roche',
-    src: '/brands/Roche.png',
+    src: '/brands/Roche.webp',
     height: 56,
     alt: 'Roche'
   },
   {
     name: 'Studio 63',
-    src: '/brands/Studio_63.png',
+    src: '/brands/Studio_63.webp',
     height: 98,
     alt: 'Studio 63'
   }
