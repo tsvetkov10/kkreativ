@@ -1,8 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { downloadCoreVideos, isAudit } from '../utils/videoUtils';
 
 export default function Preloader({ onComplete }) {
   const screenRef = useRef(null);
+  // Timestamp query param ensures the animated WebP restarts from frame 0 on every reload
+  const [animSrc] = useState(() => {
+    const time = (typeof window !== 'undefined' && window.__KK_ANIM_TIME__) || Date.now();
+    return `/Comp 9_1.webp?v=${time}`;
+  });
 
   useEffect(() => {
     // If running in automated audit, complete immediately to avoid artificial delays
@@ -11,6 +16,11 @@ export default function Preloader({ onComplete }) {
       return;
     }
 
+    try {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    } catch (e) {}
     window.scrollTo(0, 0);
     let isMounted = true;
     let completed = false;
@@ -24,6 +34,7 @@ export default function Preloader({ onComplete }) {
       }
       setTimeout(() => {
         if (isMounted) {
+          window.scrollTo(0, 0);
           onComplete();
         }
       }, 500);
@@ -57,7 +68,8 @@ export default function Preloader({ onComplete }) {
       <div className="loading-wrap">
         <div className="video-crop-container">
           <img 
-            src="/Comp 9_1.webp" 
+            key={animSrc}
+            src={animSrc} 
             alt="kkreativ Loading"
             fetchpriority="high"
             loading="eager"

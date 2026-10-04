@@ -18,6 +18,11 @@ export default function App() {
   const location = useLocation();
 
   useEffect(() => {
+    try {
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    } catch (e) {}
     // Scroll to top on route change without forced layout reflow
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     

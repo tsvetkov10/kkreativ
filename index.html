@@ -14,8 +14,27 @@
     
     <title>kkreativ</title>
     <link rel="icon" type="image/svg+xml" href="/kkreativ-favicon.svg" />
-    <!-- Preload Critical LCP Image -->
-    <link rel="preload" as="image" type="image/webp" href="/Comp 9_1.webp" fetchpriority="high" />
+    <!-- Preload Critical LCP Animation with Per-Load Cache-Busting for Mobile Replays -->
+    <script>
+      (function() {
+        try {
+          if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+          }
+        } catch (e) {}
+        window.__KK_ANIM_TIME__ = Date.now();
+        var l = document.createElement('link');
+        l.rel = 'preload';
+        l.as = 'image';
+        l.type = 'image/webp';
+        l.href = '/Comp 9_1.webp?v=' + window.__KK_ANIM_TIME__;
+        l.fetchPriority = 'high';
+        document.head.appendChild(l);
+      })();
+    </script>
+    <noscript>
+      <link rel="preload" as="image" type="image/webp" href="/Comp 9_1.webp" fetchpriority="high" />
+    </noscript>
 
     <!-- Preload Custom Brand Fonts -->
     <link rel="preload" as="font" type="font/otf" href="/fonts/Akira-Expanded.otf" crossorigin />
