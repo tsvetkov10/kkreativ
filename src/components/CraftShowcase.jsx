@@ -8,24 +8,21 @@ const showcaseClients = [
     name: 'Acai Hero',
     targetId: 'ugc-acai-hero',
     subtitle: 'Вайръл скечове, интервюта и образователни видеа',
-    video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
-    tags: ['FOOD & BEV', 'VIRAL CONTENT']
+    video: encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4')
   },
   {
     num: '02',
     name: 'Autolux Import',
     targetId: 'ugc-autolux',
-    subtitle: 'Реални доставки, ексклузивни коли и продажби',
-    video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4'),
-    tags: ['AUTOMOTIVE', 'COMMUNITY']
+    subtitle: 'Доставки на коли и много смях.',
+    video: encodeURI('/videos/autolux/S63 AMG_5s_1080p.mp4')
   },
   {
     num: '03',
     name: 'Leo\'s Pasta',
     targetId: 'ugc-leos-pasta',
-    subtitle: 'Автентично италианско готвене и силен бранд',
-    video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4'),
-    tags: ['RESTAURANT', 'SOCIAL SCALING']
+    subtitle: 'Storytelling, вкусна паста и много характер.',
+    video: encodeURI('/videos/leo/How to kidnap me_5s_1080p.mp4')
   }
 ];
 
@@ -128,12 +125,6 @@ function ShowcaseCard({ client }) {
         <p className="craft-card-subtitle">{client.subtitle}</p>
 
         <div className="craft-card-bottom-row">
-          <div className="craft-card-tags">
-            {client.tags.map((tag, idx) => (
-              <span key={idx} className="craft-tag-pill">{tag}</span>
-            ))}
-          </div>
-
           <div className="craft-card-action-btn" aria-label="Виж казуса">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
@@ -353,30 +344,9 @@ export default function CraftShowcase() {
         .craft-card-bottom-row {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: flex-end;
           gap: 0.8rem;
-        }
-
-        .craft-card-tags {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.45rem;
-          align-items: center;
-        }
-
-        .craft-tag-pill {
-          background: rgba(255, 255, 255, 0.08);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 100px;
-          padding: 0.35rem 0.75rem;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 700;
-          font-size: 0.65rem;
-          letter-spacing: 0.06em;
-          color: rgba(255, 255, 255, 0.88);
-          text-transform: uppercase;
+          margin-top: 0.5rem;
         }
 
         .craft-card-action-btn {
