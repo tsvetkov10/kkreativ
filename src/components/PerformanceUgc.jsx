@@ -171,13 +171,20 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
   const containerRef = React.useRef(null);
   const videoRef = React.useRef(null);
   const [currentIdx, setCurrentIdx] = React.useState(0);
+  const [prevIdx, setPrevIdx] = React.useState(null);
+  const [isTransitioning, setIsTransitioning] = React.useState(false);
   const [isMuted, setIsMuted] = React.useState(true);
   const [isPlaying, setIsPlaying] = React.useState(false);
   const isIntersectingRef = React.useRef(false);
+  const transitionTimerRef = React.useRef(null);
+  const touchStartRef = React.useRef({ x: 0, y: 0, time: 0 });
 
   const videoList = Array.isArray(videos) && videos.length > 0 ? videos : (videoSrc ? [videoSrc] : []);
   const currentVideoSrc = videoList[currentIdx];
   const currentPoster = getVideoPoster(currentVideoSrc);
+
+  const prevVideoSrc = prevIdx !== null ? videoList[prevIdx] : null;
+  const prevPoster = prevVideoSrc ? getVideoPoster(prevVideoSrc) : null;
 
   React.useEffect(() => {
     // Proactively download videos of this client into blob cache
@@ -222,9 +229,73 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
     }
   }, [currentIdx, isMuted]);
 
+  React.useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
+
   const handleNext = (e) => {
-    e.stopPropagation();
-    setCurrentIdx((idx) => (idx + 1) % videoList.length);
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (videoList.length <= 1 || isTransitioning) return;
+
+    const nextIdx = (currentIdx + 1) % videoList.length;
+    setPrevIdx(currentIdx);
+    setCurrentIdx(nextIdx);
+    setIsTransitioning(true);
+
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+    }
+    transitionTimerRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+      setPrevIdx(null);
+    }, 320);
+  };
+
+  const handlePrev = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (videoList.length <= 1 || isTransitioning) return;
+
+    const prevIdxVal = (currentIdx - 1 + videoList.length) % videoList.length;
+    setPrevIdx(currentIdx);
+    setCurrentIdx(prevIdxVal);
+    setIsTransitioning(true);
+
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+    }
+    transitionTimerRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+      setPrevIdx(null);
+    }, 320);
+  };
+
+  const handleTouchStart = (e) => {
+    if (!e.touches || e.touches.length === 0) return;
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+      time: Date.now()
+    };
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!e.changedTouches || e.changedTouches.length === 0) return;
+    const deltaX = touchStartRef.current.x - e.changedTouches[0].clientX;
+    const deltaY = touchStartRef.current.y - e.changedTouches[0].clientY;
+    const deltaTime = Date.now() - touchStartRef.current.time;
+
+    // Horizontal swipe gesture (> 40px swipe, primarily horizontal, < 500ms)
+    if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4 && deltaTime < 500) {
+      if (deltaX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
   };
 
   const toggleSound = (e) => {
@@ -255,25 +326,91 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
       ref={containerRef}
       style={{ position: 'relative', width: '100%', height: '100%', cursor: 'pointer', background: '#0a0a0f', overflow: 'hidden' }}
       onClick={togglePlay}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* Instant High-Res Poster Image Behind Video: Zero Black Screen */}
-      {currentPoster && (
-        <img
-          src={currentPoster}
-          alt={alt || "Video preview"}
-          loading="eager"
-          decoding="async"
+      {/* Previous Slide (kept underneath during transition to prevent black gaps) */}
+      {isTransitioning && prevVideoSrc && (
+        <div
           style={{
             position: 'absolute',
             inset: 0,
+            zIndex: 1,
+            pointerEvents: 'none',
+            overflow: 'hidden'
+          }}
+        >
+          {prevPoster && (
+            <img
+              src={prevPoster}
+              alt=""
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Active Slide (fades in smoothly with hardware acceleration) */}
+      <div
+        key={currentVideoSrc}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 2,
+          animation: isTransitioning ? 'ugcVideoFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none'
+        }}
+      >
+        {currentPoster && (
+          <img
+            src={currentPoster}
+            alt={alt || "Video preview"}
+            loading="eager"
+            decoding="async"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              zIndex: 0,
+              pointerEvents: 'none'
+            }}
+          />
+        )}
+
+        <video
+          ref={videoRef}
+          src={getCachedVideoSrc(currentVideoSrc)}
+          poster={currentPoster}
+          loop
+          muted={isMuted}
+          playsInline
+          preload="auto"
+          onCanPlay={() => {
+            if (isIntersectingRef.current && videoRef.current?.paused) {
+              videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+            }
+          }}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          style={{
+            position: 'relative',
+            zIndex: 1,
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            zIndex: 0,
-            pointerEvents: 'none'
+            display: 'block'
           }}
-        />
-      )}
+        >
+          Your browser does not support video playback.
+        </video>
+      </div>
 
       {/* Single Arrow Button on Top Right - cycles continuously through videos */}
       {videoList.length > 1 && (
@@ -291,44 +428,17 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
         </button>
       )}
 
-      <video
-        ref={videoRef}
-        key={currentVideoSrc}
-        src={getCachedVideoSrc(currentVideoSrc)}
-        poster={currentPoster}
-        loop
-        muted={isMuted}
-        playsInline
-        preload="auto"
-        onCanPlay={() => {
-          if (isIntersectingRef.current && videoRef.current?.paused) {
-            videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-          }
-        }}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block'
-        }}
-      >
-        Your browser does not support video playback.
-      </video>
-
       {/* Sound toggle button */}
       <button
         onClick={toggleSound}
         type="button"
         aria-label={isMuted ? "Включи звука" : "Заглуши звука"}
+        className="ugc-sound-btn"
         style={{
           position: 'absolute',
           bottom: '16px',
           right: '16px',
-          zIndex: 10,
+          zIndex: 12,
           background: 'rgba(0, 0, 0, 0.7)',
           backdropFilter: 'blur(8px)',
           WebkitBackdropFilter: 'blur(8px)',
@@ -343,16 +453,6 @@ function UgcVideoPlayer({ videos, videoSrc, alt }) {
           cursor: 'pointer',
           boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
           transition: 'all 0.25s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = 'rgba(212, 175, 55, 0.9)';
-          e.currentTarget.style.color = '#000';
-          e.currentTarget.style.transform = 'scale(1.1)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'rgba(0, 0, 0, 0.7)';
-          e.currentTarget.style.color = '#fff';
-          e.currentTarget.style.transform = 'scale(1)';
         }}
       >
         {isMuted ? (
@@ -639,18 +739,33 @@ export default function PerformanceUgc() {
 
       {/* Embedded styles for responsive scaling, hover interactions, and mobile stacking */}
       <style>{`
-        .ugc-card-frame:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 25px rgba(212,175,55,0.15) !important;
+        @media (hover: hover) and (pointer: fine) {
+          .ugc-card-frame:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 25px rgba(212,175,55,0.15) !important;
+          }
+          .ugc-card-frame:hover img {
+            transform: scale(1.04);
+          }
+          .ugc-arrow-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: var(--gold-main, #ffd700);
+            color: var(--gold-light, #fff2a3);
+            transform: scale(1.08);
+            box-shadow: 0 6px 22px rgba(212, 175, 55, 0.35);
+          }
+          .ugc-sound-btn:hover {
+            background: rgba(212, 175, 55, 0.9) !important;
+            color: #000 !important;
+            transform: scale(1.08);
+          }
         }
-        .ugc-card-frame:hover img {
-          transform: scale(1.04);
-        }
+
         .ugc-arrow-btn {
           position: absolute;
           top: 18px;
           right: 18px;
-          z-index: 10;
+          z-index: 12;
           width: 44px;
           height: 44px;
           border-radius: 50%;
@@ -663,19 +778,37 @@ export default function PerformanceUgc() {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
           box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
-        .ugc-arrow-btn:hover {
-          background: rgba(212, 175, 55, 0.3);
-          border-color: var(--gold-main, #ffd700);
-          color: var(--gold-light, #fff2a3);
-          transform: scale(1.1);
-          box-shadow: 0 6px 22px rgba(212, 175, 55, 0.35);
-        }
+
         .ugc-arrow-btn:active {
-          transform: scale(0.95);
+          transform: scale(0.92) !important;
+          background: rgba(212, 175, 55, 0.35) !important;
         }
+
+        .ugc-sound-btn {
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
+        }
+
+        .ugc-sound-btn:active {
+          transform: scale(0.92) !important;
+        }
+
+        @keyframes ugcVideoFadeIn {
+          from {
+            opacity: 0;
+            transform: scale(1.02);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
         @media (max-width: 900px) {
           .ugc-section {
             padding: 3.5rem 1rem !important;
@@ -697,6 +830,7 @@ export default function PerformanceUgc() {
           .ugc-card-frame {
             max-width: 285px !important;
             border-radius: 20px !important;
+            transform: none !important;
           }
           .ugc-stat-box {
             padding: 0.65rem 0.95rem !important;
