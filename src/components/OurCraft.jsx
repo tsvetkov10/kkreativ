@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PerformanceUgc from './PerformanceUgc';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ourCraftCtaImg from '../assets/our-craft-call-to-action.webp';
 
 export default function OurCraft() {
   const navigate = useNavigate();
@@ -36,27 +37,23 @@ export default function OurCraft() {
 
       <section className="section cta-banner-section" style={{ textAlign: 'center', paddingTop: '3rem', paddingBottom: '6rem' }}>
         <div className="container reveal-scale">
-          <h2 style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontWeight: 800,
-            fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-            color: '#fff',
-            marginBottom: '1.2rem',
-            letterSpacing: '-0.02em',
-            lineHeight: 1.2
-          }}>
-            ИСКАТЕ ПОДОБНИ РЕЗУЛТАТИ ЗА ВАШИЯ БРАНД?
-          </h2>
-          <p style={{
-            fontFamily: "'Montserrat', sans-serif",
-            fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
-            color: 'var(--text-secondary)',
-            maxWidth: '600px',
-            margin: '0 auto 2.5rem auto',
-            lineHeight: 1.6
-          }}>
-            Свържете се с нас и нека създадем съдържание, което хората не просто гледат, а споделят.
-          </p>
+          <img 
+            src={ourCraftCtaImg} 
+            alt="И ТВОЯ БРАНД МОЖЕ ДА СЕ ХВАЛИ С ПОДОБНИ РЕЗУЛТАТИ..." 
+            onClick={() => {
+              navigate('/contact');
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            }}
+            style={{ 
+              width: '100%', 
+              maxWidth: '820px', 
+              height: 'auto', 
+              display: 'block', 
+              margin: '0 auto 2.5rem auto',
+              filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))',
+              cursor: 'pointer'
+            }} 
+          />
           <button 
             className="btn btn-primary btn-nitro-call" 
             onClick={() => {

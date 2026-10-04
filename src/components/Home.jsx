@@ -8,7 +8,7 @@ import WhatWeDo from './WhatWeDo';
 import WhoWeAre from './WhoWeAre';
 import Mission from './Mission';
 import { useNavigate } from 'react-router-dom';
-import novataEraImg from '../assets/kkreativ-novata-era-text-v2.png';
+import novataEraImg from '../assets/kkreativ-novata-era-text-v2.webp';
 
 export default function Home() {
   const navigate = useNavigate();
