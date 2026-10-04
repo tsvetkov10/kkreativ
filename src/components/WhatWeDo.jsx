@@ -5,19 +5,19 @@ const steps = [
     num: "01",
     title: "BRAND\nSTRATEGY",
     desc: "Разучаваме всичко за бизнеса и нишата ти, след което изграждаме печеливша креативна концепция с ясни цели и цялостна естетика на профила.",
-    image: "/photos-of-owners/concept.png"
+    image: "/photos-of-owners/concept.webp"
   },
   {
     num: "02",
     title: "CONTENT\nCREATION",
     desc: "Идваме, снимаме, обработваме и публикуваме цялото съдържание - вие единствено се наслаждавате на резултатите :)",
-    image: "/photos-of-owners/production.png"
+    image: "/photos-of-owners/production.webp"
   },
   {
     num: "03",
     title: "MONTHLY\nANALYSIS",
     desc: "Следим растежа и анализираме реакцията и поведението на аудиторията, спрямо които адаптираме концепциите и надграждаме с всеки един месец.",
-    image: "/photos-of-owners/services.png"
+    image: "/photos-of-owners/services.webp"
   }
 ];
 

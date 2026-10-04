@@ -2,44 +2,40 @@ import { useState } from 'react';
 
 const missionImages = [
   {
-    src: '/our-mission/45.jpg',
+    src: '/our-mission/44.webp',
     alt: 'Калоян и Георги - kkreativ'
   },
   {
-    src: '/our-mission/17.jpg',
+    src: '/our-mission/17.webp',
     alt: 'Георги - kkreativ'
   },
   {
-    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 03_43_37 PM.png'),
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 03_43_37 PM(1).webp'),
     alt: 'Калоян и Георги - kkreativ'
   },
   {
-    src: '/our-mission/20.jpg',
+    src: '/our-mission/20.webp',
     alt: 'Калоян - kkreativ'
   },
   {
-    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 01_31_05 PM.png'),
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 01_31_05 PM(1).webp'),
     alt: 'Калоян и Георги - kkreativ'
   },
   {
-    src: '/our-mission/6.jpg',
+    src: encodeURI('/our-mission/zoom out.webp'),
     alt: 'Георги - kkreativ'
   },
   {
-    src: '/our-mission/13.jpg',
+    src: '/our-mission/13.webp',
     alt: 'Калоян - kkreativ'
   },
   {
-    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 04_01_57 PM.png'),
+    src: encodeURI('/our-mission/ChatGPT Image Sep 20, 2026, 04_01_57 PM(1).webp'),
     alt: 'Георги - kkreativ'
   },
   {
-    src: '/our-mission/15.jpg',
+    src: '/our-mission/15.webp',
     alt: 'Калоян - kkreativ'
-  },
-  {
-    src: '/our-mission/40.jpg',
-    alt: 'Калоян и Георги - kkreativ'
   }
 ];
 
