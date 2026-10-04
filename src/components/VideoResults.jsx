@@ -29,10 +29,6 @@ const carouselVideos = [
   {
     src: encodeURI('/videos/caroussel/ACAI HERO - Габи_(1)_5s_1080p.mp4'),
     title: 'ACAI HERO'
-  },
-  {
-    src: encodeURI('/videos/caroussel/Leo_s Pasta - искаш да се скараме_(1)_5sec_1080p.mp4'),
-    title: "LEO'S PASTA"
   }
 ];
 
