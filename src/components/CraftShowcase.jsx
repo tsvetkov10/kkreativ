@@ -187,7 +187,7 @@ export default function CraftShowcase() {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             }}
           >
-            <span>Виж работата ни</span>
+            <span>ВИЖ РАБОТАТА НИ</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
@@ -385,7 +385,8 @@ export default function CraftShowcase() {
           border-radius: 100px;
           border: none;
           cursor: pointer;
-          letter-spacing: 0.02em;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
           box-shadow: 0 10px 25px -4px rgba(212, 175, 55, 0.4), 0 0 20px rgba(212, 175, 55, 0.15);
           transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                       box-shadow 0.35s ease;
