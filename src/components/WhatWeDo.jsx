@@ -328,7 +328,7 @@ export default function WhatWeDo() {
           font-weight: 700;
           line-height: 1.25;
           letter-spacing: 0.02em;
-          color: var(--text-primary, #f4f4f5);
+          color: var(--gold-main, #d4af37);
           margin: 0 0 1.1rem 0;
           white-space: pre-line;
         }
