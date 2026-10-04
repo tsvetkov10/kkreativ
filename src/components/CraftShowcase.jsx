@@ -323,7 +323,7 @@ export default function CraftShowcase() {
           font-family: var(--font-display), 'Akira Expanded', sans-serif;
           font-weight: 800;
           font-size: clamp(1.15rem, 1.45vw, 1.45rem);
-          color: #ffffff;
+          color: var(--gold-main, #d4af37);
           line-height: 1.25;
           letter-spacing: 0.02em;
           text-transform: uppercase;
