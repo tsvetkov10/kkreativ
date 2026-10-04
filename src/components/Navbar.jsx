@@ -111,7 +111,6 @@ export default function Navbar() {
             href="/contact" 
             onClick={(e) => handleLinkClick(e, '/contact')} 
             className="mobile-cta-only btn-nav-cta"
-            style={{ display: 'none' }}
           >
             START A CONVERSATION
           </a>
