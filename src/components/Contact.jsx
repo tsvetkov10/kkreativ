@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 export default function Contact({ id = "contact" }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,15 +47,37 @@ export default function Contact({ id = "contact" }) {
 
     try {
       if (supabase) {
-        const { error } = await supabase.from('contacts').insert([
+        // Attempt insert with dedicated 'phone' column
+        let { error } = await supabase.from('contacts').insert([
           {
             name,
             email,
+            phone,
             company,
             message,
             created_at: new Date().toISOString()
           }
         ]);
+
+        // If the database table does not have a 'phone' column yet (PostgreSQL error 42703),
+        // fallback to appending phone into message so submission never fails!
+        if (error && (error.code === '42703' || error.message?.includes('phone'))) {
+          const formattedMsg = phone 
+            ? `[Телефон: ${phone}]\n\n${message}` 
+            : message;
+          
+          const fallbackRes = await supabase.from('contacts').insert([
+            {
+              name,
+              email,
+              company,
+              message: formattedMsg,
+              created_at: new Date().toISOString()
+            }
+          ]);
+          error = fallbackRes.error;
+        }
+
         if (error) throw error;
       } else {
         // Graceful fallback if Supabase keys aren't set yet
@@ -72,6 +95,7 @@ export default function Contact({ id = "contact" }) {
   const handleReset = () => {
     setName('');
     setEmail('');
+    setPhone('');
     setCompany('');
     setMessage('');
     setErrorMessage('');
@@ -337,6 +361,32 @@ export default function Contact({ id = "contact" }) {
                     placeholder="ivan@example.com" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      width: '100%',
+                      background: 'rgba(255, 255, 255, 0.03)',
+                      border: '1px solid rgba(255, 255, 255, 0.05)',
+                      borderRadius: '8px',
+                      padding: '0.8rem 1rem',
+                      color: '#fff',
+                      fontSize: '0.95rem',
+                      outline: 'none',
+                      fontFamily: 'inherit'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'}
+                    onBlur={(e) => e.target.style.borderColor = 'rgba(255, 255, 255, 0.05)'}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.35rem', color: '#fff' }}>
+                    Телефонен номер<span style={{ color: 'var(--gold-main)' }}>*</span>
+                  </label>
+                  <input 
+                    type="tel" 
+                    required 
+                    placeholder="+359 888 123 456" 
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     style={{
                       width: '100%',
                       background: 'rgba(255, 255, 255, 0.03)',
