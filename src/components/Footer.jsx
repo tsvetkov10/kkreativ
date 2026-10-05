@@ -54,8 +54,8 @@ export default function Footer() {
 
         <div className="footer-links" style={{ gap: '0.5rem' }}>
           <span className="footer-title font-mono" style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>правна информация</span>
-          <Link to="/cookies" style={{ fontSize: '1.05rem' }}>политика за бисквитките</Link>
-          <Link to="/privacy" style={{ fontSize: '1.05rem' }}>политика за поверителност</Link>
+          <Link to="/cookies" style={{ fontSize: '1.05rem' }}>Политика за бисквитките</Link>
+          <Link to="/privacy" style={{ fontSize: '1.05rem' }}>Политика за поверителност</Link>
           <button 
             type="button"
             onClick={openCookieSettings}
@@ -73,7 +73,7 @@ export default function Footer() {
             onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-primary)'; e.currentTarget.style.paddingLeft = '0.2rem'; }}
             onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-secondary)'; e.currentTarget.style.paddingLeft = '0'; }}
           >
-            настройки за бисквитки
+            Настройки за бисквитки
           </button>
         </div>
 
