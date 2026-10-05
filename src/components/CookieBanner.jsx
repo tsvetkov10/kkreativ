@@ -123,7 +123,7 @@ export default function CookieBanner() {
                 paddingTop: '0.5rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <div className="cookie-banner-actions" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   onClick={handleAcceptAll}
@@ -172,7 +172,7 @@ export default function CookieBanner() {
                 </button>
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.78rem' }}>
+              <div className="cookie-banner-links" style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.78rem' }}>
                 <Link 
                   to="/cookies" 
                   style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
@@ -365,14 +365,23 @@ export default function CookieBanner() {
             transform: translate(-50%, 0);
           }
         }
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
           .cookie-banner-container {
             bottom: 0.75rem !important;
-            padding: 1.15rem 1rem !important;
+            padding: 1.15rem 1.1rem !important;
           }
-          .cookie-banner-container button {
-            flex: 1 1 auto !important;
+          .cookie-banner-actions {
+            width: 100% !important;
+            display: flex !important;
+            gap: 0.6rem !important;
+          }
+          .cookie-banner-actions button {
+            flex: 1 1 0 !important;
             text-align: center !important;
+            padding: 0.65rem 0.6rem !important;
+          }
+          .cookie-banner-links {
+            display: none !important;
           }
         }
       `}</style>
