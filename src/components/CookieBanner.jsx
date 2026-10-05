@@ -123,25 +123,6 @@ export default function CookieBanner() {
                 paddingTop: '0.5rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.78rem' }}>
-                <Link 
-                  to="/cookies" 
-                  style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
-                  onMouseEnter={(e) => { e.target.style.color = 'var(--gold-main)'; e.target.style.textDecoration = 'underline'; }}
-                  onMouseLeave={(e) => { e.target.style.color = 'rgba(255, 255, 255, 0.55)'; e.target.style.textDecoration = 'none'; }}
-                >
-                  Политика за бисквитките
-                </Link>
-                <Link 
-                  to="/privacy" 
-                  style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
-                  onMouseEnter={(e) => { e.target.style.color = 'var(--gold-main)'; e.target.style.textDecoration = 'underline'; }}
-                  onMouseLeave={(e) => { e.target.style.color = 'rgba(255, 255, 255, 0.55)'; e.target.style.textDecoration = 'none'; }}
-                >
-                  Политика за поверителност
-                </Link>
-              </div>
-
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <button
                   type="button"
@@ -189,6 +170,25 @@ export default function CookieBanner() {
                 >
                   Настройки
                 </button>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.78rem' }}>
+                <Link 
+                  to="/cookies" 
+                  style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => { e.target.style.color = 'var(--gold-main)'; e.target.style.textDecoration = 'underline'; }}
+                  onMouseLeave={(e) => { e.target.style.color = 'rgba(255, 255, 255, 0.55)'; e.target.style.textDecoration = 'none'; }}
+                >
+                  Политика за бисквитките
+                </Link>
+                <Link 
+                  to="/privacy" 
+                  style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
+                  onMouseEnter={(e) => { e.target.style.color = 'var(--gold-main)'; e.target.style.textDecoration = 'underline'; }}
+                  onMouseLeave={(e) => { e.target.style.color = 'rgba(255, 255, 255, 0.55)'; e.target.style.textDecoration = 'none'; }}
+                >
+                  Политика за поверителност
+                </Link>
               </div>
             </div>
           </div>
