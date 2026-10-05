@@ -161,15 +161,20 @@ export async function downloadVideo(url) {
 export async function downloadCoreVideos(onProgress) {
   if (isAudit) return Promise.resolve();
 
-  let completed = 0;
-  const total = CAROUSEL_VIDEOS.length;
+  // Priority 1: The first 4 videos are immediately visible on screen in the hero marquee
+  const priorityVideos = CAROUSEL_VIDEOS.slice(0, 4);
+  const remainingCarousel = CAROUSEL_VIDEOS.slice(4);
 
-  const carouselPromises = CAROUSEL_VIDEOS.map(async (url) => {
+  // Preload all posters in parallel (lightweight JPGs, finishes in milliseconds)
+  CAROUSEL_VIDEOS.forEach((url) => {
     const poster = getVideoPoster(url);
-    if (poster) {
-      preloadImage(poster);
-    }
+    if (poster) preloadImage(poster);
+  });
 
+  let completed = 0;
+  const total = priorityVideos.length;
+
+  const priorityPromises = priorityVideos.map(async (url) => {
     await downloadVideo(url);
     completed++;
     if (onProgress) {
@@ -177,15 +182,15 @@ export async function downloadCoreVideos(onProgress) {
     }
   });
 
-  // Wait for the carousel videos first
-  await Promise.all(carouselPromises);
-
-  // Background-prefetch the craft showcase videos after carousel videos are ready
+  // Stream remaining carousel and showcase videos concurrently in background
+  remainingCarousel.forEach((url) => downloadVideo(url));
   CRAFT_PRIMARY_VIDEOS.forEach((url) => {
     const poster = getVideoPoster(url);
     if (poster) preloadImage(poster);
     downloadVideo(url);
   });
+
+  await Promise.all(priorityPromises);
 }
 
 /**
