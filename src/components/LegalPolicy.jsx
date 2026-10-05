@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
-export default function LegalPolicy({ initialTab = 'cookies' }) {
+export default function LegalPolicy() {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const currentTab = location.pathname.includes('privacy') ? 'privacy' : 'cookies';
   const [activeTab, setActiveTab] = useState(currentTab);
@@ -19,15 +18,6 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [location.pathname]);
 
-  const switchTab = (tab) => {
-    setActiveTab(tab);
-    if (tab === 'privacy') {
-      navigate('/privacy');
-    } else {
-      navigate('/cookies');
-    }
-  };
-
   const openCookiePreferences = () => {
     window.dispatchEvent(new CustomEvent('openCookieSettings'));
   };
@@ -36,28 +26,8 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
     <div className="page-wrapper legal-page" style={{ minHeight: '100vh', paddingTop: '7.5rem', paddingBottom: '7rem' }}>
       <div className="container" style={{ maxWidth: '860px', margin: '0 auto', padding: '0 1.5rem' }}>
         
-        {/* Breadcrumb / Back button */}
-        <div style={{ marginBottom: '2.5rem' }}>
-          <Link 
-            to="/" 
-            style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              color: 'rgba(255, 255, 255, 0.6)', 
-              fontSize: '0.88rem', 
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
-          >
-            ← Обратно към началната страница
-          </Link>
-        </div>
-
         {/* Page Header */}
-        <div style={{ marginBottom: '2.5rem' }}>
+        <div style={{ marginBottom: '3rem' }}>
           <h1 style={{ 
             fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', 
             fontWeight: 700, 
@@ -72,51 +42,6 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
           <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.88rem' }}>
             Последна актуализация: 5 октомври 2026 г.
           </p>
-        </div>
-
-        {/* Tab Switcher */}
-        <div 
-          style={{ 
-            display: 'flex', 
-            marginBottom: '3rem',
-            gap: '2rem'
-          }}
-        >
-          <button
-            type="button"
-            onClick={() => switchTab('cookies')}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: activeTab === 'cookies' ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.5)',
-              padding: '0.5rem 0',
-              fontSize: '1rem',
-              fontWeight: activeTab === 'cookies' ? 600 : 400,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              fontFamily: 'inherit'
-            }}
-          >
-            Политика за бисквитките
-          </button>
-
-          <button
-            type="button"
-            onClick={() => switchTab('privacy')}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: activeTab === 'privacy' ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.5)',
-              padding: '0.5rem 0',
-              fontSize: '1rem',
-              fontWeight: activeTab === 'privacy' ? 600 : 400,
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              fontFamily: 'inherit'
-            }}
-          >
-            Политика за поверителност
-          </button>
         </div>
 
         {/* CONTENT - Clean Natural Typography, No Lines */}
@@ -588,7 +513,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                   Сайтът използва технологии, които могат да включват бисквитки или други механизми за локално съхранение. Строго необходимите технологии могат да се използват без предварително съгласие, когато това е допустимо по закон. Аналитичните технологии, включително Google Analytics 4, се активират съобразно Вашия избор и когато е необходимо - след получаване на предварително съгласие.
                 </p>
                 <p style={{ margin: 0 }}>
-                  Допълнителна информация е предоставена в нашата <button type="button" onClick={() => switchTab('cookies')} style={{ background: 'none', border: 'none', padding: 0, color: 'var(--gold-main)', textDecoration: 'underline', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit' }}>Политика за бисквитките</button>.
+                  Допълнителна информация е предоставена в нашата <Link to="/cookies" style={{ color: 'var(--gold-main)', textDecoration: 'underline' }}>Политика за бисквитките</Link>.
                 </p>
               </div>
 
@@ -617,26 +542,6 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
             </div>
           )}
 
-        </div>
-
-        {/* Bottom Back Button */}
-        <div style={{ marginTop: '3.5rem' }}>
-          <Link 
-            to="/" 
-            style={{ 
-              display: 'inline-flex', 
-              alignItems: 'center', 
-              gap: '0.5rem', 
-              color: 'rgba(255, 255, 255, 0.6)', 
-              fontSize: '0.88rem', 
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.6)'}
-          >
-            ← Върни се на началната страница
-          </Link>
         </div>
 
       </div>
