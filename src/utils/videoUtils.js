@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 /**
  * Detect automated performance audits (Lighthouse, PageSpeed, Google Inspection Tool)
  */
@@ -12,11 +14,44 @@ export const isAudit = typeof navigator !== 'undefined' && (
 export const videoBlobCache = new Map();
 
 /**
+ * Cache event listeners for reactive UI updates
+ */
+const cacheListeners = new Set();
+
+export function subscribeToVideoCache(fn) {
+  cacheListeners.add(fn);
+  return () => cacheListeners.delete(fn);
+}
+
+/**
  * Returns the in-memory Blob URL if downloaded, otherwise returns the original URL.
  */
 export function getCachedVideoSrc(videoUrl) {
   if (!videoUrl) return '';
   return videoBlobCache.get(videoUrl) || videoUrl;
+}
+
+/**
+ * React hook that returns the cached Blob URL as soon as it becomes available.
+ */
+export function useCachedVideoSrc(videoUrl) {
+  const [src, setSrc] = useState(() => getCachedVideoSrc(videoUrl));
+
+  useEffect(() => {
+    if (!videoUrl) return;
+    if (videoBlobCache.has(videoUrl)) {
+      setSrc(videoBlobCache.get(videoUrl));
+      return;
+    }
+    const unsubscribe = subscribeToVideoCache((url, blobUrl) => {
+      if (url === videoUrl) {
+        setSrc(blobUrl);
+      }
+    });
+    return unsubscribe;
+  }, [videoUrl]);
+
+  return src;
 }
 
 /**
@@ -50,8 +85,21 @@ export function preloadImage(url) {
 }
 
 /**
- * The core client videos that MUST be ready before the preloader completes:
- * (Acai Hero, Autolux, Leo's Pasta - used in both Home showcase and Our Craft)
+ * Priority 1: Top-of-page hero carousel videos that the user sees IMMEDIATELY
+ * when the preloader ends.
+ */
+export const CAROUSEL_VIDEOS = [
+  encodeURI('/videos/caroussel/Autolux - E53(1)_5s_1080p.mp4'),
+  encodeURI('/videos/caroussel/ACAI HERO - Voice Message 5sec.mp4'),
+  encodeURI('/videos/caroussel/Leo_s Pasta - Leo cooking(1)_5sec_1080p.mp4'),
+  encodeURI('/videos/caroussel/Autolux - S5(1)_5s_1080p.mp4'),
+  encodeURI('/videos/caroussel/ACAI HERO - как се произнася_(1)_5s_1080p.mp4'),
+  '/videos/caroussel/Leos_Pasta_POV_Dvoikite_5sec_1080p.mp4',
+  encodeURI('/videos/caroussel/ACAI HERO - Габи_(1)_5s_1080p.mp4')
+];
+
+/**
+ * Priority 2: Primary client showcase videos further down the page
  */
 export const CRAFT_PRIMARY_VIDEOS = [
   encodeURI('/videos/acai-hero/Acai bowl или 100 евро__5s_1080p.mp4'),
@@ -72,9 +120,10 @@ export const CRAFT_ALL_VIDEOS = [
 ];
 
 const inFlightFetches = new Map();
+const preloadedSet = new Set();
 
 /**
- * Fully download a video and convert to a memory blob URL.
+ * Fully download a video and convert to a memory blob URL for instantaneous playback.
  */
 export async function downloadVideo(url) {
   if (!url) return null;
@@ -89,9 +138,12 @@ export async function downloadVideo(url) {
       const blob = await res.blob();
       const blobUrl = URL.createObjectURL(blob);
       videoBlobCache.set(url, blobUrl);
+      cacheListeners.forEach((listener) => {
+        try { listener(url, blobUrl); } catch {}
+      });
       return blobUrl;
-    } catch (err) {
-      // If fetch is blocked or fails, fall back to native video buffering
+    } catch {
+      // If fetch fails, fall back to native video buffering
       return url;
     } finally {
       inFlightFetches.delete(url);
@@ -103,16 +155,16 @@ export async function downloadVideo(url) {
 }
 
 /**
- * Downloads the core primary videos with progress callback.
+ * Downloads the hero carousel videos during the preloader animation so they
+ * play with zero latency as soon as the preloader fades out.
  */
 export async function downloadCoreVideos(onProgress) {
   if (isAudit) return Promise.resolve();
 
   let completed = 0;
-  const total = CRAFT_PRIMARY_VIDEOS.length;
+  const total = CAROUSEL_VIDEOS.length;
 
-  const promises = CRAFT_PRIMARY_VIDEOS.map(async (url) => {
-    // Also preload poster image in parallel
+  const carouselPromises = CAROUSEL_VIDEOS.map(async (url) => {
     const poster = getVideoPoster(url);
     if (poster) {
       preloadImage(poster);
@@ -125,7 +177,15 @@ export async function downloadCoreVideos(onProgress) {
     }
   });
 
-  await Promise.all(promises);
+  // Wait for the carousel videos first
+  await Promise.all(carouselPromises);
+
+  // Background-prefetch the craft showcase videos after carousel videos are ready
+  CRAFT_PRIMARY_VIDEOS.forEach((url) => {
+    const poster = getVideoPoster(url);
+    if (poster) preloadImage(poster);
+    downloadVideo(url);
+  });
 }
 
 /**
@@ -135,13 +195,11 @@ export function preloadVideoImmediately(url) {
   if (!url || preloadedSet.has(url) || typeof document === 'undefined') return;
   preloadedSet.add(url);
 
-  // 1. Preload poster first
   const poster = getVideoPoster(url);
   if (poster) {
     const img = new Image();
     img.src = poster;
   }
 
-  // 2. Fetch full blob into memory cache
   downloadVideo(url);
 }

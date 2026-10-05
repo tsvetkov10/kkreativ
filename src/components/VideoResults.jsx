@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getVideoPoster } from '../utils/videoUtils';
+import { getVideoPoster, useCachedVideoSrc } from '../utils/videoUtils';
 
 const carouselVideos = [
   {
@@ -36,7 +36,9 @@ function MarqueeCard({ vid }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
   const isIntersectingRef = useRef(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const poster = getVideoPoster(vid.src);
+  const videoSrc = useCachedVideoSrc(vid.src);
 
   useEffect(() => {
     const card = cardRef.current;
@@ -56,7 +58,7 @@ function MarqueeCard({ vid }) {
       }
     };
 
-    // Only play cards that are visible in the viewport to prevent GPU decoder overload
+    // Pre-activate videos that are within 250px of the viewport for seamless playback
     const observer = new IntersectionObserver(
       ([entry]) => {
         const inView = entry.isIntersecting;
@@ -70,10 +72,19 @@ function MarqueeCard({ vid }) {
           pauseSafe();
         }
       },
-      { rootMargin: '100px 0px', threshold: 0 }
+      { rootMargin: '250px 0px', threshold: 0 }
     );
 
     observer.observe(card);
+
+    // Initial check on mount
+    const rect = card.getBoundingClientRect();
+    if (rect.right > -100 && rect.left < window.innerWidth + 250) {
+      isIntersectingRef.current = true;
+      if (!document.hidden) {
+        playSafe();
+      }
+    }
 
     const handleVisibility = () => {
       if (document.hidden) {
@@ -101,7 +112,7 @@ function MarqueeCard({ vid }) {
         <img
           src={poster}
           alt={vid.title}
-          loading="lazy"
+          loading="eager"
           decoding="async"
           style={{
             position: 'absolute',
@@ -111,20 +122,24 @@ function MarqueeCard({ vid }) {
             objectFit: 'cover',
             borderRadius: '24px',
             zIndex: 0,
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            opacity: isPlaying ? 0 : 1,
+            transition: 'opacity 0.25s ease'
           }}
         />
       )}
       <video
         ref={videoRef}
-        src={vid.src}
+        src={videoSrc}
         poster={poster}
         muted
         loop
         playsInline
-        preload="metadata"
+        autoPlay
+        preload="auto"
         disablePictureInPicture
         disableRemotePlayback
+        onPlaying={() => setIsPlaying(true)}
         onCanPlay={() => {
           if (isIntersectingRef.current && !document.hidden && videoRef.current?.paused) {
             videoRef.current.play().catch(() => {});

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getCachedVideoSrc, getVideoPoster, preloadVideoImmediately } from '../utils/videoUtils';
+import { useCachedVideoSrc, getVideoPoster, preloadVideoImmediately } from '../utils/videoUtils';
 
 const showcaseClients = [
   {
@@ -30,6 +30,7 @@ function ShowcaseCard({ client }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
   const navigate = useNavigate();
+  const videoSrc = useCachedVideoSrc(client.video);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -96,7 +97,7 @@ function ShowcaseCard({ client }) {
         )}
         <video 
           ref={videoRef}
-          src={getCachedVideoSrc(client.video)}
+          src={videoSrc}
           poster={getVideoPoster(client.video)}
           muted
           loop
