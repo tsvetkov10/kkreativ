@@ -243,7 +243,7 @@ export default function CookieBanner() {
             <div style={{ marginBottom: '2rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.5rem' }}>
                 <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
-                  Аналитични технологии (Google Analytics 4)
+                  Аналитични технологии
                 </span>
                 
                 {/* Clean switch toggle */}
@@ -293,7 +293,7 @@ export default function CookieBanner() {
                 </label>
               </div>
               <p style={{ margin: 0, fontSize: '0.83rem', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.62)' }}>
-                С Ваше съгласие използваме Google Analytics 4, за да разбираме как посетителите взаимодействат със съдържанието и да подобряваме сайта. Данните се съхраняват до 14 месеца.
+                С Ваше съгласие ги използваме, за да разбираме как посетителите взаимодействат със съдържанието и да подобряваме сайта. Данните се съхраняват до 14 месеца.
               </p>
             </div>
 
