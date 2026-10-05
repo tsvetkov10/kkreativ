@@ -145,6 +145,27 @@ export default function CookieBanner() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <button
                   type="button"
+                  onClick={handleAcceptAll}
+                  style={{
+                    background: 'var(--gold-main)',
+                    border: 'none',
+                    borderRadius: '6px',
+                    padding: '0.45rem 1.15rem',
+                    color: '#08080a',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: 'inherit'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                >
+                  Приемам всички
+                </button>
+
+                <button
+                  type="button"
                   onClick={() => setModalOpen(true)}
                   style={{
                     background: 'transparent',
@@ -167,53 +188,6 @@ export default function CookieBanner() {
                   }}
                 >
                   Настройки
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleRejectAll}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '6px',
-                    padding: '0.45rem 0.95rem',
-                    color: 'rgba(255, 255, 255, 0.8)',
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: 'inherit'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)';
-                    e.currentTarget.style.color = '#fff';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
-                  }}
-                >
-                  Отказвам незадължителните
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleAcceptAll}
-                  style={{
-                    background: 'var(--gold-main)',
-                    border: 'none',
-                    borderRadius: '6px',
-                    padding: '0.45rem 1.15rem',
-                    color: '#08080a',
-                    fontSize: '0.82rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: 'inherit'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                  onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-                >
-                  Приемам всички
                 </button>
               </div>
             </div>
@@ -328,53 +302,31 @@ export default function CookieBanner() {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 flexWrap: 'wrap',
                 gap: '0.75rem',
                 marginTop: '1.5rem'
               }}
             >
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  onClick={handleRejectAll}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '6px',
-                    padding: '0.5rem 0.95rem',
-                    color: 'rgba(255, 255, 255, 0.75)',
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: 'inherit'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)'}
-                >
-                  Отказвам незадължителните
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleAcceptAll}
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '6px',
-                    padding: '0.5rem 0.95rem',
-                    color: 'rgba(255, 255, 255, 0.75)',
-                    fontSize: '0.82rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: 'inherit'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)'}
-                >
-                  Приемам всички
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={handleAcceptAll}
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  borderRadius: '6px',
+                  padding: '0.5rem 0.95rem',
+                  color: 'rgba(255, 255, 255, 0.75)',
+                  fontSize: '0.82rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  fontFamily: 'inherit'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)'}
+              >
+                Приемам всички
+              </button>
 
               <button
                 type="button"
