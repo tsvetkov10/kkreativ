@@ -76,7 +76,7 @@ export default function CookieBanner() {
 
   return (
     <>
-      {/* Cookie Notification Banner - Minimalist Studio Design */}
+      {/* Cookie Notification Banner */}
       {bannerVisible && !modalOpen && (
         <div 
           className="cookie-banner-container"
@@ -102,7 +102,8 @@ export default function CookieBanner() {
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '1.15rem', lineHeight: 1 }}>🍪</span>
               <span style={{ fontSize: '0.98rem', fontWeight: 600, color: '#fff', letterSpacing: '-0.01em' }}>
                 Ние използваме бисквитки
               </span>
@@ -122,7 +123,7 @@ export default function CookieBanner() {
                 paddingTop: '0.5rem'
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.78rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', fontSize: '0.78rem' }}>
                 <Link 
                   to="/cookies" 
                   style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
@@ -131,7 +132,6 @@ export default function CookieBanner() {
                 >
                   Политика за бисквитките
                 </Link>
-                <span style={{ color: 'rgba(255, 255, 255, 0.25)' }}>·</span>
                 <Link 
                   to="/privacy" 
                   style={{ color: 'rgba(255, 255, 255, 0.55)', textDecoration: 'none', transition: 'color 0.2s' }}
@@ -221,7 +221,7 @@ export default function CookieBanner() {
         </div>
       )}
 
-      {/* Cookie Preferences Dialog - Clean Editorial Design (No Nested Cards) */}
+      {/* Cookie Preferences Dialog */}
       {modalOpen && (
         <div 
           role="dialog"
@@ -247,7 +247,7 @@ export default function CookieBanner() {
             style={{
               position: 'relative',
               width: '100%',
-              maxWidth: '620px',
+              maxWidth: '560px',
               maxHeight: '90vh',
               overflowY: 'auto',
               background: '#0d0d10',
@@ -259,113 +259,68 @@ export default function CookieBanner() {
             }}
           >
             {/* Header */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', marginBottom: '1.75rem', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '1.25rem' }}>
-              <div>
-                <h3 id="cookie-modal-title" style={{ margin: '0 0 0.35rem 0', fontSize: '1.25rem', fontWeight: 600, color: '#fff', letterSpacing: '-0.01em' }}>
-                  Настройки за бисквитки
-                </h3>
-                <p style={{ margin: 0, fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Управлявайте предпочитанията си за бисквитки. Можете да промените избора си по всяко време.
-                </p>
-              </div>
-
-              <button 
-                type="button"
-                onClick={() => setModalOpen(false)}
-                aria-label="Затвори"
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  padding: '0.25rem',
-                  color: 'rgba(255, 255, 255, 0.5)',
-                  cursor: 'pointer',
-                  fontSize: '1.2rem',
-                  lineHeight: 1,
-                  transition: 'color 0.2s ease'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)'}
-              >
-                ✕
-              </button>
+            <div style={{ marginBottom: '1.75rem' }}>
+              <h3 id="cookie-modal-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600, color: '#fff', letterSpacing: '-0.01em' }}>
+                Настройки за бисквитки
+              </h3>
             </div>
 
-            {/* List of categories - Clean text rows without small boxes */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '2rem' }}>
-              
-              {/* Category 1 */}
-              <div style={{ paddingBottom: '1.25rem', borderBottom: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
-                    Строго необходими технологии
-                  </span>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--gold-main)', fontWeight: 500 }}>
-                    Задължителни
-                  </span>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.83rem', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.62)' }}>
-                  Необходими за основното функциониране на сайта, сигурността и запомнянето на Вашия избор относно поверителността. Те не могат да бъдат деактивирани.
-                </p>
-              </div>
-
-              {/* Category 2 */}
-              <div style={{ paddingBottom: '0.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
-                    Аналитични технологии (Google Analytics 4)
-                  </span>
-                  
-                  {/* Clean switch toggle */}
-                  <label 
+            {/* Category: Only Analytics */}
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '0.5rem' }}>
+                <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#fff' }}>
+                  Аналитични технологии (Google Analytics 4)
+                </span>
+                
+                {/* Clean switch toggle */}
+                <label 
+                  style={{
+                    position: 'relative',
+                    display: 'inline-block',
+                    width: '42px',
+                    height: '22px',
+                    cursor: 'pointer',
+                    flexShrink: 0
+                  }}
+                >
+                  <input 
+                    type="checkbox"
+                    checked={analyticsConsent}
+                    onChange={(e) => setAnalyticsConsent(e.target.checked)}
+                    style={{ opacity: 0, width: 0, height: 0 }}
+                  />
+                  <span 
                     style={{
-                      position: 'relative',
-                      display: 'inline-block',
-                      width: '42px',
-                      height: '22px',
+                      position: 'absolute',
                       cursor: 'pointer',
-                      flexShrink: 0
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      backgroundColor: analyticsConsent ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.15)',
+                      transition: '0.25s ease',
+                      borderRadius: '22px'
                     }}
                   >
-                    <input 
-                      type="checkbox"
-                      checked={analyticsConsent}
-                      onChange={(e) => setAnalyticsConsent(e.target.checked)}
-                      style={{ opacity: 0, width: 0, height: 0 }}
-                    />
                     <span 
                       style={{
                         position: 'absolute',
-                        cursor: 'pointer',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: analyticsConsent ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.15)',
+                        content: '""',
+                        height: '16px',
+                        width: '16px',
+                        left: analyticsConsent ? '23px' : '3px',
+                        bottom: '3px',
+                        backgroundColor: analyticsConsent ? '#08080a' : '#fff',
                         transition: '0.25s ease',
-                        borderRadius: '22px'
+                        borderRadius: '50%'
                       }}
-                    >
-                      <span 
-                        style={{
-                          position: 'absolute',
-                          content: '""',
-                          height: '16px',
-                          width: '16px',
-                          left: analyticsConsent ? '23px' : '3px',
-                          bottom: '3px',
-                          backgroundColor: analyticsConsent ? '#08080a' : '#fff',
-                          transition: '0.25s ease',
-                          borderRadius: '50%'
-                        }}
-                      />
-                    </span>
-                  </label>
-                </div>
-                <p style={{ margin: 0, fontSize: '0.83rem', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.62)' }}>
-                  С Ваше съгласие използваме Google Analytics 4, за да разбираме как посетителите взаимодействат със съдържанието и да подобряваме сайта. Данните се съхраняват до 14 месеца.
-                </p>
+                    />
+                  </span>
+                </label>
               </div>
-
+              <p style={{ margin: 0, fontSize: '0.83rem', lineHeight: '1.6', color: 'rgba(255, 255, 255, 0.62)' }}>
+                С Ваше съгласие използваме Google Analytics 4, за да разбираме как посетителите взаимодействат със съдържанието и да подобряваме сайта. Данните се съхраняват до 14 месеца.
+              </p>
             </div>
 
             {/* Actions */}
@@ -376,8 +331,7 @@ export default function CookieBanner() {
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
                 gap: '0.75rem',
-                borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-                paddingTop: '1.25rem'
+                marginTop: '1.5rem'
               }}
             >
               <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>

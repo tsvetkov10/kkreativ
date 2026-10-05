@@ -56,7 +56,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
           </Link>
         </div>
 
-        {/* Page Header - Clean Editorial Style */}
+        {/* Page Header */}
         <div style={{ marginBottom: '2.5rem' }}>
           <h1 style={{ 
             fontSize: 'clamp(2rem, 3.5vw, 2.75rem)', 
@@ -69,18 +69,15 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
             {activeTab === 'cookies' ? 'Политика за бисквитките' : 'Политика за поверителност'}
           </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'rgba(255, 255, 255, 0.45)', fontSize: '0.85rem' }}>
-            <span>www.kkreativ.eu</span>
-            <span>·</span>
-            <span>Последна актуализация: 5 октомври 2026 г.</span>
-          </div>
+          <p style={{ margin: 0, color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.88rem' }}>
+            Последна актуализация: 5 октомври 2026 г.
+          </p>
         </div>
 
-        {/* Tab Switcher - Minimalist Underline / Pill Tabs */}
+        {/* Tab Switcher */}
         <div 
           style={{ 
             display: 'flex', 
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)', 
             marginBottom: '3rem',
             gap: '2rem'
           }}
@@ -91,15 +88,13 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
             style={{
               background: 'transparent',
               border: 'none',
-              borderBottom: activeTab === 'cookies' ? '2px solid var(--gold-main)' : '2px solid transparent',
-              color: activeTab === 'cookies' ? '#fff' : 'rgba(255, 255, 255, 0.5)',
-              padding: '0.75rem 0',
-              fontSize: '0.95rem',
+              color: activeTab === 'cookies' ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.5)',
+              padding: '0.5rem 0',
+              fontSize: '1rem',
               fontWeight: activeTab === 'cookies' ? 600 : 400,
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              fontFamily: 'inherit',
-              marginBottom: '-1px'
+              fontFamily: 'inherit'
             }}
           >
             Политика за бисквитките
@@ -111,22 +106,20 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
             style={{
               background: 'transparent',
               border: 'none',
-              borderBottom: activeTab === 'privacy' ? '2px solid var(--gold-main)' : '2px solid transparent',
-              color: activeTab === 'privacy' ? '#fff' : 'rgba(255, 255, 255, 0.5)',
-              padding: '0.75rem 0',
-              fontSize: '0.95rem',
+              color: activeTab === 'privacy' ? 'var(--gold-main)' : 'rgba(255, 255, 255, 0.5)',
+              padding: '0.5rem 0',
+              fontSize: '1rem',
               fontWeight: activeTab === 'privacy' ? 600 : 400,
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              fontFamily: 'inherit',
-              marginBottom: '-1px'
+              fontFamily: 'inherit'
             }}
           >
             Политика за поверителност
           </button>
         </div>
 
-        {/* CONTENT - Clean Natural Typography, No Small Boxes */}
+        {/* CONTENT - Clean Natural Typography, No Lines */}
         <div 
           style={{
             lineHeight: 1.8,
@@ -144,7 +137,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 Настоящата Политика за бисквитките описва използването на бисквитки и сходни технологии на <strong>www.kkreativ.eu</strong>, управляван от <strong>ККРЕАТИВ ООД</strong>, ЕИК <strong>208820251</strong>.
               </p>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   1. Какво представляват бисквитките
                 </h2>
@@ -153,7 +146,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 1rem 0' }}>
                   2. Какви категории използваме
                 </h2>
@@ -183,7 +176,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   3. Google Analytics 4
                 </h2>
@@ -192,7 +185,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   4. Управление на избора Ви
                 </h2>
@@ -229,7 +222,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </button>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   5. Google Consent Mode
                 </h2>
@@ -238,7 +231,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   6. Шрифтове
                 </h2>
@@ -247,7 +240,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   7. Социални мрежи
                 </h2>
@@ -256,7 +249,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   8. Срок на действие на технологиите
                 </h2>
@@ -267,7 +260,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </ul>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   9. Настройки на браузъра
                 </h2>
@@ -276,7 +269,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   10. Промени в политиката
                 </h2>
@@ -285,7 +278,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   11. Контакт
                 </h2>
@@ -313,7 +306,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 Обработваме личните данни в съответствие с Регламент (ЕС) 2016/679 („GDPR“), Закона за защита на личните данни, Закона за електронната търговия и другото приложимо българско и европейско законодателство.
               </p>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   1. Администратор на лични данни
                 </h2>
@@ -329,7 +322,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 1rem 0' }}>
                   2. Какви лични данни обработваме
                 </h2>
@@ -390,7 +383,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 1rem 0' }}>
                   3. Цели и правни основания
                 </h2>
@@ -440,7 +433,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   4. Google Analytics 4
                 </h2>
@@ -455,7 +448,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   5. Къде се съхраняват данните от контактната форма
                 </h2>
@@ -464,7 +457,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   6. Срокове за съхранение
                 </h2>
@@ -482,7 +475,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   7. Получатели и доставчици
                 </h2>
@@ -503,7 +496,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   8. Международно предаване на данни
                 </h2>
@@ -515,7 +508,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   9. Маркетингови съобщения
                 </h2>
@@ -524,7 +517,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   10. Вашите права
                 </h2>
@@ -546,7 +539,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   11. Жалба до КЗЛД
                 </h2>
@@ -560,7 +553,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </ul>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   12. Задължително ли е предоставянето на данните
                 </h2>
@@ -569,7 +562,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   13. Автоматизирано вземане на решения
                 </h2>
@@ -578,7 +571,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   14. Сигурност
                 </h2>
@@ -587,7 +580,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   15. Бисквитки и сходни технологии
                 </h2>
@@ -599,7 +592,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   16. Промени в политиката
                 </h2>
@@ -608,7 +601,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
                 </p>
               </div>
 
-              <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '2rem', marginTop: '2rem' }}>
+              <div style={{ marginTop: '2.5rem' }}>
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#fff', margin: '0 0 0.85rem 0' }}>
                   17. Контакт
                 </h2>
@@ -627,7 +620,7 @@ export default function LegalPolicy({ initialTab = 'cookies' }) {
         </div>
 
         {/* Bottom Back Button */}
-        <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+        <div style={{ marginTop: '3.5rem' }}>
           <Link 
             to="/" 
             style={{ 
