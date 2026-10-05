@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="kkreativ">
+  <title>kkreativ</title>
+  <defs>
+    <radialGradient id="og-glow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#20202a" stop-opacity="0.95"/>
+      <stop offset="65%" stop-color="#0e0e12" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0a0a0c" stop-opacity="1"/>
+    </radialGradient>
+    <radialGradient id="og-gold" cx="50%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Deep luxury dark background with subtle vignette and warm brand accent -->
+  <rect width="1200" height="630" fill="#0a0a0c"/>
+  <rect width="1200" height="630" fill="url(#og-glow)"/>
+  <rect width="1200" height="630" fill="url(#og-gold)"/>
+
+  <!-- Iconic [kk] Company Logo -->
+  <g transform="translate(600, 315) scale(1.0) translate(-255.55, -255.86)">
+    <path d="M 416.87 110.92 L 479.00 113.19 L 472.45 177.92 L 469.70 239.25 L 470.27 306.82 L 472.47 347.71 L 476.25 388.02 L 475.75 392.34 L 431.46 394.08 L 410.34 393.70 L 410.45 368.88 L 447.36 367.47 L 448.09 366.44 L 444.21 306.25 L 443.64 236.98 L 445.88 185.30 L 449.74 138.74 L 414.99 136.60 Z M 90.31 111.48 L 93.63 111.48 L 95.66 137.04 L 58.64 139.88 L 58.71 203.47 L 60.39 286.38 L 63.75 370.99 L 91.35 369.28 L 92.61 394.84 L 39.09 400.80 L 33.77 263.10 L 32.11 114.89 Z M 110.89 129.09 L 135.62 129.42 L 136.59 130.22 L 134.12 213.70 L 134.48 255.53 L 175.93 217.45 L 216.82 183.23 L 233.12 202.91 L 187.18 242.66 L 249.66 343.73 L 228.18 357.36 L 226.59 356.22 L 167.42 260.60 L 133.57 292.63 L 134.06 357.36 L 108.10 357.93 L 107.50 255.15 Z M 258.64 129.09 L 283.82 129.41 L 284.63 130.22 L 281.88 217.10 L 282.12 255.59 L 324.14 217.08 L 364.46 183.39 L 381.08 202.91 L 335.15 242.66 L 397.58 343.73 L 376.95 357.02 L 375.81 357.60 L 373.28 354.52 L 315.06 260.64 L 281.39 292.63 L 281.85 357.36 L 255.88 357.93 L 255.28 251.17 Z" fill="#ffffff" fill-rule="evenodd"/>
+  </g>
+</svg>
