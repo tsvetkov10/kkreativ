@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 export default function Contact({ id = "contact" }) {
@@ -469,6 +470,32 @@ export default function Contact({ id = "contact" }) {
                 >
                   {isSubmitting ? 'Изпращане...' : 'Изпрати запитване'}
                 </button>
+
+                <p 
+                  style={{ 
+                    marginTop: '0.85rem', 
+                    fontSize: '0.78rem', 
+                    color: 'rgba(255, 255, 255, 0.55)', 
+                    textAlign: 'center', 
+                    lineHeight: '1.45',
+                    marginBottom: 0
+                  }}
+                >
+                  С изпращането на формата потвърждавате, че сте се запознали с нашата{' '}
+                  <Link 
+                    to="/privacy" 
+                    style={{ 
+                      color: 'var(--gold-main)', 
+                      textDecoration: 'underline',
+                      transition: 'opacity 0.2s' 
+                    }}
+                    onMouseEnter={(e) => e.target.style.opacity = '0.8'}
+                    onMouseLeave={(e) => e.target.style.opacity = '1'}
+                  >
+                    Политика за поверителност
+                  </Link>
+                  .
+                </p>
               </form>
             )}
           </div>

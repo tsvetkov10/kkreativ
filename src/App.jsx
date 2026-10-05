@@ -6,12 +6,14 @@ import CanvasBackground from './components/CanvasBackground';
 import EmojiSplash from './components/EmojiSplash';
 import Footer from './components/Footer';
 import BackgroundVideoPreloader from './components/BackgroundVideoPreloader';
+import CookieBanner from './components/CookieBanner';
 
 import Home from './components/Home';
 
 // Code-split secondary routes to eliminate 90+ KiB unused JavaScript on initial load
 const OurCraft = lazy(() => import('./components/OurCraft'));
 const Contact = lazy(() => import('./components/Contact'));
+const LegalPolicy = lazy(() => import('./components/LegalPolicy'));
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -65,6 +67,7 @@ export default function App() {
         <CanvasBackground active={loaded} />
         <EmojiSplash />
         <BackgroundVideoPreloader active={loaded} />
+        <CookieBanner />
 
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Suspense fallback={null}>
@@ -73,6 +76,10 @@ export default function App() {
               <Route path="/our-craft" element={<OurCraft />} />
               <Route path="/craft" element={<OurCraft />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/cookies" element={<LegalPolicy initialTab="cookies" />} />
+              <Route path="/cookie-policy" element={<LegalPolicy initialTab="cookies" />} />
+              <Route path="/privacy" element={<LegalPolicy initialTab="privacy" />} />
+              <Route path="/privacy-policy" element={<LegalPolicy initialTab="privacy" />} />
             </Routes>
           </Suspense>
         </main>
