@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
@@ -18,6 +18,25 @@ const LegalPolicy = lazy(() => import('./components/LegalPolicy'));
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const location = useLocation();
+  const isFirstMount = useRef(true);
+
+  // Send page_view to Google Analytics on client-side route transitions
+  useEffect(() => {
+    if (isFirstMount.current) {
+      isFirstMount.current = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('config', 'G-Y4YGG5TG73', {
+          page_path: location.pathname + location.search,
+          page_title: document.title,
+          page_location: window.location.href,
+        });
+      }
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     try {
