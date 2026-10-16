@@ -12,6 +12,7 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
       try {
         var hasAnalyticsConsent = localStorage.getItem('kk_analytics_consent') === 'true';
         gtag('consent', 'default', {

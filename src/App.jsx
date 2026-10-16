@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Preloader from './components/Preloader';
 import Navbar from './components/Navbar';
@@ -20,6 +20,10 @@ export default function App() {
   const location = useLocation();
   const isFirstMount = useRef(true);
 
+  const handlePreloaderComplete = useCallback(() => {
+    setLoaded(true);
+  }, []);
+
   // Send page_view to Google Analytics on client-side route transitions
   useEffect(() => {
     if (isFirstMount.current) {
@@ -27,13 +31,15 @@ export default function App() {
       return;
     }
     const timer = setTimeout(() => {
-      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-        window.gtag('config', 'G-Y4YGG5TG73', {
-          page_path: location.pathname + location.search,
-          page_title: document.title,
-          page_location: window.location.href,
-        });
-      }
+      try {
+        if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+          window.gtag('config', 'G-Y4YGG5TG73', {
+            page_path: location.pathname + location.search,
+            page_title: document.title,
+            page_location: window.location.href,
+          });
+        }
+      } catch (e) {}
     }, 50);
     return () => clearTimeout(timer);
   }, [location.pathname, location.search]);
@@ -78,7 +84,7 @@ export default function App() {
 
   return (
     <>
-      {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
+      {!loaded && <Preloader onComplete={handlePreloaderComplete} />}
       
       {/* Main App Layout */}
       <div style={{ position: 'relative', opacity: loaded ? 1 : 0, transition: 'opacity 0.5s ease' }}>
@@ -86,7 +92,7 @@ export default function App() {
         <CanvasBackground active={loaded} />
         <EmojiSplash />
         <BackgroundVideoPreloader active={loaded} />
-        <CookieBanner />
+        <CookieBanner active={loaded} />
 
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Suspense fallback={null}>

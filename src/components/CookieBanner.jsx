@@ -1,14 +1,33 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function CookieBanner() {
+const safeGetItem = (key) => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSetItem = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export default function CookieBanner({ active = true }) {
   const [bannerVisible, setBannerVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [analyticsConsent, setAnalyticsConsent] = useState(false);
 
   useEffect(() => {
-    const storedConsent = localStorage.getItem('kk_cookie_consent');
-    const storedAnalytics = localStorage.getItem('kk_analytics_consent');
+    if (!active) return;
+
+    const storedConsent = safeGetItem('kk_cookie_consent');
+    const storedAnalytics = safeGetItem('kk_analytics_consent');
 
     if (storedConsent === null) {
       const timer = setTimeout(() => {
@@ -18,11 +37,11 @@ export default function CookieBanner() {
     } else {
       setAnalyticsConsent(storedAnalytics === 'true');
     }
-  }, []);
+  }, [active]);
 
   useEffect(() => {
     const handleOpenModal = () => {
-      const storedAnalytics = localStorage.getItem('kk_analytics_consent');
+      const storedAnalytics = safeGetItem('kk_analytics_consent');
       setAnalyticsConsent(storedAnalytics === 'true');
       setModalOpen(true);
     };
@@ -41,16 +60,18 @@ export default function CookieBanner() {
   }, [modalOpen]);
 
   const updateGoogleConsent = (granted) => {
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('consent', 'update', {
-        analytics_storage: granted ? 'granted' : 'denied'
-      });
-    }
+    try {
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('consent', 'update', {
+          analytics_storage: granted ? 'granted' : 'denied'
+        });
+      }
+    } catch (e) {}
   };
 
   const handleAcceptAll = () => {
-    localStorage.setItem('kk_cookie_consent', 'all');
-    localStorage.setItem('kk_analytics_consent', 'true');
+    safeSetItem('kk_cookie_consent', 'all');
+    safeSetItem('kk_analytics_consent', 'true');
     setAnalyticsConsent(true);
     updateGoogleConsent(true);
     setBannerVisible(false);
@@ -58,8 +79,8 @@ export default function CookieBanner() {
   };
 
   const handleRejectAll = () => {
-    localStorage.setItem('kk_cookie_consent', 'essential_only');
-    localStorage.setItem('kk_analytics_consent', 'false');
+    safeSetItem('kk_cookie_consent', 'essential_only');
+    safeSetItem('kk_analytics_consent', 'false');
     setAnalyticsConsent(false);
     updateGoogleConsent(false);
     setBannerVisible(false);
@@ -67,8 +88,8 @@ export default function CookieBanner() {
   };
 
   const handleSaveCustom = () => {
-    localStorage.setItem('kk_cookie_consent', 'custom');
-    localStorage.setItem('kk_analytics_consent', analyticsConsent ? 'true' : 'false');
+    safeSetItem('kk_cookie_consent', 'custom');
+    safeSetItem('kk_analytics_consent', analyticsConsent ? 'true' : 'false');
     updateGoogleConsent(analyticsConsent);
     setBannerVisible(false);
     setModalOpen(false);
