@@ -1776,21 +1776,35 @@ p {
 .marquee-wrapper {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: auto !important;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+.marquee-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.marquee-wrapper.is-dragging {
+  cursor: grabbing;
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: scrollMarquee 45s linear infinite;
-  will-change: transform;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .marquee-group {
@@ -1800,11 +1814,8 @@ p {
   flex-shrink: 0;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
-}
-
-@keyframes scrollMarquee {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .marquee-card {
@@ -1821,6 +1832,9 @@ p {
   border: 1px solid rgba(255, 255, 255, 0.08);
   transform: translateZ(0);
   contain: paint;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 .marquee-card video {
@@ -1829,6 +1843,10 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 .marquee-card-inner {

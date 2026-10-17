@@ -114,6 +114,7 @@ function MarqueeCard({ vid }) {
           alt={vid.title}
           loading="eager"
           decoding="async"
+          draggable="false"
           style={{
             position: 'absolute',
             inset: 0,
@@ -123,6 +124,8 @@ function MarqueeCard({ vid }) {
             borderRadius: '24px',
             zIndex: 0,
             pointerEvents: 'none',
+            userSelect: 'none',
+            WebkitUserDrag: 'none',
             opacity: isPlaying ? 0 : 1,
             transition: 'opacity 0.25s ease'
           }}
@@ -139,6 +142,7 @@ function MarqueeCard({ vid }) {
         preload="auto"
         disablePictureInPicture
         disableRemotePlayback
+        draggable="false"
         onPlaying={() => setIsPlaying(true)}
         onCanPlay={() => {
           if (isIntersectingRef.current && !document.hidden && videoRef.current?.paused) {
@@ -152,7 +156,10 @@ function MarqueeCard({ vid }) {
           height: '100%',
           objectFit: 'cover',
           borderRadius: '24px',
-          zIndex: 1
+          zIndex: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
+          WebkitUserDrag: 'none'
         }}
       />
     </div>
@@ -160,12 +167,198 @@ function MarqueeCard({ vid }) {
 }
 
 export default function VideoResults() {
+  const containerRef = useRef(null);
+  const firstGroupRef = useRef(null);
+  const groupWidthRef = useRef(0);
+  const subpixelScrollRef = useRef(0);
+  const isDraggingRef = useRef(false);
+  const isInteractingRef = useRef(false);
+  const isHoveredRef = useRef(false);
+  const lastPointerXRef = useRef(0);
+  const resumeTimeoutRef = useRef(null);
+  const hasInitializedRef = useRef(false);
+
+  // Seamless wrap function to keep scroll position within infinite middle buffer
+  const checkWrap = () => {
+    const container = containerRef.current;
+    const gw = groupWidthRef.current;
+    if (!container || !gw || gw <= 0) return;
+
+    while (container.scrollLeft >= gw * 3) {
+      container.scrollLeft -= gw;
+      subpixelScrollRef.current -= gw;
+    }
+    while (container.scrollLeft <= gw * 1) {
+      container.scrollLeft += gw;
+      subpixelScrollRef.current += gw;
+    }
+  };
+
+  const scheduleResume = (delay = 1200) => {
+    clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, delay);
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const firstGroup = firstGroupRef.current;
+    if (!container || !firstGroup) return;
+
+    const updateGroupWidth = () => {
+      const width = firstGroup.offsetWidth;
+      if (width > 0) {
+        const prevWidth = groupWidthRef.current;
+        groupWidthRef.current = width;
+        if (!hasInitializedRef.current) {
+          container.scrollLeft = width * 2;
+          subpixelScrollRef.current = width * 2;
+          hasInitializedRef.current = true;
+        } else if (prevWidth > 0 && prevWidth !== width) {
+          const ratio = width / prevWidth;
+          container.scrollLeft *= ratio;
+          subpixelScrollRef.current *= ratio;
+        }
+      }
+    };
+
+    updateGroupWidth();
+
+    const ro = new ResizeObserver(() => {
+      updateGroupWidth();
+      checkWrap();
+    });
+    ro.observe(firstGroup);
+
+    // Auto-scroll loop using requestAnimationFrame
+    let lastTimestamp = null;
+    let rafId = null;
+    const scrollSpeed = 45; // pixels per second
+
+    const step = (timestamp) => {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const deltaTime = Math.min((timestamp - lastTimestamp) / 1000, 0.1);
+      lastTimestamp = timestamp;
+
+      if (
+        !isInteractingRef.current &&
+        !isDraggingRef.current &&
+        !isHoveredRef.current &&
+        !document.hidden
+      ) {
+        subpixelScrollRef.current += scrollSpeed * deltaTime;
+        container.scrollLeft = subpixelScrollRef.current;
+        checkWrap();
+      }
+
+      rafId = requestAnimationFrame(step);
+    };
+
+    rafId = requestAnimationFrame(step);
+
+    // Global pointermove and pointerup so dragging continues even when cursor moves outside container
+    const handleWindowPointerMove = (e) => {
+      if (!isDraggingRef.current) return;
+      const dx = e.clientX - lastPointerXRef.current;
+      lastPointerXRef.current = e.clientX;
+      container.scrollLeft -= dx;
+      subpixelScrollRef.current = container.scrollLeft;
+      checkWrap();
+    };
+
+    const handleWindowPointerUp = () => {
+      if (!isDraggingRef.current) return;
+      isDraggingRef.current = false;
+      container.classList.remove('is-dragging');
+      scheduleResume(1200);
+    };
+
+    window.addEventListener('pointermove', handleWindowPointerMove);
+    window.addEventListener('pointerup', handleWindowPointerUp);
+    window.addEventListener('pointercancel', handleWindowPointerUp);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      ro.disconnect();
+      clearTimeout(resumeTimeoutRef.current);
+      window.removeEventListener('pointermove', handleWindowPointerMove);
+      window.removeEventListener('pointerup', handleWindowPointerUp);
+      window.removeEventListener('pointercancel', handleWindowPointerUp);
+    };
+  }, []);
+
+  const handlePointerDown = (e) => {
+    // Only drag with primary mouse button
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    e.preventDefault();
+
+    isDraggingRef.current = true;
+    isInteractingRef.current = true;
+    lastPointerXRef.current = e.clientX;
+    clearTimeout(resumeTimeoutRef.current);
+
+    if (containerRef.current) {
+      containerRef.current.classList.add('is-dragging');
+    }
+  };
+
+  const handleMouseEnter = () => {
+    isHoveredRef.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    isHoveredRef.current = false;
+  };
+
+  const handleWheel = (e) => {
+    // Trackpad horizontal swipe or shift+wheel
+    if (Math.abs(e.deltaX) > 0 || (e.shiftKey && Math.abs(e.deltaY) > 0)) {
+      isInteractingRef.current = true;
+      scheduleResume(1200);
+    }
+  };
+
+  const handleTouchStart = () => {
+    isInteractingRef.current = true;
+    clearTimeout(resumeTimeoutRef.current);
+  };
+
+  const handleTouchEnd = () => {
+    scheduleResume(1200);
+  };
+
+  const handleScroll = () => {
+    checkWrap();
+    if (containerRef.current) {
+      subpixelScrollRef.current = containerRef.current.scrollLeft;
+    }
+    if (isInteractingRef.current) {
+      scheduleResume(1200);
+    }
+  };
+
   return (
     <section id="video-results" className="video-marquee-section">
-      <div className="marquee-wrapper">
+      <div
+        ref={containerRef}
+        className="marquee-wrapper"
+        onPointerDown={handlePointerDown}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onScroll={handleScroll}
+      >
         <div className="marquee-track">
-          {[0, 1].map((groupIndex) => (
-            <div key={groupIndex} className="marquee-group" aria-hidden={groupIndex > 0 ? 'true' : 'false'}>
+          {[0, 1, 2, 3, 4].map((groupIndex) => (
+            <div
+              key={groupIndex}
+              ref={groupIndex === 0 ? firstGroupRef : null}
+              className="marquee-group"
+              aria-hidden={groupIndex > 0 ? 'true' : 'false'}
+            >
               {carouselVideos.map((vid, idx) => (
                 <MarqueeCard key={`${groupIndex}-${idx}`} vid={vid} />
               ))}
