@@ -89,13 +89,13 @@ export function preloadImage(url) {
  * when the preloader ends.
  */
 export const CAROUSEL_VIDEOS = [
-  encodeURI('/videos/caroussel/Autolux - E53(1)_5s_1080p.mp4'),
-  encodeURI('/videos/caroussel/ACAI HERO - Voice Message 5sec.mp4'),
-  encodeURI('/videos/caroussel/Leo_s Pasta - Leo cooking(1)_5sec_1080p.mp4'),
-  encodeURI('/videos/caroussel/Autolux - S5(1)_5s_1080p.mp4'),
-  encodeURI('/videos/caroussel/ACAI HERO - как се произнася_(1)_5s_1080p.mp4'),
-  '/videos/caroussel/Leos_Pasta_POV_Dvoikite_5sec_1080p.mp4',
-  encodeURI('/videos/caroussel/ACAI HERO - Габи_(1)_5s_1080p.mp4')
+  encodeURI('/videos/new/Autolux - E53(1)_5s_1080p_3s_1080p.mp4'),
+  encodeURI('/videos/new/ACAI HERO - Voice Message 5sec_3s_1080p.mp4'),
+  encodeURI('/videos/new/Leo_s Pasta - Leo cooking(1)_3sec_1080p.mp4'),
+  encodeURI('/videos/new/Autolux - S5(1)_5s_1080p_3s_1080p.mp4'),
+  encodeURI('/videos/new/ACAI HERO - как се произнася_(1)_5s_1080p_3s_1080p.mp4'),
+  encodeURI('/videos/new/Leo_s Pasta - POV_ Двойките ядат безплатно(1)_3sec_1080p.mp4'),
+  encodeURI('/videos/new/ACAI HERO - Габи_(1)_5s_1080p_3s_1080p.mp4')
 ];
 
 /**
