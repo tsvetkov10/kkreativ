@@ -8,50 +8,21 @@ export const isAudit = typeof navigator !== 'undefined' && (
   navigator.webdriver === true
 );
 
-/**
- * In-memory Blob URL cache for instant, zero-latency playback.
- */
 export const videoBlobCache = new Map();
 
 /**
- * Cache event listeners for reactive UI updates
- */
-const cacheListeners = new Set();
-
-export function subscribeToVideoCache(fn) {
-  cacheListeners.add(fn);
-  return () => cacheListeners.delete(fn);
-}
-
-/**
- * Returns the in-memory Blob URL if downloaded, otherwise returns the original URL.
+ * In-memory URL cache for reactive UI updates
  */
 export function getCachedVideoSrc(videoUrl) {
-  if (!videoUrl) return '';
-  return videoBlobCache.get(videoUrl) || videoUrl;
+  return videoUrl || '';
 }
 
 /**
- * React hook that returns the cached Blob URL as soon as it becomes available.
+ * React hook that returns the video URL.
+ * Avoids using blob: URLs which fail in Safari / iOS AVFoundation media pipeline.
  */
 export function useCachedVideoSrc(videoUrl) {
-  const [src, setSrc] = useState(() => getCachedVideoSrc(videoUrl));
-
-  useEffect(() => {
-    if (!videoUrl) return;
-    if (videoBlobCache.has(videoUrl)) {
-      setSrc(videoBlobCache.get(videoUrl));
-      return;
-    }
-    const unsubscribe = subscribeToVideoCache((url, blobUrl) => {
-      if (url === videoUrl) {
-        setSrc(blobUrl);
-      }
-    });
-    return unsubscribe;
-  }, [videoUrl]);
-
-  return src;
+  return videoUrl || '';
 }
 
 /**
@@ -123,27 +94,20 @@ const inFlightFetches = new Map();
 const preloadedSet = new Set();
 
 /**
- * Fully download a video and convert to a memory blob URL for instantaneous playback.
+ * Preload a video into the browser's native HTTP cache for instant playback.
+ * Does not create blob: URLs to preserve full compatibility with Safari/AVFoundation.
  */
 export async function downloadVideo(url) {
-  if (!url) return null;
-  if (isAudit) return url;
-  if (videoBlobCache.has(url)) return videoBlobCache.get(url);
+  if (!url || isAudit) return url;
+  if (preloadedSet.has(url)) return url;
   if (inFlightFetches.has(url)) return inFlightFetches.get(url);
 
   const fetchPromise = (async () => {
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const blob = await res.blob();
-      const blobUrl = URL.createObjectURL(blob);
-      videoBlobCache.set(url, blobUrl);
-      cacheListeners.forEach((listener) => {
-        try { listener(url, blobUrl); } catch {}
-      });
-      return blobUrl;
+      preloadedSet.add(url);
+      await fetch(url, { cache: 'force-cache' });
+      return url;
     } catch {
-      // If fetch fails, fall back to native video buffering
       return url;
     } finally {
       inFlightFetches.delete(url);

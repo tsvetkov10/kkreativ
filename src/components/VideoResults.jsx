@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getVideoPoster, useCachedVideoSrc } from '../utils/videoUtils';
+import { getVideoPoster } from '../utils/videoUtils';
 
 const carouselVideos = [
   {
@@ -37,7 +37,6 @@ function MarqueeCard({ vid }) {
   const cardRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const poster = getVideoPoster(vid.src);
-  const videoSrc = useCachedVideoSrc(vid.src);
 
   // Configure native element attributes for strict iOS/Safari autoplay compliance
   useEffect(() => {
@@ -52,7 +51,7 @@ function MarqueeCard({ vid }) {
     }
   }, []);
 
-  // Guarantee playback whenever videoSrc changes (network URL -> blob cache) or mounts
+  // Guarantee playback whenever video is ready or mounts
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -71,7 +70,7 @@ function MarqueeCard({ vid }) {
     };
 
     playSafe();
-  }, [videoSrc]);
+  }, [vid.src]);
 
   // Handle tab visibility cleanly (pause in background, resume in foreground)
   useEffect(() => {
@@ -118,15 +117,13 @@ function MarqueeCard({ vid }) {
             zIndex: 0,
             pointerEvents: 'none',
             userSelect: 'none',
-            WebkitUserDrag: 'none',
-            opacity: isPlaying ? 0 : 1,
-            transition: 'opacity 0.25s ease'
+            WebkitUserDrag: 'none'
           }}
         />
       )}
       <video
         ref={videoRef}
-        src={videoSrc}
+        src={vid.src}
         poster={poster}
         muted
         loop
@@ -138,6 +135,11 @@ function MarqueeCard({ vid }) {
         draggable="false"
         onPlay={() => setIsPlaying(true)}
         onPlaying={() => setIsPlaying(true)}
+        onTimeUpdate={() => {
+          if (!isPlaying && videoRef.current && videoRef.current.currentTime > 0) {
+            setIsPlaying(true);
+          }
+        }}
         onLoadedData={() => {
           if (videoRef.current?.paused && !document.hidden) {
             const p = videoRef.current.play();
@@ -164,7 +166,9 @@ function MarqueeCard({ vid }) {
           zIndex: 1,
           pointerEvents: 'none',
           userSelect: 'none',
-          WebkitUserDrag: 'none'
+          WebkitUserDrag: 'none',
+          opacity: isPlaying ? 1 : 0,
+          transition: 'opacity 0.25s ease'
         }}
       />
     </div>
