@@ -3,31 +3,31 @@ import { getVideoPoster, useCachedVideoSrc } from '../utils/videoUtils';
 
 const carouselVideos = [
   {
-    src: encodeURI('/videos/new/Autolux - E53(1)_5s_1080p_3s_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/Autolux - E53(1)_5s_1080p_3s_1080p.mp4'),
     title: 'AUTOLUX'
   },
   {
-    src: encodeURI('/videos/new/ACAI HERO - Voice Message 5sec_3s_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/ACAI HERO - Voice Message 5sec_3s_1080p.mp4'),
     title: 'ACAI HERO'
   },
   {
-    src: encodeURI('/videos/new/Leo_s Pasta - Leo cooking(1)_3sec_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/Leo_s Pasta - Leo cooking(1)_3sec_1080p.mp4'),
     title: "LEO'S PASTA"
   },
   {
-    src: encodeURI('/videos/new/Autolux - S5(1)_5s_1080p_3s_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/Autolux - S5(1)_5s_1080p_3s_1080p.mp4'),
     title: 'AUTOLUX'
   },
   {
-    src: encodeURI('/videos/new/ACAI HERO - как се произнася_(1)_5s_1080p_3s_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/ACAI HERO - как се произнася_(1)_5s_1080p_3s_1080p.mp4'),
     title: 'ACAI HERO'
   },
   {
-    src: encodeURI('/videos/new/Leo_s Pasta - POV_ Двойките ядат безплатно(1)_3sec_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/Leo_s Pasta - POV_ Двойките ядат безплатно(1)_3sec_1080p.mp4'),
     title: "LEO'S PASTA"
   },
   {
-    src: encodeURI('/videos/new/ACAI HERO - Габи_(1)_5s_1080p_3s_1080p.mp4'),
+    src: encodeURI('/videos/caroussel/ACAI HERO - Габи_(1)_5s_1080p_3s_1080p.mp4'),
     title: 'ACAI HERO'
   }
 ];
@@ -35,63 +35,57 @@ const carouselVideos = [
 function MarqueeCard({ vid }) {
   const videoRef = useRef(null);
   const cardRef = useRef(null);
-  const isIntersectingRef = useRef(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const poster = getVideoPoster(vid.src);
   const videoSrc = useCachedVideoSrc(vid.src);
 
+  // Configure native element attributes for strict iOS/Safari autoplay compliance
   useEffect(() => {
-    const card = cardRef.current;
-    if (!card) return;
+    const v = videoRef.current;
+    if (v) {
+      v.defaultMuted = true;
+      v.muted = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.setAttribute('webkit-playsinline', '');
+      v.setAttribute('muted', '');
+    }
+  }, []);
+
+  // Guarantee playback whenever videoSrc changes (network URL -> blob cache) or mounts
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+
+    v.defaultMuted = true;
+    v.muted = true;
+    v.playsInline = true;
 
     const playSafe = () => {
-      const v = videoRef.current;
-      if (v && v.paused) {
-        v.play().catch(() => {});
-      }
-    };
-
-    const pauseSafe = () => {
-      const v = videoRef.current;
-      if (v && !v.paused) {
-        v.pause();
-      }
-    };
-
-    // Pre-activate videos that are within 250px of the viewport for seamless playback
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        const inView = entry.isIntersecting;
-        isIntersectingRef.current = inView;
-
-        if (inView) {
-          if (!document.hidden) {
-            playSafe();
-          }
-        } else {
-          pauseSafe();
+      if (v.paused && !document.hidden) {
+        const promise = v.play();
+        if (promise !== undefined) {
+          promise.then(() => setIsPlaying(true)).catch(() => {});
         }
-      },
-      { rootMargin: '250px 0px', threshold: 0 }
-    );
-
-    observer.observe(card);
-
-    // Initial check on mount
-    const rect = card.getBoundingClientRect();
-    if (rect.right > -100 && rect.left < window.innerWidth + 250) {
-      isIntersectingRef.current = true;
-      if (!document.hidden) {
-        playSafe();
       }
-    }
+    };
 
+    playSafe();
+  }, [videoSrc]);
+
+  // Handle tab visibility cleanly (pause in background, resume in foreground)
+  useEffect(() => {
     const handleVisibility = () => {
+      const v = videoRef.current;
+      if (!v) return;
       if (document.hidden) {
-        pauseSafe();
+        if (!v.paused) v.pause();
       } else {
-        if (isIntersectingRef.current) {
-          playSafe();
+        if (v.paused) {
+          const promise = v.play();
+          if (promise !== undefined) {
+            promise.then(() => setIsPlaying(true)).catch(() => {});
+          }
         }
       }
     };
@@ -100,7 +94,6 @@ function MarqueeCard({ vid }) {
     window.addEventListener('focus', handleVisibility);
 
     return () => {
-      observer.disconnect();
       document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('focus', handleVisibility);
     };
@@ -143,10 +136,22 @@ function MarqueeCard({ vid }) {
         disablePictureInPicture
         disableRemotePlayback
         draggable="false"
+        onPlay={() => setIsPlaying(true)}
         onPlaying={() => setIsPlaying(true)}
+        onLoadedData={() => {
+          if (videoRef.current?.paused && !document.hidden) {
+            const p = videoRef.current.play();
+            if (p !== undefined) {
+              p.then(() => setIsPlaying(true)).catch(() => {});
+            }
+          }
+        }}
         onCanPlay={() => {
-          if (isIntersectingRef.current && !document.hidden && videoRef.current?.paused) {
-            videoRef.current.play().catch(() => {});
+          if (videoRef.current?.paused && !document.hidden) {
+            const p = videoRef.current.play();
+            if (p !== undefined) {
+              p.then(() => setIsPlaying(true)).catch(() => {});
+            }
           }
         }}
         style={{
